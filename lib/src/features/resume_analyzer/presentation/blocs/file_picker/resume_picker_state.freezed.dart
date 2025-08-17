@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'file_picker_state.dart';
+part of 'resume_picker_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,23 +13,23 @@ part of 'file_picker_state.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$FilePickerState {
+mixin _$ResumePickerState {
   FormStatus get status;
   File? get pickedFile;
 
-  /// Create a copy of FilePickerState
+  /// Create a copy of ResumePickerState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $FilePickerStateCopyWith<FilePickerState> get copyWith =>
-      _$FilePickerStateCopyWithImpl<FilePickerState>(
-          this as FilePickerState, _$identity);
+  $ResumePickerStateCopyWith<ResumePickerState> get copyWith =>
+      _$ResumePickerStateCopyWithImpl<ResumePickerState>(
+          this as ResumePickerState, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is FilePickerState &&
+            other is ResumePickerState &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.pickedFile, pickedFile) ||
                 other.pickedFile == pickedFile));
@@ -40,15 +40,15 @@ mixin _$FilePickerState {
 
   @override
   String toString() {
-    return 'FilePickerState(status: $status, pickedFile: $pickedFile)';
+    return 'ResumePickerState(status: $status, pickedFile: $pickedFile)';
   }
 }
 
 /// @nodoc
-abstract mixin class $FilePickerStateCopyWith<$Res> {
-  factory $FilePickerStateCopyWith(
-          FilePickerState value, $Res Function(FilePickerState) _then) =
-      _$FilePickerStateCopyWithImpl;
+abstract mixin class $ResumePickerStateCopyWith<$Res> {
+  factory $ResumePickerStateCopyWith(
+          ResumePickerState value, $Res Function(ResumePickerState) _then) =
+      _$ResumePickerStateCopyWithImpl;
   @useResult
   $Res call({FormStatus status, File? pickedFile});
 
@@ -56,14 +56,14 @@ abstract mixin class $FilePickerStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$FilePickerStateCopyWithImpl<$Res>
-    implements $FilePickerStateCopyWith<$Res> {
-  _$FilePickerStateCopyWithImpl(this._self, this._then);
+class _$ResumePickerStateCopyWithImpl<$Res>
+    implements $ResumePickerStateCopyWith<$Res> {
+  _$ResumePickerStateCopyWithImpl(this._self, this._then);
 
-  final FilePickerState _self;
-  final $Res Function(FilePickerState) _then;
+  final ResumePickerState _self;
+  final $Res Function(ResumePickerState) _then;
 
-  /// Create a copy of FilePickerState
+  /// Create a copy of ResumePickerState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -83,7 +83,7 @@ class _$FilePickerStateCopyWithImpl<$Res>
     ));
   }
 
-  /// Create a copy of FilePickerState
+  /// Create a copy of ResumePickerState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -94,8 +94,8 @@ class _$FilePickerStateCopyWithImpl<$Res>
   }
 }
 
-/// Adds pattern-matching-related methods to [FilePickerState].
-extension FilePickerStatePatterns on FilePickerState {
+/// Adds pattern-matching-related methods to [ResumePickerState].
+extension ResumePickerStatePatterns on ResumePickerState {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -110,12 +110,12 @@ extension FilePickerStatePatterns on FilePickerState {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
-    TResult Function(_FilePickerState value)? $default, {
+    TResult Function(_ResumePickerState value)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _FilePickerState() when $default != null:
+      case _ResumePickerState() when $default != null:
         return $default(_that);
       case _:
         return orElse();
@@ -137,11 +137,11 @@ extension FilePickerStatePatterns on FilePickerState {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>(
-    TResult Function(_FilePickerState value) $default,
+    TResult Function(_ResumePickerState value) $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _FilePickerState():
+      case _ResumePickerState():
         return $default(_that);
       case _:
         throw StateError('Unexpected subclass');
@@ -162,11 +162,11 @@ extension FilePickerStatePatterns on FilePickerState {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_FilePickerState value)? $default,
+    TResult? Function(_ResumePickerState value)? $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _FilePickerState() when $default != null:
+      case _ResumePickerState() when $default != null:
         return $default(_that);
       case _:
         return null;
@@ -192,7 +192,7 @@ extension FilePickerStatePatterns on FilePickerState {
   }) {
     final _that = this;
     switch (_that) {
-      case _FilePickerState() when $default != null:
+      case _ResumePickerState() when $default != null:
         return $default(_that.status, _that.pickedFile);
       case _:
         return orElse();
@@ -218,7 +218,7 @@ extension FilePickerStatePatterns on FilePickerState {
   ) {
     final _that = this;
     switch (_that) {
-      case _FilePickerState():
+      case _ResumePickerState():
         return $default(_that.status, _that.pickedFile);
       case _:
         throw StateError('Unexpected subclass');
@@ -243,7 +243,7 @@ extension FilePickerStatePatterns on FilePickerState {
   ) {
     final _that = this;
     switch (_that) {
-      case _FilePickerState() when $default != null:
+      case _ResumePickerState() when $default != null:
         return $default(_that.status, _that.pickedFile);
       case _:
         return null;
@@ -253,8 +253,8 @@ extension FilePickerStatePatterns on FilePickerState {
 
 /// @nodoc
 
-class _FilePickerState implements FilePickerState {
-  const _FilePickerState(
+class _ResumePickerState implements ResumePickerState {
+  const _ResumePickerState(
       {this.status = const FormStatus.initial(), this.pickedFile});
 
   @override
@@ -263,19 +263,19 @@ class _FilePickerState implements FilePickerState {
   @override
   final File? pickedFile;
 
-  /// Create a copy of FilePickerState
+  /// Create a copy of ResumePickerState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$FilePickerStateCopyWith<_FilePickerState> get copyWith =>
-      __$FilePickerStateCopyWithImpl<_FilePickerState>(this, _$identity);
+  _$ResumePickerStateCopyWith<_ResumePickerState> get copyWith =>
+      __$ResumePickerStateCopyWithImpl<_ResumePickerState>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _FilePickerState &&
+            other is _ResumePickerState &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.pickedFile, pickedFile) ||
                 other.pickedFile == pickedFile));
@@ -286,16 +286,16 @@ class _FilePickerState implements FilePickerState {
 
   @override
   String toString() {
-    return 'FilePickerState(status: $status, pickedFile: $pickedFile)';
+    return 'ResumePickerState(status: $status, pickedFile: $pickedFile)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$FilePickerStateCopyWith<$Res>
-    implements $FilePickerStateCopyWith<$Res> {
-  factory _$FilePickerStateCopyWith(
-          _FilePickerState value, $Res Function(_FilePickerState) _then) =
-      __$FilePickerStateCopyWithImpl;
+abstract mixin class _$ResumePickerStateCopyWith<$Res>
+    implements $ResumePickerStateCopyWith<$Res> {
+  factory _$ResumePickerStateCopyWith(
+          _ResumePickerState value, $Res Function(_ResumePickerState) _then) =
+      __$ResumePickerStateCopyWithImpl;
   @override
   @useResult
   $Res call({FormStatus status, File? pickedFile});
@@ -305,14 +305,14 @@ abstract mixin class _$FilePickerStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$FilePickerStateCopyWithImpl<$Res>
-    implements _$FilePickerStateCopyWith<$Res> {
-  __$FilePickerStateCopyWithImpl(this._self, this._then);
+class __$ResumePickerStateCopyWithImpl<$Res>
+    implements _$ResumePickerStateCopyWith<$Res> {
+  __$ResumePickerStateCopyWithImpl(this._self, this._then);
 
-  final _FilePickerState _self;
-  final $Res Function(_FilePickerState) _then;
+  final _ResumePickerState _self;
+  final $Res Function(_ResumePickerState) _then;
 
-  /// Create a copy of FilePickerState
+  /// Create a copy of ResumePickerState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -320,7 +320,7 @@ class __$FilePickerStateCopyWithImpl<$Res>
     Object? status = null,
     Object? pickedFile = freezed,
   }) {
-    return _then(_FilePickerState(
+    return _then(_ResumePickerState(
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -332,7 +332,7 @@ class __$FilePickerStateCopyWithImpl<$Res>
     ));
   }
 
-  /// Create a copy of FilePickerState
+  /// Create a copy of ResumePickerState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')

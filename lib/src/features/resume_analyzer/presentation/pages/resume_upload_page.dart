@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:ai_resume/src/app/presentation/pages/app.dart';
+import 'package:ai_resume/src/core/di/injector.dart';
+import 'package:ai_resume/src/features/resume_analyzer/presentation/blocs/file_picker/resume_picker_cubit.dart';
+import 'package:ai_resume/src/features/resume_analyzer/presentation/blocs/file_picker/resume_picker_state.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 @RoutePage()
@@ -24,9 +27,12 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
   late Animation<double> _cardScaleAnimation;
   late Animation<double> _particleAnimation;
 
+  late ResumePickerCubit _resumePickerCubit;
+
   @override
   void initState() {
     super.initState();
+    _resumePickerCubit = getIt<ResumePickerCubit>();
     _cardAnimationController = AnimationController(
       duration: Duration(milliseconds: 800),
       vsync: this,
@@ -34,7 +40,8 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
     _particleAnimationController = AnimationController(
       duration: Duration(seconds: 10),
       vsync: this,
-    )..repeat();
+    )
+      ..repeat();
 
     _cardScaleAnimation = Tween<double>(
       begin: 0.0,
@@ -60,18 +67,9 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
   }
 
   Future<void> _pickFile() async {
-    
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf'],
-    );
 
-    if (result != null) {
-      setState(() {
-        selectedFile = File(result.files.single.path!);
-      });
-      _startUpload();
-    }
+
+    _startUpload();
   }
 
   void _startUpload() async {
@@ -97,7 +95,10 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
     Navigator.of(context).push(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            CVAnalysisScreen(fileName: selectedFile!.path.split('/').last),
+            CVAnalysisScreen(fileName: selectedFile!
+                .path
+                .split('/')
+                .last),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(opacity: animation, child: child);
         },
@@ -239,11 +240,12 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
               _buildPDFIcon(),
               SizedBox(height: 24),
               _buildSelectButton(),
-            ] else ...[
-              _buildSelectedFile(),
-              SizedBox(height: 24),
-              if (isUploading) _buildProgressIndicator(),
-            ],
+            ] else
+              ...[
+                _buildSelectedFile(),
+                SizedBox(height: 24),
+                if (isUploading) _buildProgressIndicator(),
+              ],
           ],
         ),
       ),
@@ -320,7 +322,9 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
           ),
           SizedBox(height: 16),
           Text(
-            selectedFile?.path.split('/').last ?? '',
+            selectedFile?.path
+                .split('/')
+                .last ?? '',
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontWeight: FontWeight.w500,

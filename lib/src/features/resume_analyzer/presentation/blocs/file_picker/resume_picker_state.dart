@@ -4,12 +4,12 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:simple_form_field/form/form_status.dart';
 
-part 'file_picker_state.freezed.dart';
+part 'resume_picker_state.freezed.dart';
 
 @freezed
-abstract class FilePickerState with _$FilePickerState {
-  const factory FilePickerState({
+abstract class ResumePickerState with _$ResumePickerState {
+  const factory ResumePickerState({
     @Default(FormStatus.initial()) FormStatus status,
     File? pickedFile,
-  }) = _FilePickerState;
+  }) = _ResumePickerState;
 }
