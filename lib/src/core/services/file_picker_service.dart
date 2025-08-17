@@ -1,10 +1,13 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:injectable/injectable.dart';
 
+@Singleton()
 class FilePickerService {
   /// File Picker from phone
-  static Future<(File?, String? message)> pickFileFromPhone(
+   Future<(File?, String? message)> pickFileFromPhone(
       {List<String>? allowedExtensions}) async {
+
     File? pickedFiles;
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: false,
