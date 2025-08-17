@@ -40,8 +40,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
     _particleAnimationController = AnimationController(
       duration: Duration(seconds: 10),
       vsync: this,
-    )
-      ..repeat();
+    )..repeat();
 
     _cardScaleAnimation = Tween<double>(
       begin: 0.0,
@@ -67,9 +66,8 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
   }
 
   Future<void> _pickFile() async {
-
-
-    _startUpload();
+    _resumePickerCubit.selectedPdfFile();
+    // _startUpload();
   }
 
   void _startUpload() async {
@@ -95,10 +93,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
     Navigator.of(context).push(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            CVAnalysisScreen(fileName: selectedFile!
-                .path
-                .split('/')
-                .last),
+            CVAnalysisScreen(fileName: selectedFile!.path.split('/').last),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(opacity: animation, child: child);
         },
@@ -137,18 +132,53 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Upload Your CV',
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
+    return BlocListener<ResumePickerCubit, ResumePickerState>(
+      bloc: _resumePickerCubit,
+      listener: (_, ResumePickerState state) {
+        state.status.maybeWhen(
+          error: (String? error) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  '$error',
+                  style: GoogleFonts.poppins(),
+                ),
+                backgroundColor: Colors.redAccent,
+              ),
+            );
+          },
+          orElse: () {},
+        );
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Upload Your CV',
+            style: GoogleFonts.poppins(
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
           ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.list, color: Colors.white),
+              onPressed: _navigateToListings,
+              tooltip: 'View All CVs',
+            ),
+          ],
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
+        body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
@@ -156,50 +186,34 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
               end: Alignment.bottomRight,
             ),
           ),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.list, color: Colors.white),
-            onPressed: _navigateToListings,
-            tooltip: 'View All CVs',
-          ),
-        ],
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: Stack(
-          children: [
-            // Animated particles background
-            AnimatedBuilder(
-              animation: _particleAnimation,
-              builder: (context, child) {
-                return CustomPaint(
-                  painter: ParticlePainter(_particleAnimation.value),
-                  size: Size.infinite,
-                );
-              },
-            ),
-            Center(
-              child: Padding(
-                padding: EdgeInsets.all(24.0),
-                child: AnimatedBuilder(
-                  animation: _cardScaleAnimation,
-                  builder: (context, child) {
-                    return Transform.scale(
-                      scale: _cardScaleAnimation.value,
-                      child: _buildUploadCard(),
-                    );
-                  },
+          child: Stack(
+            children: [
+              // Animated particles background
+              AnimatedBuilder(
+                animation: _particleAnimation,
+                builder: (context, child) {
+                  return CustomPaint(
+                    painter: ParticlePainter(_particleAnimation.value),
+                    size: Size.infinite,
+                  );
+                },
+              ),
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.all(24.0),
+                  child: AnimatedBuilder(
+                    animation: _cardScaleAnimation,
+                    builder: (context, child) {
+                      return Transform.scale(
+                        scale: _cardScaleAnimation.value,
+                        child: _buildUploadCard(),
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -240,12 +254,11 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
               _buildPDFIcon(),
               SizedBox(height: 24),
               _buildSelectButton(),
-            ] else
-              ...[
-                _buildSelectedFile(),
-                SizedBox(height: 24),
-                if (isUploading) _buildProgressIndicator(),
-              ],
+            ] else ...[
+              _buildSelectedFile(),
+              SizedBox(height: 24),
+              if (isUploading) _buildProgressIndicator(),
+            ],
           ],
         ),
       ),
@@ -322,9 +335,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
           ),
           SizedBox(height: 16),
           Text(
-            selectedFile?.path
-                .split('/')
-                .last ?? '',
+            selectedFile?.path.split('/').last ?? '',
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontWeight: FontWeight.w500,
@@ -351,11 +362,24 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
   Widget _buildProgressIndicator() {
     return Column(
       children: [
-        LinearProgressIndicator(
-          value: uploadProgress,
-          backgroundColor: Colors.white.withOpacity(0.3),
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-        ),
+        BlocSelector<ResumePickerCubit, ResumePickerState, int>(
+            bloc: _resumePickerCubit,
+            selector: (state) => state.uploadProgress,
+            builder: (_, progress) {
+              uploadProgress = progress / 100;
+              return GestureDetector(
+                onTap: () {
+                  if (uploadProgress < 1.0) {
+                    _resumePickerCubit.resetFile();
+                  }
+                },
+                child: LinearProgressIndicator(
+                  value: uploadProgress,
+                  backgroundColor: Colors.white.withOpacity(0.3),
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              );
+            }),
         SizedBox(height: 16),
         Text(
           '${(uploadProgress * 100).toInt()}%',

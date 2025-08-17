@@ -38,7 +38,8 @@ class BaseRepository {
         network: () => const AppError.noInternet(),
       );
       return left(appError);
-    } on Exception {
+    } catch(_) {
+      print("An unexpected error occurred: $_");
       return left(AppError.serverError(message: 'Server Error'));
     }
   }

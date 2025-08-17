@@ -332,11 +332,12 @@ packages:
   dio_filex_uploader:
     dependency: "direct main"
     description:
-      name: dio_filex_uploader
-      sha256: "07232abb0eca67a8e567d419b931a9e13a033aea4f09a86727068fe872062194"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.5"
+      path: "."
+      ref: HEAD
+      resolved-ref: "90cb75eb78be888d798f5d7c5d4ec79c86f83e29"
+      url: "https://github.com/basnetjiten/dio-filex-uploader"
+    source: git
+    version: "0.1.4"
   dio_web_adapter:
     dependency: transitive
     description:

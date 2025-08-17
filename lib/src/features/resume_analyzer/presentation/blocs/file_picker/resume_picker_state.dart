@@ -10,6 +10,7 @@ part 'resume_picker_state.freezed.dart';
 abstract class ResumePickerState with _$ResumePickerState {
   const factory ResumePickerState({
     @Default(FormStatus.initial()) FormStatus status,
+    @Default(0) int uploadProgress,
     File? pickedFile,
   }) = _ResumePickerState;
 }

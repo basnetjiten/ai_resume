@@ -24,7 +24,7 @@ abstract class RegisterModules {
           "Accept": 'application/json',
           "Content-Type": "application/json",
         },
-        baseUrl:'https://api.test.com',
+        baseUrl:'http://192.168.1.100:3000/api/v1',
         receiveTimeout: const Duration(seconds: 120),
         connectTimeout: const Duration(seconds: 120),
         responseType: ResponseType.json,

@@ -27,14 +27,18 @@ class ResumeFileRepoImpl extends BaseRepository
   }
 
   @override
-  EitherResponse<bool> uploadFile({required File pickedFile}) async {
-    final filePath = FileXUtils.fileName(pickedFile);
+  EitherResponse<bool> uploadFile({required File pickedFile,
+    required void Function(int sentBytes, int totalBytes) downloadProgress})  async {
+    final filePath = pickedFile.path;
     return processApiCall(
         call: DioFileXUploader.uploadMultiPartFileFromURL(
-          signedUrl: 'https',
+          signedUrl: "http://localhost:3000/api/v1/resume/upload",
           filePath: filePath,
-          metaData: {'userId': 'FUELED-777'},
+          metaData: {"userId": "FUELED-777"},
+          errorMessage: 'FILE UPLOAD FAILED',
+          onProgress: downloadProgress,
         ),
-        onSuccess: (status) => status);
+        onSuccess: (status) => status,
+    );
   }
 }

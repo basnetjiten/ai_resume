@@ -18,20 +18,28 @@ class ResumePickerCubit extends BaseBloc<void, ResumePickerState> {
     pickStatus.fold((String errorMessage) {
       emit(state.copyWith(status: FormStatus.error(error: errorMessage)));
     }, (File pdfFile) {
+      emit(state.copyWith(
+        status: const FormStatus.submitting(),
+        pickedFile: pdfFile,
+      ));
       _uploadFile(pickedFile: pdfFile);
     });
   }
 
-  void _uploadFile({required File pickedFile}) {
-    final File? pickedFile = state.pickedFile;
-
-    if (state.pickedFile == null) {
+  void _uploadFile({required File? pickedFile}) {
+    if (pickedFile == null) {
       emit(state.copyWith(status: FormStatus.error(error: 'No file selected')));
       return;
     }
 
     handleAPICall(
-      call: _resumeFileRepository.uploadFile(pickedFile: pickedFile!),
+      call: _resumeFileRepository.uploadFile(
+        pickedFile: pickedFile,
+        downloadProgress: (int sentBytes, int totalBytes) {
+          final int progress = sentBytes * 100 ~/ totalBytes;
+          emit(state.copyWith(uploadProgress: progress));
+        },
+      ),
       onSuccess: (status) => state.copyWith(status: FormStatus.success()),
       onFailure: (error) =>
           state.copyWith(status: FormStatus.error(error: error)),
