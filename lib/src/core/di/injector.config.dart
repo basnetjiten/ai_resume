@@ -21,6 +21,14 @@ import 'package:ai_resume/src/features/resume_analyzer/domain/repositories/resum
     as _i918;
 import 'package:ai_resume/src/features/resume_analyzer/presentation/blocs/file_picker/resume_picker_cubit.dart'
     as _i71;
+import 'package:ai_resume/src/features/resume_summary/data/datasources/resume_summary_remote_data_source.dart'
+    as _i879;
+import 'package:ai_resume/src/features/resume_summary/data/repositories/resume_summary_repository_impl.dart'
+    as _i940;
+import 'package:ai_resume/src/features/resume_summary/domain/repositories/resume_summary_repository.dart'
+    as _i895;
+import 'package:ai_resume/src/features/resume_summary/presentation/blocs/resume_summary_cubit/resume_summary_cubit.dart'
+    as _i580;
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:hive_local_storage/hive_local_storage.dart' as _i920;
@@ -48,10 +56,17 @@ Future<_i174.GetIt> $initGetIt(
   gh.lazySingleton<_i444.AuthInterceptor>(() => _i444.AuthInterceptor());
   gh.lazySingleton<_i361.Dio>(
       () => registerModules.dio(gh<_i444.AuthInterceptor>()));
+  gh.singleton<_i879.ResumeSummaryRemoteDataSource>(
+      () => _i879.ResumeSummaryRemoteDataSourceImpl(gh<_i361.Dio>()));
+  gh.singleton<_i895.ResumeSummaryRepository>(() =>
+      _i940.ResumeSummaryRepositoryImpl(
+          remoteDataSource: gh<_i879.ResumeSummaryRemoteDataSource>()));
   gh.singleton<_i918.ResumeFileRepository>(
       () => _i618.ResumeFileRepoImpl(gh<_i403.FilePickerService>()));
   gh.factory<_i71.ResumePickerCubit>(
       () => _i71.ResumePickerCubit(gh<_i918.ResumeFileRepository>()));
+  gh.factory<_i580.ResumeSummaryCubit>(
+      () => _i580.ResumeSummaryCubit(gh<_i895.ResumeSummaryRepository>()));
   return getIt;
 }
 

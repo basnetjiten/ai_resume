@@ -136,6 +136,19 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
       bloc: _resumePickerCubit,
       listener: (_, ResumePickerState state) {
         state.status.maybeWhen(
+          success: (String? data) {
+            Navigator.of(context).push(
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    CVAnalysisScreen(
+                        fileName: state.pickedFile!.path.split('/').last),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
+              ),
+            );
+          },
           error: (String? error) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -250,15 +263,27 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (selectedFile == null) ...[
-              _buildPDFIcon(),
-              SizedBox(height: 24),
-              _buildSelectButton(),
-            ] else ...[
-              _buildSelectedFile(),
-              SizedBox(height: 24),
-              if (isUploading) _buildProgressIndicator(),
-            ],
+            BlocBuilder<ResumePickerCubit, ResumePickerState>(
+                bloc: _resumePickerCubit,
+                builder: (context, state) {
+                  if (state.pickedFile == null) {
+                    return Column(
+                      children: [
+                        _buildPDFIcon(),
+                        SizedBox(height: 24),
+                        _buildSelectButton(),
+                      ],
+                    );
+                  } else {
+                    return Column(
+                      children: [
+                        _buildSelectedFile(state.pickedFile),
+                        SizedBox(height: 24),
+                        if (state.uploadProgress > 0) _buildProgressIndicator()
+                      ],
+                    );
+                  }
+                }),
           ],
         ),
       ),
@@ -314,9 +339,9 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
     );
   }
 
-  Widget _buildSelectedFile() {
+  Widget _buildSelectedFile(File? pickedFile) {
     return AnimatedOpacity(
-      opacity: (selectedFile != null ? 1.0 : 0.0).clamp(0.0, 1.0),
+      opacity: (pickedFile != null ? 1.0 : 0.0).clamp(0.0, 1.0),
       duration: Duration(milliseconds: 300),
       child: Column(
         children: [
@@ -335,7 +360,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
           ),
           SizedBox(height: 16),
           Text(
-            selectedFile?.path.split('/').last ?? '',
+            pickedFile?.path.split('/').last ?? '',
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontWeight: FontWeight.w500,
