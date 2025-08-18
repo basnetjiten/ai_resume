@@ -21,10 +21,10 @@ abstract class RegisterModules {
   Dio dio(AuthInterceptor authInterceptor) => Dio(
       BaseOptions(
         headers: {
-          "Accept": 'application/json',
+          "Accept": "application/json'",
           "Content-Type": "application/json",
         },
-        baseUrl:'http://192.168.1.100:3000/api/v1',
+        baseUrl:"http://localhost:3000/api/v1/",
         receiveTimeout: const Duration(seconds: 120),
         connectTimeout: const Duration(seconds: 120),
         responseType: ResponseType.json,

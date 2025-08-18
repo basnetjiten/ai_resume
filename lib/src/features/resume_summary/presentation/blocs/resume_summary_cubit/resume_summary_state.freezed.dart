@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ResumeSummaryState {
   List<ResumeSummaryDto> get summaries;
-  ResumeSummaryDto? get summary;
+  ResumeSummaryDataDto? get resumeSummaryData;
   FormStatus get status;
 
   /// Create a copy of ResumeSummaryState
@@ -32,17 +32,21 @@ mixin _$ResumeSummaryState {
         (other.runtimeType == runtimeType &&
             other is ResumeSummaryState &&
             const DeepCollectionEquality().equals(other.summaries, summaries) &&
-            (identical(other.summary, summary) || other.summary == summary) &&
+            (identical(other.resumeSummaryData, resumeSummaryData) ||
+                other.resumeSummaryData == resumeSummaryData) &&
             (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(summaries), summary, status);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(summaries),
+      resumeSummaryData,
+      status);
 
   @override
   String toString() {
-    return 'ResumeSummaryState(summaries: $summaries, summary: $summary, status: $status)';
+    return 'ResumeSummaryState(summaries: $summaries, resumeSummaryData: $resumeSummaryData, status: $status)';
   }
 }
 
@@ -54,10 +58,10 @@ abstract mixin class $ResumeSummaryStateCopyWith<$Res> {
   @useResult
   $Res call(
       {List<ResumeSummaryDto> summaries,
-      ResumeSummaryDto? summary,
+      ResumeSummaryDataDto? resumeSummaryData,
       FormStatus status});
 
-  $ResumeSummaryDtoCopyWith<$Res>? get summary;
+  $ResumeSummaryDataDtoCopyWith<$Res>? get resumeSummaryData;
   $FormStatusCopyWith<$Res> get status;
 }
 
@@ -75,7 +79,7 @@ class _$ResumeSummaryStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? summaries = null,
-    Object? summary = freezed,
+    Object? resumeSummaryData = freezed,
     Object? status = null,
   }) {
     return _then(_self.copyWith(
@@ -83,10 +87,10 @@ class _$ResumeSummaryStateCopyWithImpl<$Res>
           ? _self.summaries
           : summaries // ignore: cast_nullable_to_non_nullable
               as List<ResumeSummaryDto>,
-      summary: freezed == summary
-          ? _self.summary
-          : summary // ignore: cast_nullable_to_non_nullable
-              as ResumeSummaryDto?,
+      resumeSummaryData: freezed == resumeSummaryData
+          ? _self.resumeSummaryData
+          : resumeSummaryData // ignore: cast_nullable_to_non_nullable
+              as ResumeSummaryDataDto?,
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -98,13 +102,14 @@ class _$ResumeSummaryStateCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ResumeSummaryDtoCopyWith<$Res>? get summary {
-    if (_self.summary == null) {
+  $ResumeSummaryDataDtoCopyWith<$Res>? get resumeSummaryData {
+    if (_self.resumeSummaryData == null) {
       return null;
     }
 
-    return $ResumeSummaryDtoCopyWith<$Res>(_self.summary!, (value) {
-      return _then(_self.copyWith(summary: value));
+    return $ResumeSummaryDataDtoCopyWith<$Res>(_self.resumeSummaryData!,
+        (value) {
+      return _then(_self.copyWith(resumeSummaryData: value));
     });
   }
 
@@ -213,14 +218,14 @@ extension ResumeSummaryStatePatterns on ResumeSummaryState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(List<ResumeSummaryDto> summaries,
-            ResumeSummaryDto? summary, FormStatus status)?
+            ResumeSummaryDataDto? resumeSummaryData, FormStatus status)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _ResumeSummaryState() when $default != null:
-        return $default(_that.summaries, _that.summary, _that.status);
+        return $default(_that.summaries, _that.resumeSummaryData, _that.status);
       case _:
         return orElse();
     }
@@ -242,13 +247,13 @@ extension ResumeSummaryStatePatterns on ResumeSummaryState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(List<ResumeSummaryDto> summaries,
-            ResumeSummaryDto? summary, FormStatus status)
+            ResumeSummaryDataDto? resumeSummaryData, FormStatus status)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ResumeSummaryState():
-        return $default(_that.summaries, _that.summary, _that.status);
+        return $default(_that.summaries, _that.resumeSummaryData, _that.status);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -269,13 +274,13 @@ extension ResumeSummaryStatePatterns on ResumeSummaryState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(List<ResumeSummaryDto> summaries,
-            ResumeSummaryDto? summary, FormStatus status)?
+            ResumeSummaryDataDto? resumeSummaryData, FormStatus status)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ResumeSummaryState() when $default != null:
-        return $default(_that.summaries, _that.summary, _that.status);
+        return $default(_that.summaries, _that.resumeSummaryData, _that.status);
       case _:
         return null;
     }
@@ -287,7 +292,7 @@ extension ResumeSummaryStatePatterns on ResumeSummaryState {
 class _ResumeSummaryState implements ResumeSummaryState {
   const _ResumeSummaryState(
       {final List<ResumeSummaryDto> summaries = const [],
-      this.summary = null,
+      this.resumeSummaryData = null,
       this.status = const FormStatus.initial()})
       : _summaries = summaries;
 
@@ -302,7 +307,7 @@ class _ResumeSummaryState implements ResumeSummaryState {
 
   @override
   @JsonKey()
-  final ResumeSummaryDto? summary;
+  final ResumeSummaryDataDto? resumeSummaryData;
   @override
   @JsonKey()
   final FormStatus status;
@@ -322,17 +327,21 @@ class _ResumeSummaryState implements ResumeSummaryState {
             other is _ResumeSummaryState &&
             const DeepCollectionEquality()
                 .equals(other._summaries, _summaries) &&
-            (identical(other.summary, summary) || other.summary == summary) &&
+            (identical(other.resumeSummaryData, resumeSummaryData) ||
+                other.resumeSummaryData == resumeSummaryData) &&
             (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_summaries), summary, status);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_summaries),
+      resumeSummaryData,
+      status);
 
   @override
   String toString() {
-    return 'ResumeSummaryState(summaries: $summaries, summary: $summary, status: $status)';
+    return 'ResumeSummaryState(summaries: $summaries, resumeSummaryData: $resumeSummaryData, status: $status)';
   }
 }
 
@@ -346,11 +355,11 @@ abstract mixin class _$ResumeSummaryStateCopyWith<$Res>
   @useResult
   $Res call(
       {List<ResumeSummaryDto> summaries,
-      ResumeSummaryDto? summary,
+      ResumeSummaryDataDto? resumeSummaryData,
       FormStatus status});
 
   @override
-  $ResumeSummaryDtoCopyWith<$Res>? get summary;
+  $ResumeSummaryDataDtoCopyWith<$Res>? get resumeSummaryData;
   @override
   $FormStatusCopyWith<$Res> get status;
 }
@@ -369,7 +378,7 @@ class __$ResumeSummaryStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   $Res call({
     Object? summaries = null,
-    Object? summary = freezed,
+    Object? resumeSummaryData = freezed,
     Object? status = null,
   }) {
     return _then(_ResumeSummaryState(
@@ -377,10 +386,10 @@ class __$ResumeSummaryStateCopyWithImpl<$Res>
           ? _self._summaries
           : summaries // ignore: cast_nullable_to_non_nullable
               as List<ResumeSummaryDto>,
-      summary: freezed == summary
-          ? _self.summary
-          : summary // ignore: cast_nullable_to_non_nullable
-              as ResumeSummaryDto?,
+      resumeSummaryData: freezed == resumeSummaryData
+          ? _self.resumeSummaryData
+          : resumeSummaryData // ignore: cast_nullable_to_non_nullable
+              as ResumeSummaryDataDto?,
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -392,13 +401,14 @@ class __$ResumeSummaryStateCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ResumeSummaryDtoCopyWith<$Res>? get summary {
-    if (_self.summary == null) {
+  $ResumeSummaryDataDtoCopyWith<$Res>? get resumeSummaryData {
+    if (_self.resumeSummaryData == null) {
       return null;
     }
 
-    return $ResumeSummaryDtoCopyWith<$Res>(_self.summary!, (value) {
-      return _then(_self.copyWith(summary: value));
+    return $ResumeSummaryDataDtoCopyWith<$Res>(_self.resumeSummaryData!,
+        (value) {
+      return _then(_self.copyWith(resumeSummaryData: value));
     });
   }
 

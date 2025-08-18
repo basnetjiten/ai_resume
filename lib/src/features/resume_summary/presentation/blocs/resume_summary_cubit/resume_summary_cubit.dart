@@ -10,7 +10,9 @@ class ResumeSummaryCubit extends BaseBloc<void, ResumeSummaryState> {
 
   ResumeSummaryCubit(this._repository) : super(const ResumeSummaryState());
 
-  Future<void> onLoadResumeSummaries() async {
+  Future<void> fetchResumeSummaries() async {
+    emit(state.copyWith(status: FormStatus.submitting()));
+
     await handleAPICall(
       call: _repository.getResumeSummaries(),
       onSuccess: (summaries) => state.copyWith(
@@ -23,11 +25,11 @@ class ResumeSummaryCubit extends BaseBloc<void, ResumeSummaryState> {
     );
   }
 
-  Future<void> _onLoadResumeSummaryDetail(String id) async {
+  Future<void> fetchResumeSummaryDetail({String? id}) async {
     await handleAPICall(
-      call: _repository.getResumeSummary(id),
+      call: _repository.getResumeSummary("id"),
       onSuccess: (summary) =>
-          state.copyWith(status: const FormStatus.success(), summary: summary),
+          state.copyWith(status: const FormStatus.success(), summary: summary.data),
       onFailure: (error) => state.copyWith(
         status: FormStatus.error(error: error.toString()),
       ),

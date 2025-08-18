@@ -14,7 +14,7 @@ class CVSummaryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<ResumeSummaryCubit>(),
+      create: (_) => getIt<ResumeSummaryCubit>(),
       child: const _CVSummaryPageContent(),
     );
   }
@@ -39,7 +39,7 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
       vsync: this,
     );
     _staggerController.forward();
-    context.read<ResumeSummaryCubit>().onLoadResumeSummaries();
+    context.read<ResumeSummaryCubit>().fetchResumeSummaryDetail();
   }
 
   @override
@@ -100,7 +100,7 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
         ),
       ),
       child: RefreshIndicator(
-        onRefresh: () => context.read<ResumeSummaryCubit>().onLoadResumeSummaries(),
+        onRefresh: () => context.read<ResumeSummaryCubit>().fetchResumeSummaryDetail(),
         child: ListView.builder(
           padding: const EdgeInsets.all(16),
           itemCount: summaries.length,
@@ -153,7 +153,7 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              summary.title,
+              summary.data.candidateName,
               style: GoogleFonts.poppins(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
@@ -161,7 +161,7 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
               ),
             ),
             const SizedBox(height: 16),
-            ...summary.summary
+            ...summary.data.summary
                 .split('\n')
                 .where((line) => line.trim().isNotEmpty)
                 .map((line) => _buildSummaryLine(line))
@@ -222,7 +222,7 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
           ),
           const SizedBox(height: 16),
           ElevatedButton(
-            onPressed: () => context.read<ResumeSummaryCubit>().onLoadResumeSummaries(),
+            onPressed: () => context.read<ResumeSummaryCubit>().fetchResumeSummaryDetail(),
             child: const Text('Retry'),
           ),
         ],
