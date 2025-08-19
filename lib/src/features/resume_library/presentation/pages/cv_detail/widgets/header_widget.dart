@@ -1,0 +1,82 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../../../../domain/models/cv_summary_data.dart';
+
+class HeaderWidget extends StatelessWidget {
+  final CVSummaryData cvData;
+
+  const HeaderWidget({super.key, required this.cvData});
+
+  Color _getExperienceColor(String experience) {
+    switch (experience) {
+      case 'Senior':
+        return const Color(0xFF4CAF50);
+      case 'Mid-level':
+        return const Color(0xFFFF9800);
+      case 'Junior':
+        return const Color(0xFF2196F3);
+      default:
+        return const Color(0xFF9C27B0);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.15),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.white.withOpacity(0.3)),
+      ),
+      child: Column(
+        children: [
+          Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: const Icon(Icons.person, color: Colors.white, size: 40),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            cvData.name,
+            style: GoogleFonts.poppins(
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          Text(
+            cvData.position,
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              color: Colors.white.withOpacity(0.8),
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: _getExperienceColor(cvData.experience),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text(
+              '${cvData.experience} Level',
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

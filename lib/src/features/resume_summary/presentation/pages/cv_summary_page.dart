@@ -106,23 +106,6 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
     );
   }
 
-  Widget _buildLoading() {
-    return const Center(
-      child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-      ),
-    );
-  }
-
-  Widget _buildEmptyState() {
-    return const Center(
-      child: Text(
-        'No data available',
-        style: TextStyle(color: Colors.white),
-      ),
-    );
-  }
-
   Widget _buildContent(ResumeSummaryDataDto resumeSummaryData) {
     final List<ResumeResultDto> cvSummaries = context
         .read<ResumeSummaryCubit>()
@@ -160,6 +143,23 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
             },
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildLoading() {
+    return const Center(
+      child: CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+      ),
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return const Center(
+      child: Text(
+        'No data available',
+        style: TextStyle(color: Colors.white),
       ),
     );
   }
