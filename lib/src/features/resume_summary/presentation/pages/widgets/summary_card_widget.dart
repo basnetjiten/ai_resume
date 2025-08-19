@@ -1,12 +1,12 @@
+import 'package:ai_resume/src/features/resume_summary/data/models/resume_result_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../../../app/presentation/pages/app.dart';
 
 class SummaryCardWidget extends StatelessWidget {
   const SummaryCardWidget(
-      {super.key, required this.category, required this.index});
+      {super.key, required this.resumeResultDto, required this.index});
 
-  final CVCategory category;
+  final ResumeResultDto resumeResultDto;
   final int index;
 
   @override
@@ -33,7 +33,7 @@ class SummaryCardWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              category.title,
+              resumeResultDto.title,
               style: GoogleFonts.poppins(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
@@ -41,7 +41,7 @@ class SummaryCardWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            ...category.items.asMap().entries.map((entry) {
+            ...resumeResultDto.items.asMap().entries.map((entry) {
               return TweenAnimationBuilder<double>(
                 duration: Duration(milliseconds: 800 + (entry.key * 100)),
                 tween: Tween(begin: 0.0, end: 1.0),
@@ -89,9 +89,4 @@ class SummaryCardWidget extends StatelessWidget {
   }
 }
 
-class CVCategory {
-  final String title;
-  final List<String> items;
 
-  CVCategory({required this.title, required this.items});
-}

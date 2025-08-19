@@ -1,3 +1,4 @@
+import 'package:ai_resume/src/features/resume_summary/data/models/resume_result_dto.dart';
 import 'package:ai_resume/src/features/resume_summary/data/models/resume_summary_dto.dart';
 import 'package:ai_resume/src/features/resume_summary/domain/repositories/resume_summary_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -38,29 +39,29 @@ class ResumeSummaryCubit extends BaseBloc<void, ResumeSummaryState> {
     );
   }
 
-  List<CVCategory> getAnalyzedSummaries() {
-    ResumeSummaryDataDto? analyzedData = state.resumeSummaryData;
-    final List<CVCategory> summaries = [
-      CVCategory(
+  List<ResumeResultDto> prepareAnalyzedSummaries(
+      ResumeSummaryDataDto analyzedData) {
+    final List<ResumeResultDto> summaries = [
+      ResumeResultDto(
         title: 'Professional Summary',
         items: [
-          analyzedData?.summary ?? '',
+          analyzedData.summary,
         ],
       ),
-      CVCategory(
+      ResumeResultDto(
         title: 'Technical Skills',
-        items: analyzedData?.skills.sublist(0, 5) ?? [],
+        items: analyzedData.skills.sublist(0, 5),
       ),
-      CVCategory(
+      ResumeResultDto(
         title: 'Strengths',
-        items: analyzedData?.analysis.candidateStrengths ?? [],
+        items: analyzedData.analysis.candidateStrengths,
       ),
-      CVCategory(
+      ResumeResultDto(
         title: 'Weaknesses',
-        items: analyzedData?.analysis.candidateWeaknesses ?? [],
+        items: analyzedData.analysis.candidateWeaknesses,
       ),
-      CVCategory(title: 'Justification', items: [
-        analyzedData?.analysis.justification ?? '',
+      ResumeResultDto(title: 'Justification', items: [
+        analyzedData.analysis.justification,
       ]),
     ];
     return summaries;

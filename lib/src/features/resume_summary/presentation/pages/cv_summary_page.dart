@@ -1,7 +1,9 @@
 import 'package:ai_resume/src/core/di/injector.dart';
+import 'package:ai_resume/src/features/resume_summary/data/models/resume_result_dto.dart';
 import 'package:ai_resume/src/features/resume_summary/data/models/resume_summary_dto.dart';
 import 'package:ai_resume/src/features/resume_summary/presentation/blocs/resume_summary_cubit/resume_summary_cubit.dart';
 import 'package:ai_resume/src/features/resume_summary/presentation/blocs/resume_summary_cubit/resume_summary_state.dart';
+import 'package:ai_resume/src/features/resume_summary/presentation/pages/widgets/profile_header_widget.dart';
 import 'package:ai_resume/src/features/resume_summary/presentation/pages/widgets/summary_card_widget.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -121,31 +123,10 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
     );
   }
 
-
-  Widget _buildContent(ResumeSummaryDataDto data) {
-    final List<CVCategory> categories = [
-      CVCategory(
-        title: 'Professional Summary',
-        items: [
-          data.summary,
-        ],
-      ),
-      CVCategory(
-        title: 'Technical Skills',
-        items: data.skills.sublist(0, 5),
-      ),
-      CVCategory(
-        title: 'Strengths',
-        items: data.analysis.candidateStrengths,
-      ),
-      CVCategory(
-        title: 'Weaknesses',
-        items: data.analysis.candidateWeaknesses,
-      ),
-      CVCategory(title: 'Justification', items: [
-        data.analysis.justification,
-      ]),
-    ];
+  Widget _buildContent(ResumeSummaryDataDto resumeSummaryData) {
+    final List<ResumeResultDto> cvSummaries = context
+        .read<ResumeSummaryCubit>()
+        .prepareAnalyzedSummaries(resumeSummaryData);
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -153,13 +134,12 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
       },
       child: ListView.builder(
         padding: const EdgeInsets.all(16),
-        itemCount: categories.length + 1,
+        itemCount: cvSummaries.length + 1,
         itemBuilder: (context, index) {
-
           if (index == 0) {
-            return _buildProfileHeader(data);
+            return ProfileHeaderWidget(data: resumeSummaryData);
           }
-          final categoryIndex = index - 1;
+          final cvIndex = index - 1;
           return AnimatedBuilder(
             animation: _staggerController,
             builder: (context, child) {
@@ -173,7 +153,8 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
                 offset: Offset(0, 50 * (1 - animationValue)),
                 child: Opacity(
                   opacity: animationValue.clamp(0.0, 1.0),
-                  child: SummaryCardWidget(category: categories[categoryIndex], index:categoryIndex),
+                  child: SummaryCardWidget(
+                      resumeResultDto: cvSummaries[cvIndex], index: cvIndex),
                 ),
               );
             },
@@ -182,61 +163,4 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
       ),
     );
   }
-
-  Widget _buildProfileHeader(ResumeSummaryDataDto data) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 24),
-      padding: EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.15),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.white.withOpacity(0.3)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 20,
-            offset: Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // Candidate Name
-          Text(
-            data.candidateName,
-            style: GoogleFonts.poppins(
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          SizedBox(height: 8),
-          // Position
-          Text(
-            data.role,
-            style: GoogleFonts.poppins(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: Colors.white.withOpacity(0.9),
-            ),
-          ),
-          SizedBox(height: 6),
-          // Experience
-          Text(
-            "${data.experience} Years of Experience",
-            style: GoogleFonts.poppins(
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
-              color: Colors.white.withOpacity(0.8),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-
 }
-
-
