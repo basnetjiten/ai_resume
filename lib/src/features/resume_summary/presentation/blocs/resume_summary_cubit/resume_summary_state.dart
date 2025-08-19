@@ -11,4 +11,5 @@ abstract class ResumeSummaryState with _$ResumeSummaryState {
     @Default(FormStatus.initial()) FormStatus status,
   }) = _ResumeSummaryState;
 
+
 }

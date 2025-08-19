@@ -10,39 +10,57 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:ai_resume/src/features/resume_analyzer/presentation/pages/resume_upload_page.dart'
-    as _i2;
-import 'package:ai_resume/src/features/resume_summary/presentation/pages/cv_summary_page.dart'
+    as _i3;
+import 'package:ai_resume/src/features/resume_summary/presentation/pages/cv_summary_dummy.dart'
     as _i1;
-import 'package:auto_route/auto_route.dart' as _i3;
+import 'package:ai_resume/src/features/resume_summary/presentation/pages/cv_summary_page.dart'
+    as _i2;
+import 'package:auto_route/auto_route.dart' as _i4;
 
 /// generated route for
-/// [_i1.CVSummaryPage]
-class CVSummaryRoute extends _i3.PageRouteInfo<void> {
-  const CVSummaryRoute({List<_i3.PageRouteInfo>? children})
-      : super(CVSummaryRoute.name, initialChildren: children);
+/// [_i1.CVSumarryPage]
+class CVSumarryRoute extends _i4.PageRouteInfo<void> {
+  const CVSumarryRoute({List<_i4.PageRouteInfo>? children})
+      : super(CVSumarryRoute.name, initialChildren: children);
 
-  static const String name = 'CVSummaryRoute';
+  static const String name = 'CVSumarryRoute';
 
-  static _i3.PageInfo page = _i3.PageInfo(
+  static _i4.PageInfo page = _i4.PageInfo(
     name,
     builder: (data) {
-      return const _i1.CVSummaryPage();
+      return _i1.CVSumarryPage();
     },
   );
 }
 
 /// generated route for
-/// [_i2.ResumeUploadPage]
-class ResumeUploadRoute extends _i3.PageRouteInfo<void> {
-  const ResumeUploadRoute({List<_i3.PageRouteInfo>? children})
+/// [_i2.CVSummaryPage]
+class CVSummaryRoute extends _i4.PageRouteInfo<void> {
+  const CVSummaryRoute({List<_i4.PageRouteInfo>? children})
+      : super(CVSummaryRoute.name, initialChildren: children);
+
+  static const String name = 'CVSummaryRoute';
+
+  static _i4.PageInfo page = _i4.PageInfo(
+    name,
+    builder: (data) {
+      return const _i2.CVSummaryPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i3.ResumeUploadPage]
+class ResumeUploadRoute extends _i4.PageRouteInfo<void> {
+  const ResumeUploadRoute({List<_i4.PageRouteInfo>? children})
       : super(ResumeUploadRoute.name, initialChildren: children);
 
   static const String name = 'ResumeUploadRoute';
 
-  static _i3.PageInfo page = _i3.PageInfo(
+  static _i4.PageInfo page = _i4.PageInfo(
     name,
     builder: (data) {
-      return const _i2.ResumeUploadPage();
+      return const _i3.ResumeUploadPage();
     },
   );
 }

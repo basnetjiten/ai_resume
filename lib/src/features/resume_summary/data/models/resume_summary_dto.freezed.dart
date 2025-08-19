@@ -360,6 +360,7 @@ mixin _$ResumeSummaryDataDto {
   String get cvId;
   String get candidateName;
   String get role;
+  String? get experience;
   String get seniority;
   List<String> get skills;
   String get summary;
@@ -387,6 +388,8 @@ mixin _$ResumeSummaryDataDto {
             (identical(other.candidateName, candidateName) ||
                 other.candidateName == candidateName) &&
             (identical(other.role, role) || other.role == role) &&
+            (identical(other.experience, experience) ||
+                other.experience == experience) &&
             (identical(other.seniority, seniority) ||
                 other.seniority == seniority) &&
             const DeepCollectionEquality().equals(other.skills, skills) &&
@@ -405,6 +408,7 @@ mixin _$ResumeSummaryDataDto {
       cvId,
       candidateName,
       role,
+      experience,
       seniority,
       const DeepCollectionEquality().hash(skills),
       summary,
@@ -413,7 +417,7 @@ mixin _$ResumeSummaryDataDto {
 
   @override
   String toString() {
-    return 'ResumeSummaryDataDto(id: $id, cvId: $cvId, candidateName: $candidateName, role: $role, seniority: $seniority, skills: $skills, summary: $summary, uploadedDate: $uploadedDate, analysis: $analysis)';
+    return 'ResumeSummaryDataDto(id: $id, cvId: $cvId, candidateName: $candidateName, role: $role, experience: $experience, seniority: $seniority, skills: $skills, summary: $summary, uploadedDate: $uploadedDate, analysis: $analysis)';
   }
 }
 
@@ -428,6 +432,7 @@ abstract mixin class $ResumeSummaryDataDtoCopyWith<$Res> {
       String cvId,
       String candidateName,
       String role,
+      String? experience,
       String seniority,
       List<String> skills,
       String summary,
@@ -454,6 +459,7 @@ class _$ResumeSummaryDataDtoCopyWithImpl<$Res>
     Object? cvId = null,
     Object? candidateName = null,
     Object? role = null,
+    Object? experience = freezed,
     Object? seniority = null,
     Object? skills = null,
     Object? summary = null,
@@ -477,6 +483,10 @@ class _$ResumeSummaryDataDtoCopyWithImpl<$Res>
           ? _self.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
+      experience: freezed == experience
+          ? _self.experience
+          : experience // ignore: cast_nullable_to_non_nullable
+              as String?,
       seniority: null == seniority
           ? _self.seniority
           : seniority // ignore: cast_nullable_to_non_nullable
@@ -609,6 +619,7 @@ extension ResumeSummaryDataDtoPatterns on ResumeSummaryDataDto {
             String cvId,
             String candidateName,
             String role,
+            String? experience,
             String seniority,
             List<String> skills,
             String summary,
@@ -625,6 +636,7 @@ extension ResumeSummaryDataDtoPatterns on ResumeSummaryDataDto {
             _that.cvId,
             _that.candidateName,
             _that.role,
+            _that.experience,
             _that.seniority,
             _that.skills,
             _that.summary,
@@ -655,6 +667,7 @@ extension ResumeSummaryDataDtoPatterns on ResumeSummaryDataDto {
             String cvId,
             String candidateName,
             String role,
+            String? experience,
             String seniority,
             List<String> skills,
             String summary,
@@ -670,6 +683,7 @@ extension ResumeSummaryDataDtoPatterns on ResumeSummaryDataDto {
             _that.cvId,
             _that.candidateName,
             _that.role,
+            _that.experience,
             _that.seniority,
             _that.skills,
             _that.summary,
@@ -699,6 +713,7 @@ extension ResumeSummaryDataDtoPatterns on ResumeSummaryDataDto {
             String cvId,
             String candidateName,
             String role,
+            String? experience,
             String seniority,
             List<String> skills,
             String summary,
@@ -714,6 +729,7 @@ extension ResumeSummaryDataDtoPatterns on ResumeSummaryDataDto {
             _that.cvId,
             _that.candidateName,
             _that.role,
+            _that.experience,
             _that.seniority,
             _that.skills,
             _that.summary,
@@ -733,6 +749,7 @@ class _ResumeSummaryDataDto implements ResumeSummaryDataDto {
       required this.cvId,
       required this.candidateName,
       required this.role,
+      this.experience,
       required this.seniority,
       required final List<String> skills,
       required this.summary,
@@ -751,6 +768,8 @@ class _ResumeSummaryDataDto implements ResumeSummaryDataDto {
   final String candidateName;
   @override
   final String role;
+  @override
+  final String? experience;
   @override
   final String seniority;
   final List<String> _skills;
@@ -794,6 +813,8 @@ class _ResumeSummaryDataDto implements ResumeSummaryDataDto {
             (identical(other.candidateName, candidateName) ||
                 other.candidateName == candidateName) &&
             (identical(other.role, role) || other.role == role) &&
+            (identical(other.experience, experience) ||
+                other.experience == experience) &&
             (identical(other.seniority, seniority) ||
                 other.seniority == seniority) &&
             const DeepCollectionEquality().equals(other._skills, _skills) &&
@@ -812,6 +833,7 @@ class _ResumeSummaryDataDto implements ResumeSummaryDataDto {
       cvId,
       candidateName,
       role,
+      experience,
       seniority,
       const DeepCollectionEquality().hash(_skills),
       summary,
@@ -820,7 +842,7 @@ class _ResumeSummaryDataDto implements ResumeSummaryDataDto {
 
   @override
   String toString() {
-    return 'ResumeSummaryDataDto(id: $id, cvId: $cvId, candidateName: $candidateName, role: $role, seniority: $seniority, skills: $skills, summary: $summary, uploadedDate: $uploadedDate, analysis: $analysis)';
+    return 'ResumeSummaryDataDto(id: $id, cvId: $cvId, candidateName: $candidateName, role: $role, experience: $experience, seniority: $seniority, skills: $skills, summary: $summary, uploadedDate: $uploadedDate, analysis: $analysis)';
   }
 }
 
@@ -837,6 +859,7 @@ abstract mixin class _$ResumeSummaryDataDtoCopyWith<$Res>
       String cvId,
       String candidateName,
       String role,
+      String? experience,
       String seniority,
       List<String> skills,
       String summary,
@@ -864,6 +887,7 @@ class __$ResumeSummaryDataDtoCopyWithImpl<$Res>
     Object? cvId = null,
     Object? candidateName = null,
     Object? role = null,
+    Object? experience = freezed,
     Object? seniority = null,
     Object? skills = null,
     Object? summary = null,
@@ -887,6 +911,10 @@ class __$ResumeSummaryDataDtoCopyWithImpl<$Res>
           ? _self.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
+      experience: freezed == experience
+          ? _self.experience
+          : experience // ignore: cast_nullable_to_non_nullable
+              as String?,
       seniority: null == seniority
           ? _self.seniority
           : seniority // ignore: cast_nullable_to_non_nullable

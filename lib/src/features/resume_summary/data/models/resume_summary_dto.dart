@@ -23,6 +23,7 @@ abstract class ResumeSummaryDataDto with _$ResumeSummaryDataDto {
     required String cvId,
     required String candidateName,
     required String role,
+    String? experience,
     required String seniority,
     required List<String> skills,
     required String summary,

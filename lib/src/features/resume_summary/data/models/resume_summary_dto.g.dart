@@ -25,6 +25,7 @@ _ResumeSummaryDataDto _$ResumeSummaryDataDtoFromJson(
       cvId: json['cvId'] as String,
       candidateName: json['candidateName'] as String,
       role: json['role'] as String,
+      experience: json['experience'] as String?,
       seniority: json['seniority'] as String,
       skills:
           (json['skills'] as List<dynamic>).map((e) => e as String).toList(),
@@ -40,6 +41,7 @@ Map<String, dynamic> _$ResumeSummaryDataDtoToJson(
       'cvId': instance.cvId,
       'candidateName': instance.candidateName,
       'role': instance.role,
+      'experience': instance.experience,
       'seniority': instance.seniority,
       'skills': instance.skills,
       'summary': instance.summary,

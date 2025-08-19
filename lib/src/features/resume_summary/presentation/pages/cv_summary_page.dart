@@ -2,6 +2,7 @@ import 'package:ai_resume/src/core/di/injector.dart';
 import 'package:ai_resume/src/features/resume_summary/data/models/resume_summary_dto.dart';
 import 'package:ai_resume/src/features/resume_summary/presentation/blocs/resume_summary_cubit/resume_summary_cubit.dart';
 import 'package:ai_resume/src/features/resume_summary/presentation/blocs/resume_summary_cubit/resume_summary_state.dart';
+import 'package:ai_resume/src/features/resume_summary/presentation/pages/widgets/summary_card_widget.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,7 @@ class CVSummaryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<ResumeSummaryCubit>(),
+      create: (_) => getIt<ResumeSummaryCubit>()..fetchResumeSummaryDetail(),
       child: const _CVSummaryPageContent(),
     );
   }
@@ -39,7 +40,6 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
       vsync: this,
     );
     _staggerController.forward();
-    context.read<ResumeSummaryCubit>().fetchResumeSummaryDetail();
   }
 
   @override
@@ -71,133 +71,35 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
           ),
         ),
       ),
-      body: BlocBuilder<ResumeSummaryCubit, ResumeSummaryState>(
-        builder: (context, state) {
-          return state.status.maybeWhen(
-            initial: () => _buildLoading(),
-            submitting: () => _buildLoading(),
-            success: (data) {
-              if (state.summaries.isEmpty) {
-                return _buildEmptyState();
-              }
-              return _buildContent(state.summaries);
-            },
-            error: (error) => _buildErrorState(error),
-            orElse: () => _buildLoading(),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildContent(List<ResumeSummaryDto> summaries) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
         ),
-      ),
-      child: RefreshIndicator(
-        onRefresh: () => context.read<ResumeSummaryCubit>().fetchResumeSummaryDetail(),
-        child: ListView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: summaries.length,
-          itemBuilder: (context, index) {
-            final summary = summaries[index];
-            return AnimatedBuilder(
-              animation: _staggerController,
-              builder: (context, child) {
-                final animationValue = Interval(
-                  (index * 0.2).clamp(0.0, 1.0),
-                  ((index * 0.2) + 0.4).clamp(0.0, 1.0),
-                  curve: Curves.easeOutBack,
-                ).transform(_staggerController.value);
-
-                return Transform.translate(
-                  offset: Offset(0, 50 * (1 - animationValue)),
-                  child: Opacity(
-                    opacity: animationValue.clamp(0.0, 1.0),
-                    child: _buildSummaryCard(summary, index),
-                  ),
-                );
+        child: BlocBuilder<ResumeSummaryCubit, ResumeSummaryState>(
+          builder: (context, state) {
+            return state.status.maybeWhen(
+              initial: () => _buildLoading(),
+              submitting: () => _buildLoading(),
+              success: (data) {
+                if (state.resumeSummaryData?.candidateName != null) {
+                  return _buildContent(state.resumeSummaryData!);
+                }
+                return _buildEmptyState();
               },
+              error: (error) => Center(
+                child: Text(
+                  'Error: $error',
+                  style: const TextStyle(color: Colors.redAccent),
+                ),
+              ),
+              orElse: () => _buildLoading(),
             );
           },
         ),
-      ),
-    );
-  }
-
-  Widget _buildSummaryCard(ResumeSummaryDto summary, int index) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.15),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.3),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              summary.data.candidateName,
-              style: GoogleFonts.poppins(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
-            ),
-            const SizedBox(height: 16),
-            ...summary.data.summary
-                .split('\n')
-                .where((line) => line.trim().isNotEmpty)
-                .map((line) => _buildSummaryLine(line))
-                .toList(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSummaryLine(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(top: 6, right: 12),
-            width: 6,
-            height: 6,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-            ),
-          ),
-          Expanded(
-            child: Text(
-              text,
-              style: GoogleFonts.poppins(
-                fontSize: 15,
-                color: Colors.white.withOpacity(0.9),
-                height: 1.5,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -210,32 +112,131 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
     );
   }
 
-  Widget _buildErrorState(String? error) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            error ?? 'Failed to load CV summary',
-            style: GoogleFonts.poppins(color: Colors.white),
-            textAlign: TextAlign.center,
+  Widget _buildEmptyState() {
+    return const Center(
+      child: Text(
+        'No data available',
+        style: TextStyle(color: Colors.white),
+      ),
+    );
+  }
+
+
+  Widget _buildContent(ResumeSummaryDataDto data) {
+    final List<CVCategory> categories = [
+      CVCategory(
+        title: 'Professional Summary',
+        items: [
+          data.summary,
+        ],
+      ),
+      CVCategory(
+        title: 'Technical Skills',
+        items: data.skills.sublist(0, 5),
+      ),
+      CVCategory(
+        title: 'Strengths',
+        items: data.analysis.candidateStrengths,
+      ),
+      CVCategory(
+        title: 'Weaknesses',
+        items: data.analysis.candidateWeaknesses,
+      ),
+      CVCategory(title: 'Justification', items: [
+        data.analysis.justification,
+      ]),
+    ];
+
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<ResumeSummaryCubit>().fetchResumeSummaryDetail();
+      },
+      child: ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: categories.length + 1,
+        itemBuilder: (context, index) {
+
+          if (index == 0) {
+            return _buildProfileHeader(data);
+          }
+          final categoryIndex = index - 1;
+          return AnimatedBuilder(
+            animation: _staggerController,
+            builder: (context, child) {
+              final animationValue = Interval(
+                (index * 0.2).clamp(0.0, 1.0),
+                ((index * 0.2) + 0.4).clamp(0.0, 1.0),
+                curve: Curves.easeOutBack,
+              ).transform(_staggerController.value);
+
+              return Transform.translate(
+                offset: Offset(0, 50 * (1 - animationValue)),
+                child: Opacity(
+                  opacity: animationValue.clamp(0.0, 1.0),
+                  child: SummaryCardWidget(category: categories[categoryIndex], index:categoryIndex),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildProfileHeader(ResumeSummaryDataDto data) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 24),
+      padding: EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.15),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.white.withOpacity(0.3)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 20,
+            offset: Offset(0, 8),
           ),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () => context.read<ResumeSummaryCubit>().fetchResumeSummaryDetail(),
-            child: const Text('Retry'),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Candidate Name
+          Text(
+            data.candidateName,
+            style: GoogleFonts.poppins(
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(height: 8),
+          // Position
+          Text(
+            data.role,
+            style: GoogleFonts.poppins(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: Colors.white.withOpacity(0.9),
+            ),
+          ),
+          SizedBox(height: 6),
+          // Experience
+          Text(
+            "${data.experience} Years of Experience",
+            style: GoogleFonts.poppins(
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              color: Colors.white.withOpacity(0.8),
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildEmptyState() {
-    return Center(
-      child: Text(
-        'No CV summary available',
-        style: GoogleFonts.poppins(color: Colors.white),
-      ),
-    );
-  }
+
 }
+
+
