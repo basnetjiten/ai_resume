@@ -22,13 +22,18 @@ class PaginationWidget extends StatelessWidget {
       children: [
         _buildPaginationButton(
           icon: Icons.chevron_left,
-          onPressed: currentPage > 0 ? () => onPageChanged(currentPage - 1) : null,
-          isActive: currentPage > 0, context: context,
+          onPressed:
+              currentPage > 0 ? () => onPageChanged(currentPage - 1) : null,
+          isActive: currentPage > 0,
+          context: context,
         ),
         const SizedBox(width: 8),
         ...List.generate(
           totalPages,
-          (index) => _buildPageNumber(index, context),
+          (index) => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: _buildPageNumber(index, context),
+          ),
         ),
         const SizedBox(width: 8),
         _buildPaginationButton(
@@ -43,38 +48,32 @@ class PaginationWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildPaginationButton({
-    required IconData icon,
-    required VoidCallback? onPressed,
-    required bool isActive,
-    required BuildContext context
-  }) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: BorderRadius.circular(8),
-        child: Container(
-          width: 36,
-          height: 36,
-          decoration: BoxDecoration(
-            color: isActive
-                ? Theme.of(context).primaryColor.withOpacity(0.1)
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: isActive
-                  ? Theme.of(context).primaryColor
-                  : Colors.grey[300]!,
-              width: 1,
-            ),
-          ),
+  Widget _buildPaginationButton(
+      {required IconData icon,
+      required VoidCallback? onPressed,
+      required bool isActive,
+      required BuildContext context}) {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        color: onPressed != null
+            ? Colors.white.withOpacity(0.2)
+            : Colors.white.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.white.withOpacity(onPressed != null ? 0.3 : 0.1),
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(12),
           child: Icon(
             icon,
             size: 20,
-            color: isActive
-                ? Theme.of(context).primaryColor
-                : Colors.grey[400],
+            color: Colors.white.withOpacity(onPressed != null ? 1.0 : 0.5),
           ),
         ),
       ),
@@ -83,38 +82,35 @@ class PaginationWidget extends StatelessWidget {
 
   Widget _buildPageNumber(int index, BuildContext context) {
     final isCurrentPage = index == currentPage;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 2),
+
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        color: isCurrentPage
+            ? Colors.white.withOpacity(0.3)
+            : Colors.white.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isCurrentPage
+              ? Colors.white.withOpacity(0.5)
+              : Colors.white.withOpacity(0.2),
+          width: isCurrentPage ? 2 : 1,
+        ),
+      ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           onTap: () => onPageChanged(index),
-          borderRadius: BorderRadius.circular(8),
-          child: Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              color: isCurrentPage
-                  ? Theme.of(context).primaryColor
-                  : Colors.transparent,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: isCurrentPage
-                    ? Theme.of(context).primaryColor
-                    : Colors.grey[300]!,
-                width: 1,
-              ),
-            ),
-            child: Center(
-              child: Text(
-                '${index + 1}',
-                style: GoogleFonts.poppins(
-                  fontSize: 14,
-                  fontWeight: isCurrentPage ? FontWeight.w600 : FontWeight.normal,
-                  color: isCurrentPage
-                      ? Colors.white
-                      : Theme.of(context).textTheme.bodyLarge?.color,
-                ),
+          borderRadius: BorderRadius.circular(12),
+          child: Center(
+            child: Text(
+              '${index + 1}',
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                fontWeight: isCurrentPage ? FontWeight.w700 : FontWeight.w500,
+                color: Colors.white.withOpacity(isCurrentPage ? 1.0 : 0.8),
               ),
             ),
           ),

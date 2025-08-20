@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$ResumeSummaryState {
-  List<ResumeSummaryDto> get summaries;
+  List<ResumeSummaryDataDto> get summaries;
   ResumeSummaryDataDto? get resumeSummaryData;
   FormStatus get status;
 
@@ -57,7 +57,7 @@ abstract mixin class $ResumeSummaryStateCopyWith<$Res> {
       _$ResumeSummaryStateCopyWithImpl;
   @useResult
   $Res call(
-      {List<ResumeSummaryDto> summaries,
+      {List<ResumeSummaryDataDto> summaries,
       ResumeSummaryDataDto? resumeSummaryData,
       FormStatus status});
 
@@ -86,7 +86,7 @@ class _$ResumeSummaryStateCopyWithImpl<$Res>
       summaries: null == summaries
           ? _self.summaries
           : summaries // ignore: cast_nullable_to_non_nullable
-              as List<ResumeSummaryDto>,
+              as List<ResumeSummaryDataDto>,
       resumeSummaryData: freezed == resumeSummaryData
           ? _self.resumeSummaryData
           : resumeSummaryData // ignore: cast_nullable_to_non_nullable
@@ -217,7 +217,7 @@ extension ResumeSummaryStatePatterns on ResumeSummaryState {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(List<ResumeSummaryDto> summaries,
+    TResult Function(List<ResumeSummaryDataDto> summaries,
             ResumeSummaryDataDto? resumeSummaryData, FormStatus status)?
         $default, {
     required TResult orElse(),
@@ -246,7 +246,7 @@ extension ResumeSummaryStatePatterns on ResumeSummaryState {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(List<ResumeSummaryDto> summaries,
+    TResult Function(List<ResumeSummaryDataDto> summaries,
             ResumeSummaryDataDto? resumeSummaryData, FormStatus status)
         $default,
   ) {
@@ -273,7 +273,7 @@ extension ResumeSummaryStatePatterns on ResumeSummaryState {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(List<ResumeSummaryDto> summaries,
+    TResult? Function(List<ResumeSummaryDataDto> summaries,
             ResumeSummaryDataDto? resumeSummaryData, FormStatus status)?
         $default,
   ) {
@@ -291,15 +291,15 @@ extension ResumeSummaryStatePatterns on ResumeSummaryState {
 
 class _ResumeSummaryState implements ResumeSummaryState {
   const _ResumeSummaryState(
-      {final List<ResumeSummaryDto> summaries = const [],
+      {final List<ResumeSummaryDataDto> summaries = const [],
       this.resumeSummaryData = null,
       this.status = const FormStatus.initial()})
       : _summaries = summaries;
 
-  final List<ResumeSummaryDto> _summaries;
+  final List<ResumeSummaryDataDto> _summaries;
   @override
   @JsonKey()
-  List<ResumeSummaryDto> get summaries {
+  List<ResumeSummaryDataDto> get summaries {
     if (_summaries is EqualUnmodifiableListView) return _summaries;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_summaries);
@@ -354,7 +354,7 @@ abstract mixin class _$ResumeSummaryStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<ResumeSummaryDto> summaries,
+      {List<ResumeSummaryDataDto> summaries,
       ResumeSummaryDataDto? resumeSummaryData,
       FormStatus status});
 
@@ -385,7 +385,7 @@ class __$ResumeSummaryStateCopyWithImpl<$Res>
       summaries: null == summaries
           ? _self._summaries
           : summaries // ignore: cast_nullable_to_non_nullable
-              as List<ResumeSummaryDto>,
+              as List<ResumeSummaryDataDto>,
       resumeSummaryData: freezed == resumeSummaryData
           ? _self.resumeSummaryData
           : resumeSummaryData // ignore: cast_nullable_to_non_nullable

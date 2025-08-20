@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CVCardWidget extends StatelessWidget {
-  final ResumeSummaryDto cv;
+  final ResumeSummaryDataDto cv;
   final VoidCallback onTap;
   final int index;
 
@@ -40,28 +40,39 @@ class CVCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 16),
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.12),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white.withOpacity(0.3)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 15,
+            offset: Offset(0, 5),
+          ),
+        ],
       ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildHeader(context: context),
-              const SizedBox(height: 12),
-              _buildSummary(),
-              const SizedBox(height: 12),
-              _buildSkills(),
-              const SizedBox(height: 8),
-              _buildFooter(),
-            ],
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(16),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(context: context),
+                const SizedBox(height: 12),
+                _buildSummary(),
+                const SizedBox(height: 12),
+                _buildSkills(),
+                const SizedBox(height: 8),
+                _buildFooter(),
+              ],
+            ),
           ),
         ),
       ),
@@ -75,12 +86,12 @@ class CVCardWidget extends StatelessWidget {
           width: 50,
           height: 50,
           decoration: BoxDecoration(
-            color: Colors.blue.withOpacity(0.1),
+            color: Colors.white.withOpacity(0.2),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
             Icons.person,
-            color: Theme.of(context).primaryColor,
+            color: Colors.white,
             size: 28,
           ),
         ),
@@ -90,39 +101,39 @@ class CVCardWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                cv.data.candidateName,
+                cv.candidateName,
                 style: GoogleFonts.poppins(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
-                  color: Colors.black87,
+                  color: Colors.white,
                 ),
               ),
               Text(
-                cv.data.role,
+                cv.role,
                 style: GoogleFonts.poppins(
                   fontSize: 14,
-                  color: Colors.black54,
+                  color: Colors.white.withOpacity(0.8),
                 ),
               ),
             ],
           ),
         ),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-            color: _getExperienceColor(cv.data.seniority).withOpacity(0.1),
+            color: _getExperienceColor(cv.seniority),
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: _getExperienceColor(cv.data.seniority),
+              color: _getExperienceColor(cv.seniority),
               width: 1,
             ),
           ),
           child: Text(
-            cv.data.seniority,
+            cv.seniority,
             style: GoogleFonts.poppins(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: _getExperienceColor(cv.data.seniority),
+              color: Colors.white,
             ),
           ),
         ),
@@ -132,10 +143,10 @@ class CVCardWidget extends StatelessWidget {
 
   Widget _buildSummary() {
     return Text(
-      cv.data.summary,
+      cv.summary,
       style: GoogleFonts.poppins(
         fontSize: 14,
-        color: Colors.black87,
+        color: Colors.white,
         height: 1.5,
       ),
       maxLines: 2,
@@ -144,25 +155,29 @@ class CVCardWidget extends StatelessWidget {
   }
 
   Widget _buildSkills() {
-    if (cv.data.skills.isEmpty) return const SizedBox.shrink();
+    if (cv.skills.isEmpty) return const SizedBox.shrink();
 
     return Wrap(
       spacing: 8,
       runSpacing: 8,
-      children: (cv.data.skills.take(3).toList()..sort()).map((skill) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          color: Colors.grey[100],
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Text(
-          skill,
-          style: GoogleFonts.poppins(
-            fontSize: 12,
-            color: Colors.black54,
-          ),
-        ),
-      )).toList(),
+      children: (cv.skills.take(3).toList()..sort())
+          .map(
+            (skill) => Container(
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                skill,
+                style: GoogleFonts.poppins(
+                  fontSize: 12,
+                  color: Colors.white.withOpacity(0.9),
+                ),
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -171,15 +186,15 @@ class CVCardWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Uploaded: ${_formatDate(cv.data.uploadedDate)}',
+          'Uploaded: ${_formatDate(cv.uploadedDate)}',
           style: GoogleFonts.poppins(
             fontSize: 12,
-            color: Colors.grey[600],
+            color: Colors.white.withOpacity(0.7),
           ),
         ),
         Icon(
           Icons.arrow_forward_ios,
-          color: Colors.grey[400],
+          color: Colors.white.withOpacity(0.7),
           size: 14,
         ),
       ],

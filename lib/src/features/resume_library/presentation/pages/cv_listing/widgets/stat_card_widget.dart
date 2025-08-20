@@ -31,7 +31,7 @@ class StatCardWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Icon(icon, color: textColor, size: 20),
+          Icon(icon, color: Colors.white, size: 20),
           const SizedBox(height: 4),
           Text(
             value,

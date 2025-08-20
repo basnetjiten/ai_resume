@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$ResumeLibraryState {
-  List<ResumeSummaryDto> get summaries;
+  List<ResumeSummaryDataDto> get summaries;
   FormStatus get status;
 
   /// Create a copy of ResumeLibraryState
@@ -50,7 +50,7 @@ abstract mixin class $ResumeLibraryStateCopyWith<$Res> {
           ResumeLibraryState value, $Res Function(ResumeLibraryState) _then) =
       _$ResumeLibraryStateCopyWithImpl;
   @useResult
-  $Res call({List<ResumeSummaryDto> summaries, FormStatus status});
+  $Res call({List<ResumeSummaryDataDto> summaries, FormStatus status});
 
   $FormStatusCopyWith<$Res> get status;
 }
@@ -75,7 +75,7 @@ class _$ResumeLibraryStateCopyWithImpl<$Res>
       summaries: null == summaries
           ? _self.summaries
           : summaries // ignore: cast_nullable_to_non_nullable
-              as List<ResumeSummaryDto>,
+              as List<ResumeSummaryDataDto>,
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -187,7 +187,7 @@ extension ResumeLibraryStatePatterns on ResumeLibraryState {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(List<ResumeSummaryDto> summaries, FormStatus status)?
+    TResult Function(List<ResumeSummaryDataDto> summaries, FormStatus status)?
         $default, {
     required TResult orElse(),
   }) {
@@ -215,7 +215,7 @@ extension ResumeLibraryStatePatterns on ResumeLibraryState {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(List<ResumeSummaryDto> summaries, FormStatus status)
+    TResult Function(List<ResumeSummaryDataDto> summaries, FormStatus status)
         $default,
   ) {
     final _that = this;
@@ -241,7 +241,7 @@ extension ResumeLibraryStatePatterns on ResumeLibraryState {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(List<ResumeSummaryDto> summaries, FormStatus status)?
+    TResult? Function(List<ResumeSummaryDataDto> summaries, FormStatus status)?
         $default,
   ) {
     final _that = this;
@@ -258,14 +258,14 @@ extension ResumeLibraryStatePatterns on ResumeLibraryState {
 
 class _ResumeLibraryState implements ResumeLibraryState {
   const _ResumeLibraryState(
-      {final List<ResumeSummaryDto> summaries = const [],
+      {final List<ResumeSummaryDataDto> summaries = const [],
       this.status = const FormStatus.initial()})
       : _summaries = summaries;
 
-  final List<ResumeSummaryDto> _summaries;
+  final List<ResumeSummaryDataDto> _summaries;
   @override
   @JsonKey()
-  List<ResumeSummaryDto> get summaries {
+  List<ResumeSummaryDataDto> get summaries {
     if (_summaries is EqualUnmodifiableListView) return _summaries;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_summaries);
@@ -311,7 +311,7 @@ abstract mixin class _$ResumeLibraryStateCopyWith<$Res>
       __$ResumeLibraryStateCopyWithImpl;
   @override
   @useResult
-  $Res call({List<ResumeSummaryDto> summaries, FormStatus status});
+  $Res call({List<ResumeSummaryDataDto> summaries, FormStatus status});
 
   @override
   $FormStatusCopyWith<$Res> get status;
@@ -337,7 +337,7 @@ class __$ResumeLibraryStateCopyWithImpl<$Res>
       summaries: null == summaries
           ? _self._summaries
           : summaries // ignore: cast_nullable_to_non_nullable
-              as List<ResumeSummaryDto>,
+              as List<ResumeSummaryDataDto>,
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable

@@ -4,7 +4,7 @@ import 'package:ai_resume/src/features/resume_summary/domain/models/resume_summa
 
 abstract class ResumeSummaryRepository {
   /// Fetches all resume summaries
-  EitherResponse<List<ResumeSummaryDto>> getResumeSummaries();
+  EitherResponse<List<ResumeSummaryDataDto>> getResumeSummaries();
 
   /// Fetches a single resume summary by its ID
   EitherResponse<ResumeSummaryDto> getResumeSummary(String id);

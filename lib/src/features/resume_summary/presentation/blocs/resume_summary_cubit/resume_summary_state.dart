@@ -6,7 +6,7 @@ part 'resume_summary_state.freezed.dart';
 @freezed
 abstract class ResumeSummaryState with _$ResumeSummaryState {
   const factory ResumeSummaryState({
-    @Default([]) List<ResumeSummaryDto> summaries,
+    @Default([]) List<ResumeSummaryDataDto> summaries,
     @Default(null) ResumeSummaryDataDto? resumeSummaryData,
     @Default(FormStatus.initial()) FormStatus status,
   }) = _ResumeSummaryState;

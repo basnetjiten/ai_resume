@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:ai_resume/src/core/base/base_remote_source.dart';
+import 'package:ai_resume/src/core/services/logging/app_logger.dart';
 import 'package:ai_resume/src/features/resume_summary/data/models/resume_summary_dto.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class ResumeSummaryRemoteDataSource {
-  Future<List<ResumeSummaryDto>> getResumeSummaries();
+  Future<List<ResumeSummaryDataDto>> getResumeSummaries();
 
   Future<ResumeSummaryDto> getResumeSummary(String id);
 }
@@ -14,12 +17,16 @@ class ResumeSummaryRemoteDataSourceImpl extends BaseRemoteSource
   ResumeSummaryRemoteDataSourceImpl(super.dio);
 
   @override
-  Future<List<ResumeSummaryDto>> getResumeSummaries() async {
-    return networkRequest<List<ResumeSummaryDto>>(
+  Future<List<ResumeSummaryDataDto>> getResumeSummaries() async {
+    return networkRequest<List<ResumeSummaryDataDto>>(
       request: (dio) => dio.get('resume-summaries'),
-      onResponse: (data) => (data as List)
-          .map((json) => ResumeSummaryDto.fromJson(json))
-          .toList(),
+      onResponse: (responseData){
+
+        AppLogger.logInfo(info: "NEW DAA ${jsonEncode(responseData['data'])}");
+       return (responseData['data'] as List)
+            .map((json) => ResumeSummaryDataDto.fromJson(json))
+            .toList();
+      },
     );
   }
 

@@ -21,7 +21,7 @@ class ResumeSummaryRepositoryImpl extends BaseRepository
   }
 
   @override
-  EitherResponse<List<ResumeSummaryDto>> getResumeSummaries() {
+  EitherResponse<List<ResumeSummaryDataDto>> getResumeSummaries() {
     return processApiCall(
       call: remoteDataSource.getResumeSummaries(),
       onSuccess: (summaries) => summaries,

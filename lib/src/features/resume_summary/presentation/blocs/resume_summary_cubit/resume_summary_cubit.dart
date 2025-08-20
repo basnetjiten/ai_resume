@@ -4,7 +4,6 @@ import 'package:ai_resume/src/features/resume_summary/domain/repositories/resume
 import 'package:injectable/injectable.dart';
 import 'package:simple_form_field/base_bloc.dart';
 import 'package:simple_form_field/form/form_status.dart';
-import '../../pages/widgets/summary_card_widget.dart';
 import 'resume_summary_state.dart';
 
 @injectable
