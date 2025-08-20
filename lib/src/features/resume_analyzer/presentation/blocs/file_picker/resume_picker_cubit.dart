@@ -15,15 +15,20 @@ class ResumePickerCubit extends BaseBloc<void, ResumePickerState> {
 
     final pickStatus = await _resumeFileRepository.pickPdfFile();
 
-    pickStatus.fold((String errorMessage) {
-      emit(state.copyWith(status: FormStatus.error(error: errorMessage)));
-    }, (File pdfFile) {
-      emit(state.copyWith(
-        status: const FormStatus.submitting(),
-        pickedFile: pdfFile,
-      ));
-      _uploadFile(pickedFile: pdfFile);
-    });
+    pickStatus.fold(
+      (String errorMessage) {
+        emit(state.copyWith(status: FormStatus.error(error: errorMessage)));
+      },
+      (File pdfFile) {
+        emit(
+          state.copyWith(
+            status: const FormStatus.submitting(),
+            pickedFile: pdfFile,
+          ),
+        );
+        _uploadFile(pickedFile: pdfFile);
+      },
+    );
   }
 
   void _uploadFile({required File? pickedFile}) {
@@ -47,6 +52,12 @@ class ResumePickerCubit extends BaseBloc<void, ResumePickerState> {
   }
 
   void resetFile() {
-    emit(ResumePickerState());
+    emit(
+      state.copyWith(
+        pickedFile: null,
+        uploadProgress: 0,
+        status: FormStatus.initial(),
+      ),
+    );
   }
 }

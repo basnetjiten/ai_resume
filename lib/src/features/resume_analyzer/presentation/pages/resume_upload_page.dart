@@ -44,13 +44,12 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
       vsync: this,
     )..repeat();
 
-    _cardScaleAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _cardAnimationController,
-      curve: Curves.elasticOut,
-    ));
+    _cardScaleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _cardAnimationController,
+        curve: Curves.elasticOut,
+      ),
+    );
 
     _particleAnimation = Tween<double>(
       begin: 0.0,
@@ -110,13 +109,10 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
             CVListingPage(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(
-            position: Tween<Offset>(
-              begin: Offset(1.0, 0.0),
-              end: Offset.zero,
-            ).animate(CurvedAnimation(
-              parent: animation,
-              curve: Curves.easeInOut,
-            )),
+            position: Tween<Offset>(begin: Offset(1.0, 0.0), end: Offset.zero)
+                .animate(
+                  CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+                ),
             child: child,
           );
         },
@@ -125,11 +121,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
   }
 
   void _removeFile() {
-    setState(() {
-      selectedFile = null;
-      isUploading = false;
-      uploadProgress = 0.0;
-    });
+    context.read<ResumePickerCubit>().resetFile();
   }
 
   @override
@@ -143,21 +135,20 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>
                     CVAnalysisScreen(
-                        fileName: state.pickedFile!.path.split('/').last),
+                      fileName: state.pickedFile!.path.split('/').last,
+                    ),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
-                  return FadeTransition(opacity: animation, child: child);
-                },
+                      return FadeTransition(opacity: animation, child: child);
+                    },
               ),
             );
+            _resumePickerCubit.resetFile();
           },
           error: (String? error) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(
-                  '$error',
-                  style: GoogleFonts.poppins(),
-                ),
+                content: Text('$error', style: GoogleFonts.poppins()),
                 backgroundColor: Colors.redAccent,
               ),
             );
@@ -243,15 +234,12 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
         gradient: LinearGradient(
           colors: [
             Colors.white.withOpacity(0.2),
-            Colors.white.withOpacity(0.1)
+            Colors.white.withOpacity(0.1),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.3),
-          width: 1.5,
-        ),
+        border: Border.all(color: Colors.white.withOpacity(0.3), width: 1.5),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -266,26 +254,29 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
           mainAxisSize: MainAxisSize.min,
           children: [
             BlocBuilder<ResumePickerCubit, ResumePickerState>(
-                bloc: _resumePickerCubit,
-                builder: (context, state) {
-                  if (state.pickedFile == null) {
-                    return Column(
-                      children: [
-                        _buildPDFIcon(),
-                        SizedBox(height: 24),
-                        _buildSelectButton(),
-                      ],
-                    );
-                  } else {
-                    return Column(
-                      children: [
-                        _buildSelectedFile(state.pickedFile),
-                        SizedBox(height: 24),
-                        if (state.uploadProgress > 0) _buildProgressIndicator()
-                      ],
-                    );
-                  }
-                }),
+              buildWhen: (prev, curr) =>
+                  prev.uploadProgress != curr.uploadProgress,
+              bloc: _resumePickerCubit,
+              builder: (context, state) {
+                if (state.pickedFile == null) {
+                  return Column(
+                    children: [
+                      _buildPDFIcon(),
+                      SizedBox(height: 24),
+                      _buildSelectButton(),
+                    ],
+                  );
+                } else {
+                  return Column(
+                    children: [
+                      _buildSelectedFile(state.pickedFile),
+                      SizedBox(height: 24),
+                      if (state.uploadProgress > 0) _buildProgressIndicator(),
+                    ],
+                  );
+                }
+              },
+            ),
           ],
         ),
       ),
@@ -300,11 +291,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
         color: Colors.white.withOpacity(0.2),
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Icon(
-        Icons.picture_as_pdf,
-        size: 40,
-        color: Colors.white,
-      ),
+      child: Icon(Icons.picture_as_pdf, size: 40, color: Colors.white),
     );
   }
 
@@ -354,11 +341,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
               color: Colors.white.withOpacity(0.2),
               borderRadius: BorderRadius.circular(16),
             ),
-            child: Icon(
-              Icons.picture_as_pdf,
-              size: 30,
-              color: Colors.white,
-            ),
+            child: Icon(Icons.picture_as_pdf, size: 30, color: Colors.white),
           ),
           SizedBox(height: 16),
           Text(
@@ -390,23 +373,24 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
     return Column(
       children: [
         BlocSelector<ResumePickerCubit, ResumePickerState, int>(
-            bloc: _resumePickerCubit,
-            selector: (state) => state.uploadProgress,
-            builder: (_, progress) {
-              uploadProgress = progress / 100;
-              return GestureDetector(
-                onTap: () {
-                  if (uploadProgress < 1.0) {
-                    _resumePickerCubit.resetFile();
-                  }
-                },
-                child: LinearProgressIndicator(
-                  value: uploadProgress,
-                  backgroundColor: Colors.white.withOpacity(0.3),
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                ),
-              );
-            }),
+          bloc: _resumePickerCubit,
+          selector: (state) => state.uploadProgress,
+          builder: (_, progress) {
+            uploadProgress = progress / 100;
+            return GestureDetector(
+              onTap: () {
+                if (uploadProgress < 1.0) {
+                  _resumePickerCubit.resetFile();
+                }
+              },
+              child: LinearProgressIndicator(
+                value: uploadProgress,
+                backgroundColor: Colors.white.withOpacity(0.3),
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            );
+          },
+        ),
         SizedBox(height: 16),
         Text(
           '${(uploadProgress * 100).toInt()}%',
@@ -445,7 +429,8 @@ class ParticlePainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     for (final particle in particles) {
-      final x = (particle.x + animationValue * particle.speed) % 1.0 * size.width;
+      final x =
+          (particle.x + animationValue * particle.speed) % 1.0 * size.width;
       final y = particle.y * size.height;
       canvas.drawCircle(Offset(x, y), particle.size, paint);
     }
