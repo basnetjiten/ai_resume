@@ -20,6 +20,7 @@ class ResumeLibraryCubit extends BaseBloc<void, ResumeLibraryState> {
         summaries: summaries,
       ),
       onFailure: (error) => state.copyWith(
+        summaries: [],
         status: FormStatus.error(error: error.toString()),
       ),
     );

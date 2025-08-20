@@ -2,11 +2,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:ai_resume/src/features/resume_summary/domain/models/resume_summary_model.dart';
 
 part 'resume_summary_dto.freezed.dart';
-
 part 'resume_summary_dto.g.dart';
 
 @freezed
 abstract class ResumeSummaryDto with _$ResumeSummaryDto {
+  @JsonSerializable(explicitToJson: true)
   const factory ResumeSummaryDto({
     required bool success,
     required ResumeSummaryDataDto data,
@@ -18,6 +18,7 @@ abstract class ResumeSummaryDto with _$ResumeSummaryDto {
 
 @freezed
 abstract class ResumeSummaryDataDto with _$ResumeSummaryDataDto {
+  @JsonSerializable(explicitToJson: true)
   const factory ResumeSummaryDataDto({
     @JsonKey(name: '_id') required String id,
     required String cvId,
@@ -37,6 +38,7 @@ abstract class ResumeSummaryDataDto with _$ResumeSummaryDataDto {
 
 @freezed
 abstract class AnalysisDto with _$AnalysisDto {
+  @JsonSerializable(explicitToJson: true)
   const factory AnalysisDto({
     required List<String> candidateStrengths,
     required List<String> candidateWeaknesses,
@@ -52,6 +54,7 @@ abstract class AnalysisDto with _$AnalysisDto {
 
 @freezed
 abstract class RiskFactorDto with _$RiskFactorDto {
+  @JsonSerializable(explicitToJson: true)
   const factory RiskFactorDto({
     required String score,
     required String explanation,
@@ -63,6 +66,7 @@ abstract class RiskFactorDto with _$RiskFactorDto {
 
 @freezed
 abstract class RewardFactorDto with _$RewardFactorDto {
+  @JsonSerializable(explicitToJson: true)
   const factory RewardFactorDto({
     required String score,
     required String value,

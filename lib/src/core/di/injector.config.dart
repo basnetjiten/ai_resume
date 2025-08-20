@@ -23,6 +23,8 @@ import 'package:ai_resume/src/features/resume_analyzer/presentation/blocs/file_p
     as _i71;
 import 'package:ai_resume/src/features/resume_library/presentation/blocs/resume_library_cubit.dart'
     as _i117;
+import 'package:ai_resume/src/features/resume_summary/data/datasources/resume_library_local_data_source.dart'
+    as _i1047;
 import 'package:ai_resume/src/features/resume_summary/data/datasources/resume_summary_remote_data_source.dart'
     as _i879;
 import 'package:ai_resume/src/features/resume_summary/data/repositories/resume_summary_repository_impl.dart'
@@ -42,11 +44,7 @@ Future<_i174.GetIt> $initGetIt(
   String? environment,
   _i526.EnvironmentFilter? environmentFilter,
 }) async {
-  final gh = _i526.GetItHelper(
-    getIt,
-    environment,
-    environmentFilter,
-  );
+  final gh = _i526.GetItHelper(getIt, environment, environmentFilter);
   final registerModules = _$RegisterModules();
   gh.factory<_i326.AppCubit>(() => _i326.AppCubit());
   await gh.singletonAsync<_i920.LocalStorage>(
@@ -57,20 +55,32 @@ Future<_i174.GetIt> $initGetIt(
   gh.singleton<_i403.FilePickerService>(() => _i403.FilePickerService());
   gh.lazySingleton<_i444.AuthInterceptor>(() => _i444.AuthInterceptor());
   gh.lazySingleton<_i361.Dio>(
-      () => registerModules.dio(gh<_i444.AuthInterceptor>()));
+    () => registerModules.dio(gh<_i444.AuthInterceptor>()),
+  );
   gh.singleton<_i879.ResumeSummaryRemoteDataSource>(
-      () => _i879.ResumeSummaryRemoteDataSourceImpl(gh<_i361.Dio>()));
-  gh.singleton<_i895.ResumeSummaryRepository>(() =>
-      _i940.ResumeSummaryRepositoryImpl(
-          remoteDataSource: gh<_i879.ResumeSummaryRemoteDataSource>()));
+    () => _i879.ResumeSummaryRemoteDataSourceImpl(gh<_i361.Dio>()),
+  );
   gh.singleton<_i918.ResumeFileRepository>(
-      () => _i618.ResumeFileRepoImpl(gh<_i403.FilePickerService>()));
+    () => _i618.ResumeFileRepoImpl(gh<_i403.FilePickerService>()),
+  );
+  gh.lazySingleton<_i1047.ResumeLibraryLocalDataSource>(
+    () => _i1047.ResumeLibraryLocalDataSourceImpl(gh<_i920.LocalStorage>()),
+  );
   gh.factory<_i71.ResumePickerCubit>(
-      () => _i71.ResumePickerCubit(gh<_i918.ResumeFileRepository>()));
-  gh.factory<_i580.ResumeSummaryCubit>(
-      () => _i580.ResumeSummaryCubit(gh<_i895.ResumeSummaryRepository>()));
+    () => _i71.ResumePickerCubit(gh<_i918.ResumeFileRepository>()),
+  );
+  gh.singleton<_i895.ResumeSummaryRepository>(
+    () => _i940.ResumeSummaryRepositoryImpl(
+      gh<_i879.ResumeSummaryRemoteDataSource>(),
+      gh<_i1047.ResumeLibraryLocalDataSource>(),
+    ),
+  );
   gh.factory<_i117.ResumeLibraryCubit>(
-      () => _i117.ResumeLibraryCubit(gh<_i895.ResumeSummaryRepository>()));
+    () => _i117.ResumeLibraryCubit(gh<_i895.ResumeSummaryRepository>()),
+  );
+  gh.factory<_i580.ResumeSummaryCubit>(
+    () => _i580.ResumeSummaryCubit(gh<_i895.ResumeSummaryRepository>()),
+  );
   return getIt;
 }
 

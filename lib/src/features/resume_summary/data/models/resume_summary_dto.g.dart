@@ -15,61 +15,62 @@ _ResumeSummaryDto _$ResumeSummaryDtoFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$ResumeSummaryDtoToJson(_ResumeSummaryDto instance) =>
     <String, dynamic>{
       'success': instance.success,
-      'data': instance.data,
+      'data': instance.data.toJson(),
     };
 
 _ResumeSummaryDataDto _$ResumeSummaryDataDtoFromJson(
-        Map<String, dynamic> json) =>
-    _ResumeSummaryDataDto(
-      id: json['_id'] as String,
-      cvId: json['cvId'] as String,
-      candidateName: json['candidateName'] as String,
-      role: json['role'] as String,
-      experience: json['experience'] as String?,
-      seniority: json['seniority'] as String,
-      skills:
-          (json['skills'] as List<dynamic>).map((e) => e as String).toList(),
-      summary: json['summary'] as String,
-      uploadedDate: json['uploadedDate'] as String,
-      analysis: AnalysisDto.fromJson(json['analysis'] as Map<String, dynamic>),
-    );
+  Map<String, dynamic> json,
+) => _ResumeSummaryDataDto(
+  id: json['_id'] as String,
+  cvId: json['cvId'] as String,
+  candidateName: json['candidateName'] as String,
+  role: json['role'] as String,
+  experience: json['experience'] as String?,
+  seniority: json['seniority'] as String,
+  skills: (json['skills'] as List<dynamic>).map((e) => e as String).toList(),
+  summary: json['summary'] as String,
+  uploadedDate: json['uploadedDate'] as String,
+  analysis: AnalysisDto.fromJson(json['analysis'] as Map<String, dynamic>),
+);
 
 Map<String, dynamic> _$ResumeSummaryDataDtoToJson(
-        _ResumeSummaryDataDto instance) =>
-    <String, dynamic>{
-      '_id': instance.id,
-      'cvId': instance.cvId,
-      'candidateName': instance.candidateName,
-      'role': instance.role,
-      'experience': instance.experience,
-      'seniority': instance.seniority,
-      'skills': instance.skills,
-      'summary': instance.summary,
-      'uploadedDate': instance.uploadedDate,
-      'analysis': instance.analysis,
-    };
+  _ResumeSummaryDataDto instance,
+) => <String, dynamic>{
+  '_id': instance.id,
+  'cvId': instance.cvId,
+  'candidateName': instance.candidateName,
+  'role': instance.role,
+  'experience': instance.experience,
+  'seniority': instance.seniority,
+  'skills': instance.skills,
+  'summary': instance.summary,
+  'uploadedDate': instance.uploadedDate,
+  'analysis': instance.analysis.toJson(),
+};
 
 _AnalysisDto _$AnalysisDtoFromJson(Map<String, dynamic> json) => _AnalysisDto(
-      candidateStrengths: (json['candidateStrengths'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
-      candidateWeaknesses: (json['candidateWeaknesses'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
-      riskFactor:
-          RiskFactorDto.fromJson(json['riskFactor'] as Map<String, dynamic>),
-      rewardFactor: RewardFactorDto.fromJson(
-          json['rewardFactor'] as Map<String, dynamic>),
-      overallFitRating: json['overallFitRating'] as String,
-      justification: json['justification'] as String,
-    );
+  candidateStrengths: (json['candidateStrengths'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList(),
+  candidateWeaknesses: (json['candidateWeaknesses'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList(),
+  riskFactor: RiskFactorDto.fromJson(
+    json['riskFactor'] as Map<String, dynamic>,
+  ),
+  rewardFactor: RewardFactorDto.fromJson(
+    json['rewardFactor'] as Map<String, dynamic>,
+  ),
+  overallFitRating: json['overallFitRating'] as String,
+  justification: json['justification'] as String,
+);
 
 Map<String, dynamic> _$AnalysisDtoToJson(_AnalysisDto instance) =>
     <String, dynamic>{
       'candidateStrengths': instance.candidateStrengths,
       'candidateWeaknesses': instance.candidateWeaknesses,
-      'riskFactor': instance.riskFactor,
-      'rewardFactor': instance.rewardFactor,
+      'riskFactor': instance.riskFactor.toJson(),
+      'rewardFactor': instance.rewardFactor.toJson(),
       'overallFitRating': instance.overallFitRating,
       'justification': instance.justification,
     };

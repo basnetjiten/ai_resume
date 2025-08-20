@@ -21,7 +21,7 @@ import 'package:auto_route/auto_route.dart' as _i4;
 /// [_i1.CVListingPage]
 class CVListingRoute extends _i4.PageRouteInfo<void> {
   const CVListingRoute({List<_i4.PageRouteInfo>? children})
-      : super(CVListingRoute.name, initialChildren: children);
+    : super(CVListingRoute.name, initialChildren: children);
 
   static const String name = 'CVListingRoute';
 
@@ -37,7 +37,7 @@ class CVListingRoute extends _i4.PageRouteInfo<void> {
 /// [_i2.CVSummaryPage]
 class CVSummaryRoute extends _i4.PageRouteInfo<void> {
   const CVSummaryRoute({List<_i4.PageRouteInfo>? children})
-      : super(CVSummaryRoute.name, initialChildren: children);
+    : super(CVSummaryRoute.name, initialChildren: children);
 
   static const String name = 'CVSummaryRoute';
 
@@ -53,7 +53,7 @@ class CVSummaryRoute extends _i4.PageRouteInfo<void> {
 /// [_i3.ResumeUploadPage]
 class ResumeUploadRoute extends _i4.PageRouteInfo<void> {
   const ResumeUploadRoute({List<_i4.PageRouteInfo>? children})
-      : super(ResumeUploadRoute.name, initialChildren: children);
+    : super(ResumeUploadRoute.name, initialChildren: children);
 
   static const String name = 'ResumeUploadRoute';
 

@@ -11,27 +11,26 @@ import '../network/auth_interceptor.dart';
 
 @module
 abstract class RegisterModules {
-
-
   @singleton
   @preResolve
   Future<LocalStorage> get storage async => await LocalStorage.getInstance();
 
   @lazySingleton
-  Dio dio(AuthInterceptor authInterceptor) => Dio(
-      BaseOptions(
-        headers: {
-          "Accept": "application/json'",
-          "Content-Type": "application/json",
-        },
-        baseUrl:"http://localhost:3000/api/v1/",
-        receiveTimeout: const Duration(seconds: 120),
-        connectTimeout: const Duration(seconds: 120),
-        responseType: ResponseType.json,
-      ),
-    )
-    ..interceptors.addAll([
-      authInterceptor,
-      if (kDebugMode) LogInterceptor(requestBody: true),
-    ]);
+  Dio dio(AuthInterceptor authInterceptor) =>
+      Dio(
+          BaseOptions(
+            headers: {
+              "Accept": "application/json'",
+              "Content-Type": "application/json",
+            },
+            baseUrl: "https://journey-ai-webservice.onrender.com/api/v1/",
+            receiveTimeout: const Duration(seconds: 120),
+            connectTimeout: const Duration(seconds: 120),
+            responseType: ResponseType.json,
+          ),
+        )
+        ..interceptors.addAll([
+          authInterceptor,
+          if (kDebugMode) LogInterceptor(requestBody: true),
+        ]);
 }

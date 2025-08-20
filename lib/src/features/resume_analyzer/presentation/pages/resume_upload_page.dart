@@ -168,7 +168,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Upload Your CV',
+            'Upload Your Resume',
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.w600,
               color: Colors.white,

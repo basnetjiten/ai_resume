@@ -50,10 +50,7 @@ class _CVListingPageState extends State<CVListingPage>
     final startIndex = currentPage * itemsPerPage;
     final endIndex = math.min(startIndex + itemsPerPage, allCVs.length);
     setState(() {
-      currentPageCVs = allCVs.sublist(
-        startIndex,
-        endIndex,
-      );
+      currentPageCVs = allCVs.sublist(startIndex, endIndex);
     });
   }
 
@@ -91,10 +88,7 @@ class _CVListingPageState extends State<CVListingPage>
         );
       },
       builder: (context, state) {
-        return Scaffold(
-          appBar: _buildAppBar(),
-          body: _buildBody(state),
-        );
+        return Scaffold(appBar: _buildAppBar(), body: _buildBody(state));
       },
     );
   }
@@ -102,7 +96,7 @@ class _CVListingPageState extends State<CVListingPage>
   AppBar _buildAppBar() {
     return AppBar(
       title: Text(
-        'CV Library',
+        'Resume Library',
         style: GoogleFonts.poppins(
           fontWeight: FontWeight.w600,
           color: Colors.white,
@@ -138,18 +132,16 @@ class _CVListingPageState extends State<CVListingPage>
       child: state.status.maybeWhen(
         submitting: () => allCVs.isEmpty
             ? const Center(
-                child: CircularProgressIndicator(color: Colors.white))
+                child: CircularProgressIndicator(color: Colors.white),
+              )
             : _buildContent(),
         error: (error) => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Failed to load resumes: ${error ?? 'Unknown error'}',
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
+                'Failed to load resumes',
+                style: GoogleFonts.poppins(color: Colors.white, fontSize: 16),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
@@ -173,10 +165,9 @@ class _CVListingPageState extends State<CVListingPage>
     return Column(
       children: [
         _buildStatsHeader(),
-        Expanded(
-          child: _buildCVList(),
-        ),
+        Expanded(child: _buildCVList()),
         if (totalPages > 1) _buildPagination(),
+        const SizedBox(height: 16),
       ],
     );
   }
@@ -195,7 +186,7 @@ class _CVListingPageState extends State<CVListingPage>
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             StatCardWidget(
-              title: 'Total CVs',
+              title: 'Total Resumes',
               value: '${allCVs.length}',
               icon: Icons.description,
               color: Colors.white,
@@ -224,18 +215,11 @@ class _CVListingPageState extends State<CVListingPage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.folder_open,
-              size: 64,
-              color: Colors.grey[400],
-            ),
+            Icon(Icons.folder_open, size: 64, color: Colors.grey[400]),
             const SizedBox(height: 16),
             Text(
               'No resumes found',
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                color: Colors.grey[600],
-              ),
+              style: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
             ),
           ],
         ),
