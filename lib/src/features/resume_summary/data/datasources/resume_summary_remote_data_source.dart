@@ -16,7 +16,7 @@ class ResumeSummaryRemoteDataSourceImpl extends BaseRemoteSource
   @override
   Future<List<ResumeSummaryDto>> getResumeSummaries() async {
     return networkRequest<List<ResumeSummaryDto>>(
-      request: (dio) => dio.get('resume-summary'),
+      request: (dio) => dio.get('resume-summaries'),
       onResponse: (data) => (data as List)
           .map((json) => ResumeSummaryDto.fromJson(json))
           .toList(),

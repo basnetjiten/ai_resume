@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'dart:async';
+import 'dart:math' as math;
 import 'package:ai_resume/src/app/presentation/pages/app.dart';
 import 'package:ai_resume/src/core/di/injector.dart';
 import 'package:ai_resume/src/features/resume_analyzer/presentation/blocs/file_picker/resume_picker_cubit.dart';
 import 'package:ai_resume/src/features/resume_analyzer/presentation/blocs/file_picker/resume_picker_state.dart';
+import 'package:ai_resume/src/features/resume_library/presentation/pages/cv_listing/cv_listing_page.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -105,7 +107,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
     Navigator.of(context).push(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            CVListingsScreen(),
+            CVListingPage(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(
             position: Tween<Offset>(
@@ -416,4 +418,55 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
       ],
     );
   }
+}
+
+class ParticlePainter extends CustomPainter {
+  final double animationValue;
+  final List<Particle> particles;
+
+  ParticlePainter(this.animationValue) : particles = _generateParticles();
+
+  static List<Particle> _generateParticles() {
+    final random = math.Random();
+    return List.generate(50, (index) {
+      return Particle(
+        x: random.nextDouble(),
+        y: random.nextDouble(),
+        size: random.nextDouble() * 4 + 1,
+        speed: random.nextDouble() * 0.5 + 0.1,
+      );
+    });
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.white.withOpacity(0.1)
+      ..style = PaintingStyle.fill;
+
+    for (final particle in particles) {
+      final x = (particle.x + animationValue * particle.speed) % 1.0 * size.width;
+      final y = particle.y * size.height;
+      canvas.drawCircle(Offset(x, y), particle.size, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(ParticlePainter oldDelegate) {
+    return oldDelegate.animationValue != animationValue;
+  }
+}
+
+class Particle {
+  final double x;
+  final double y;
+  final double size;
+  final double speed;
+
+  Particle({
+    required this.x,
+    required this.y,
+    required this.size,
+    required this.speed,
+  });
 }

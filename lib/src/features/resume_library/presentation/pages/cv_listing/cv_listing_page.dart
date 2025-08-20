@@ -1,13 +1,20 @@
 import 'dart:math' as math;
 
+import 'package:ai_resume/src/core/di/injector.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../../resume_summary/data/models/resume_summary_dto.dart';
 import '../../../domain/models/cv_summary_data.dart';
+import '../../blocs/resume_library_cubit.dart';
+import '../../blocs/resume_library_state.dart';
 import '../cv_detail/cv_detail_page.dart';
 import 'widgets/stat_card_widget.dart';
 import 'widgets/cv_card_widget.dart';
 import 'widgets/pagination_widget.dart';
 
+@RoutePage()
 class CVListingPage extends StatefulWidget {
   const CVListingPage({super.key});
 
@@ -21,8 +28,10 @@ class _CVListingPageState extends State<CVListingPage>
   int currentPage = 0;
   final int itemsPerPage = 5;
   late int totalPages;
-  late List<CVSummaryData> allCVs;
-  late List<CVSummaryData> currentPageCVs = [];
+  late List<ResumeSummaryDto> allCVs = [];
+  late List<ResumeSummaryDto> currentPageCVs = [];
+
+  late ResumeLibraryCubit _resumeLibraryCubit;
 
   @override
   void initState() {
@@ -32,10 +41,8 @@ class _CVListingPageState extends State<CVListingPage>
       vsync: this,
     );
     
-    // Initialize with mock data
-    allCVs = _generateMockCVData();
-    totalPages = (allCVs.length / itemsPerPage).ceil();
-    _updateCurrentPageData();
+    // Fetch data from API
+    _resumeLibraryCubit= getIt<ResumeLibraryCubit>()..fetchResumeSummaries();
     _fadeController.forward();
   }
 
@@ -43,7 +50,10 @@ class _CVListingPageState extends State<CVListingPage>
     final startIndex = currentPage * itemsPerPage;
     final endIndex = math.min(startIndex + itemsPerPage, allCVs.length);
     setState(() {
-      currentPageCVs = allCVs.sublist(startIndex, endIndex);
+      currentPageCVs = allCVs.sublist(
+        startIndex,
+        endIndex,
+      );
     });
   }
 
@@ -58,18 +68,6 @@ class _CVListingPageState extends State<CVListingPage>
     }
   }
 
-  void _viewCVDetails(CVSummaryData cv) {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            CVDetailPage(cvData: cv),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return FadeTransition(opacity: animation, child: child);
-        },
-      ),
-    );
-  }
-
   @override
   void dispose() {
     _fadeController.dispose();
@@ -78,9 +76,28 @@ class _CVListingPageState extends State<CVListingPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: _buildBody(),
+    return BlocConsumer<ResumeLibraryCubit, ResumeLibraryState>(
+      bloc: _resumeLibraryCubit,
+      listener: (context, state) {
+
+        state.status.maybeWhen(
+          orElse: () {},
+          success: (data) {
+            setState(() {
+              allCVs = state.summaries;
+              totalPages = (allCVs.length / itemsPerPage).ceil();
+              _updateCurrentPageData();
+            });
+          },
+        );
+
+      },
+      builder: (context, state) {
+        return Scaffold(
+          appBar: _buildAppBar(),
+          body: _buildBody(state),
+        );
+      },
     );
   }
 
@@ -111,7 +128,7 @@ class _CVListingPageState extends State<CVListingPage>
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(ResumeLibraryState state) {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -120,13 +137,56 @@ class _CVListingPageState extends State<CVListingPage>
           end: Alignment.bottomRight,
         ),
       ),
-      child: Column(
-        children: [
-          _buildStatsHeader(),
-          Expanded(child: _buildCVList()),
-          _buildPagination(),
-        ],
+      child: SafeArea(
+        child: state.status.maybeWhen(
+          submitting: () => allCVs.isEmpty
+              ? const Center(child: CircularProgressIndicator(color: Colors.white))
+              : _buildContent(),
+          error: (error) => Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Failed to load resumes: ${error ?? 'Unknown error'}',
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () => _resumeLibraryCubit.fetchResumeSummaries(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: const Color(0xFF6A11CB),
+                  ),
+                  child: const Text('Retry'),
+                ),
+              ],
+            ),
+          ),
+          orElse: _buildContent,
+        ),
       ),
+    );
+  }
+
+  Widget _buildContent() {
+    return Column(
+      children: [
+        _buildStatsHeader(),
+        Expanded(
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+            ),
+            child: _buildCVList(),
+          ),
+        ),
+        if (totalPages > 1) _buildPagination(),
+      ],
     );
   }
 
@@ -157,19 +217,46 @@ class _CVListingPageState extends State<CVListingPage>
   }
 
   Widget _buildCVList() {
+    if (currentPageCVs.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.folder_open,
+              size: 64,
+              color: Colors.grey[400],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'No resumes found',
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                color: Colors.grey[600],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return AnimatedBuilder(
       animation: _fadeController,
       builder: (context, child) {
         return FadeTransition(
           opacity: _fadeController,
           child: ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             itemCount: currentPageCVs.length,
             itemBuilder: (context, index) {
-              return CVCardWidget(
-                cv: currentPageCVs[index],
-                onTap: () => _viewCVDetails(currentPageCVs[index]),
-                index: index,
+              final cv = currentPageCVs[index];
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: CVCardWidget(
+                  cv: cv,
+                  onTap: () => _viewCVDetails(cv),
+                  index: index,
+                ),
               );
             },
           ),
@@ -179,96 +266,34 @@ class _CVListingPageState extends State<CVListingPage>
   }
 
   Widget _buildPagination() {
-    return PaginationWidget(
-      currentPage: currentPage,
-      totalPages: totalPages,
-      onPageChanged: _goToPage,
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
+      ),
+      child: PaginationWidget(
+        currentPage: currentPage,
+        totalPages: totalPages,
+        onPageChanged: _goToPage,
+      ),
     );
   }
 
-  // Mock data generation
-  static List<CVSummaryData> _generateMockCVData() {
-    return [
-      CVSummaryData(
-        name: 'Sarah Johnson',
-        position: 'Senior Flutter Developer',
-        experience: 'Senior',
-        summary: 'Experienced mobile developer with expertise in Flutter and React Native. Led multiple successful app launches with 1M+ downloads.',
-        skills: ['Flutter', 'Dart', 'Firebase', 'iOS', 'Android'],
-        uploadDate: '2024-08-10',
+  void _viewCVDetails(ResumeSummaryDto cv) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CVDetailPage(
+          cvData: CVSummaryData(
+            name: cv.data.candidateName,
+            position: cv.data.role,
+            experience: cv.data.seniority,
+            summary: cv.data.summary,
+            skills: cv.data.skills,
+            uploadDate: cv.data.uploadedDate,
+          ),
+        ),
       ),
-      CVSummaryData(
-        name: 'Michael Chen',
-        position: 'Full Stack Developer',
-        experience: 'Mid-level',
-        summary: 'Full-stack developer specializing in web applications using React, Node.js, and modern cloud technologies.',
-        skills: ['React', 'Node.js', 'AWS', 'MongoDB', 'GraphQL'],
-        uploadDate: '2024-08-12',
-      ),
-      CVSummaryData(
-        name: 'Emily Rodriguez',
-        position: 'UI/UX Designer',
-        experience: 'Senior',
-        summary: 'Creative UI/UX designer with 7+ years experience creating intuitive and beautiful user interfaces for mobile and web.',
-        skills: ['Figma', 'Adobe XD', 'Prototyping', 'User Research', 'Design Systems'],
-        uploadDate: '2024-08-13',
-      ),
-      CVSummaryData(
-        name: 'David Kim',
-        position: 'iOS Developer',
-        experience: 'Mid-level',
-        summary: 'Native iOS developer with strong Swift skills and experience building scalable applications for the App Store.',
-        skills: ['Swift', 'SwiftUI', 'UIKit', 'Core Data', 'Xcode'],
-        uploadDate: '2024-08-14',
-      ),
-      CVSummaryData(
-        name: 'Lisa Wang',
-        position: 'Product Manager',
-        experience: 'Senior',
-        summary: 'Strategic product manager with expertise in mobile app development lifecycle and agile methodologies.',
-        skills: ['Product Strategy', 'Agile', 'Analytics', 'User Stories', 'Roadmapping'],
-        uploadDate: '2024-08-15',
-      ),
-      CVSummaryData(
-        name: 'Alex Thompson',
-        position: 'Backend Engineer',
-        experience: 'Junior',
-        summary: 'Backend engineer focused on building scalable APIs and microservices using modern frameworks.',
-        skills: ['Python', 'Django', 'PostgreSQL', 'Docker', 'Kubernetes'],
-        uploadDate: '2024-08-16',
-      ),
-      CVSummaryData(
-        name: 'Maria Garcia',
-        position: 'Data Scientist',
-        experience: 'Mid-level',
-        summary: 'Data scientist with expertise in machine learning and statistical analysis for business insights.',
-        skills: ['Python', 'Machine Learning', 'TensorFlow', 'SQL', 'Jupyter'],
-        uploadDate: '2024-08-17',
-      ),
-      CVSummaryData(
-        name: 'James Wilson',
-        position: 'DevOps Engineer',
-        experience: 'Senior',
-        summary: 'DevOps engineer specializing in cloud infrastructure, CI/CD pipelines, and automation.',
-        skills: ['AWS', 'Docker', 'Kubernetes', 'Jenkins', 'Terraform'],
-        uploadDate: '2024-08-18',
-      ),
-      CVSummaryData(
-        name: 'Sophie Miller',
-        position: 'Frontend Developer',
-        experience: 'Junior',
-        summary: 'Frontend developer passionate about creating responsive and accessible web applications.',
-        skills: ['JavaScript', 'React', 'CSS', 'HTML', 'Webpack'],
-        uploadDate: '2024-08-19',
-      ),
-      CVSummaryData(
-        name: 'Ryan Davis',
-        position: 'Mobile Architect',
-        experience: 'Senior',
-        summary: 'Mobile architect with extensive experience designing scalable mobile application architectures.',
-        skills: ['Architecture', 'Flutter', 'React Native', 'iOS', 'Android'],
-        uploadDate: '2024-08-20',
-      ),
-    ];
+    );
   }
 }

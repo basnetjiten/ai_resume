@@ -11,24 +11,24 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:ai_resume/src/features/resume_analyzer/presentation/pages/resume_upload_page.dart'
     as _i3;
-import 'package:ai_resume/src/features/resume_summary/presentation/pages/cv_summary_dummy.dart'
+import 'package:ai_resume/src/features/resume_library/presentation/pages/cv_listing/cv_listing_page.dart'
     as _i1;
 import 'package:ai_resume/src/features/resume_summary/presentation/pages/cv_summary_page.dart'
     as _i2;
 import 'package:auto_route/auto_route.dart' as _i4;
 
 /// generated route for
-/// [_i1.CVSumarryPage]
-class CVSumarryRoute extends _i4.PageRouteInfo<void> {
-  const CVSumarryRoute({List<_i4.PageRouteInfo>? children})
-      : super(CVSumarryRoute.name, initialChildren: children);
+/// [_i1.CVListingPage]
+class CVListingRoute extends _i4.PageRouteInfo<void> {
+  const CVListingRoute({List<_i4.PageRouteInfo>? children})
+      : super(CVListingRoute.name, initialChildren: children);
 
-  static const String name = 'CVSumarryRoute';
+  static const String name = 'CVListingRoute';
 
   static _i4.PageInfo page = _i4.PageInfo(
     name,
     builder: (data) {
-      return _i1.CVSumarryPage();
+      return const _i1.CVListingPage();
     },
   );
 }

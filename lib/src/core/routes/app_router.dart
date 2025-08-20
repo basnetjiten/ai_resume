@@ -1,3 +1,4 @@
+import 'package:ai_resume/src/features/resume_library/presentation/pages/cv_listing/cv_listing_page.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:injectable/injectable.dart';
 
@@ -14,5 +15,6 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => <AutoRoute>[
         AutoRoute(page: ResumeUploadRoute.page, initial: true),
+        AutoRoute(page: CVListingRoute.page),
       ];
 }

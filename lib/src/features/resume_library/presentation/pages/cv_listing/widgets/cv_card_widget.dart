@@ -1,9 +1,9 @@
+import 'package:ai_resume/src/features/resume_summary/data/models/resume_summary_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../../domain/models/cv_summary_data.dart';
 
 class CVCardWidget extends StatelessWidget {
-  final CVSummaryData cv;
+  final ResumeSummaryDto cv;
   final VoidCallback onTap;
   final int index;
 
@@ -14,13 +14,24 @@ class CVCardWidget extends StatelessWidget {
     required this.index,
   });
 
+  String _formatDate(String dateString) {
+    try {
+      final date = DateTime.parse(dateString);
+      return '${date.day}/${date.month}/${date.year}';
+    } catch (e) {
+      return dateString;
+    }
+  }
+
   Color _getExperienceColor(String experience) {
-    switch (experience) {
-      case 'Senior':
+    switch (experience.toLowerCase()) {
+      case 'senior':
         return const Color(0xFF4CAF50);
-      case 'Mid-level':
+      case 'mid-level':
+      case 'mid level':
+      case 'midlevel':
         return const Color(0xFFFF9800);
-      case 'Junior':
+      case 'junior':
         return const Color(0xFF2196F3);
       default:
         return const Color(0xFF9C27B0);
@@ -29,75 +40,48 @@ class CVCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TweenAnimationBuilder<double>(
-      duration: Duration(milliseconds: 600 + (index * 100)),
-      tween: Tween(begin: 0.0, end: 1.0),
-      builder: (context, value, child) {
-        return Transform.translate(
-          offset: Offset(0, 30 * (1 - value)),
-          child: Opacity(
-            opacity: value.clamp(0.0, 1.0),
-            child: _buildCard(),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildCard() {
-    return Container(
+    return Card(
       margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.12),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.3)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
-          ),
-        ],
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
       ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(20),
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeader(),
-                const SizedBox(height: 16),
-                _buildSummary(),
-                const SizedBox(height: 12),
-                _buildSkills(),
-                const SizedBox(height: 8),
-                _buildFooter(),
-              ],
-            ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeader(context: context),
+              const SizedBox(height: 12),
+              _buildSummary(),
+              const SizedBox(height: 12),
+              _buildSkills(),
+              const SizedBox(height: 8),
+              _buildFooter(),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader({required BuildContext context}) {
     return Row(
       children: [
         Container(
           width: 50,
           height: 50,
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.2),
+            color: Colors.blue.withOpacity(0.1),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: const Icon(
+          child: Icon(
             Icons.person,
-            color: Colors.white,
-            size: 24,
+            color: Theme.of(context).primaryColor,
+            size: 28,
           ),
         ),
         const SizedBox(width: 16),
@@ -106,18 +90,18 @@ class CVCardWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                cv.name,
+                cv.data.candidateName,
                 style: GoogleFonts.poppins(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
-                  color: Colors.white,
+                  color: Colors.black87,
                 ),
               ),
               Text(
-                cv.position,
+                cv.data.role,
                 style: GoogleFonts.poppins(
                   fontSize: 14,
-                  color: Colors.white.withOpacity(0.8),
+                  color: Colors.black54,
                 ),
               ),
             ],
@@ -126,15 +110,19 @@ class CVCardWidget extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-            color: _getExperienceColor(cv.experience),
+            color: _getExperienceColor(cv.data.seniority).withOpacity(0.1),
             borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: _getExperienceColor(cv.data.seniority),
+              width: 1,
+            ),
           ),
           child: Text(
-            cv.experience,
+            cv.data.seniority,
             style: GoogleFonts.poppins(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: Colors.white,
+              color: _getExperienceColor(cv.data.seniority),
             ),
           ),
         ),
@@ -144,10 +132,10 @@ class CVCardWidget extends StatelessWidget {
 
   Widget _buildSummary() {
     return Text(
-      cv.summary,
+      cv.data.summary,
       style: GoogleFonts.poppins(
         fontSize: 14,
-        color: Colors.white.withOpacity(0.9),
+        color: Colors.black87,
         height: 1.5,
       ),
       maxLines: 2,
@@ -156,20 +144,22 @@ class CVCardWidget extends StatelessWidget {
   }
 
   Widget _buildSkills() {
+    if (cv.data.skills.isEmpty) return const SizedBox.shrink();
+
     return Wrap(
       spacing: 8,
-      runSpacing: 4,
-      children: cv.skills.take(3).map((skill) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      runSpacing: 8,
+      children: (cv.data.skills.take(3).toList()..sort()).map((skill) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(12),
+          color: Colors.grey[100],
+          borderRadius: BorderRadius.circular(16),
         ),
         child: Text(
           skill,
           style: GoogleFonts.poppins(
-            fontSize: 11,
-            color: Colors.white.withOpacity(0.9),
+            fontSize: 12,
+            color: Colors.black54,
           ),
         ),
       )).toList(),
@@ -181,15 +171,15 @@ class CVCardWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Uploaded: ${cv.uploadDate}',
+          'Uploaded: ${_formatDate(cv.data.uploadedDate)}',
           style: GoogleFonts.poppins(
-            fontSize: 11,
-            color: Colors.white.withOpacity(0.7),
+            fontSize: 12,
+            color: Colors.grey[600],
           ),
         ),
         Icon(
           Icons.arrow_forward_ios,
-          color: Colors.white.withOpacity(0.7),
+          color: Colors.grey[400],
           size: 14,
         ),
       ],

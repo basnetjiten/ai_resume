@@ -21,6 +21,8 @@ import 'package:ai_resume/src/features/resume_analyzer/domain/repositories/resum
     as _i918;
 import 'package:ai_resume/src/features/resume_analyzer/presentation/blocs/file_picker/resume_picker_cubit.dart'
     as _i71;
+import 'package:ai_resume/src/features/resume_library/presentation/blocs/resume_library_cubit.dart'
+    as _i117;
 import 'package:ai_resume/src/features/resume_summary/data/datasources/resume_summary_remote_data_source.dart'
     as _i879;
 import 'package:ai_resume/src/features/resume_summary/data/repositories/resume_summary_repository_impl.dart'
@@ -67,6 +69,8 @@ Future<_i174.GetIt> $initGetIt(
       () => _i71.ResumePickerCubit(gh<_i918.ResumeFileRepository>()));
   gh.factory<_i580.ResumeSummaryCubit>(
       () => _i580.ResumeSummaryCubit(gh<_i895.ResumeSummaryRepository>()));
+  gh.factory<_i117.ResumeLibraryCubit>(
+      () => _i117.ResumeLibraryCubit(gh<_i895.ResumeSummaryRepository>()));
   return getIt;
 }
 
