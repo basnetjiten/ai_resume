@@ -28,7 +28,7 @@ class ResumeFileRepoImpl extends BaseRepository
   }
 
   @override
-  EitherResponse<bool> uploadFile({
+  EitherResponse<String> uploadFile({
     required File pickedFile,
     required void Function(int sentBytes, int totalBytes) downloadProgress,
   }) async {
@@ -44,7 +44,7 @@ class ResumeFileRepoImpl extends BaseRepository
         errorMessage: 'FILE UPLOAD FAILED',
         onProgress: downloadProgress,
       ),
-      onSuccess: (status) => status,
+      onSuccess: (status) => cvId,
     );
   }
 }

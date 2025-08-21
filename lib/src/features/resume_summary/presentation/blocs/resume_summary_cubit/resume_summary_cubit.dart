@@ -27,9 +27,9 @@ class ResumeSummaryCubit extends BaseBloc<void, ResumeSummaryState> {
     );
   }
 
-  Future<void> fetchResumeSummaryDetail({String? id}) async {
+  Future<void> fetchResumeSummaryDetail({required String id}) async {
     await handleAPICall(
-      call: _repository.getResumeSummary("id"),
+      call: _repository.getResumeSummary(id),
       onSuccess: (summary) => state.copyWith(
           status: const FormStatus.success(), resumeSummaryData: summary.data),
       onFailure: (error) => state.copyWith(

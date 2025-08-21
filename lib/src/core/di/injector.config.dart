@@ -63,7 +63,7 @@ Future<_i174.GetIt> $initGetIt(
   gh.singleton<_i918.ResumeFileRepository>(
     () => _i618.ResumeFileRepoImpl(gh<_i403.FilePickerService>()),
   );
-  gh.lazySingleton<_i1047.ResumeLibraryLocalDataSource>(
+  gh.singleton<_i1047.ResumeLibraryLocalDataSource>(
     () => _i1047.ResumeLibraryLocalDataSourceImpl(gh<_i920.LocalStorage>()),
   );
   gh.factory<_i71.ResumePickerCubit>(

@@ -6,8 +6,9 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class CVAnalysisScreen extends StatefulWidget {
   final String fileName;
+  final String cvId;
 
-  const CVAnalysisScreen({super.key, required this.fileName});
+  const CVAnalysisScreen({super.key, required this.fileName, required this.cvId});
 
   @override
   _CVAnalysisScreenState createState() => _CVAnalysisScreenState();
@@ -52,7 +53,7 @@ class _CVAnalysisScreenState extends State<CVAnalysisScreen>
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              CVSummaryPage(),
+              CVSummaryPage(cvID: widget.cvId,),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(opacity: animation, child: child);
           },

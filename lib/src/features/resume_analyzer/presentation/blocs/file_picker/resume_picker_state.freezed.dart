@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ResumePickerState {
 
- FormStatus get status; int get uploadProgress; File? get pickedFile;
+ FormStatus get status; int get uploadProgress; String? get cvId; File? get pickedFile;
 /// Create a copy of ResumePickerState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ResumePickerStateCopyWith<ResumePickerState> get copyWith => _$ResumePickerStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ResumePickerState&&(identical(other.status, status) || other.status == status)&&(identical(other.uploadProgress, uploadProgress) || other.uploadProgress == uploadProgress)&&(identical(other.pickedFile, pickedFile) || other.pickedFile == pickedFile));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ResumePickerState&&(identical(other.status, status) || other.status == status)&&(identical(other.uploadProgress, uploadProgress) || other.uploadProgress == uploadProgress)&&(identical(other.cvId, cvId) || other.cvId == cvId)&&(identical(other.pickedFile, pickedFile) || other.pickedFile == pickedFile));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,status,uploadProgress,pickedFile);
+int get hashCode => Object.hash(runtimeType,status,uploadProgress,cvId,pickedFile);
 
 @override
 String toString() {
-  return 'ResumePickerState(status: $status, uploadProgress: $uploadProgress, pickedFile: $pickedFile)';
+  return 'ResumePickerState(status: $status, uploadProgress: $uploadProgress, cvId: $cvId, pickedFile: $pickedFile)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ResumePickerStateCopyWith<$Res>  {
   factory $ResumePickerStateCopyWith(ResumePickerState value, $Res Function(ResumePickerState) _then) = _$ResumePickerStateCopyWithImpl;
 @useResult
 $Res call({
- FormStatus status, int uploadProgress, File? pickedFile
+ FormStatus status, int uploadProgress, String? cvId, File? pickedFile
 });
 
 
@@ -62,11 +62,12 @@ class _$ResumePickerStateCopyWithImpl<$Res>
 
 /// Create a copy of ResumePickerState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? uploadProgress = null,Object? pickedFile = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? uploadProgress = null,Object? cvId = freezed,Object? pickedFile = freezed,}) {
   return _then(_self.copyWith(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as FormStatus,uploadProgress: null == uploadProgress ? _self.uploadProgress : uploadProgress // ignore: cast_nullable_to_non_nullable
-as int,pickedFile: freezed == pickedFile ? _self.pickedFile : pickedFile // ignore: cast_nullable_to_non_nullable
+as int,cvId: freezed == cvId ? _self.cvId : cvId // ignore: cast_nullable_to_non_nullable
+as String?,pickedFile: freezed == pickedFile ? _self.pickedFile : pickedFile // ignore: cast_nullable_to_non_nullable
 as File?,
   ));
 }
@@ -161,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( FormStatus status,  int uploadProgress,  File? pickedFile)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( FormStatus status,  int uploadProgress,  String? cvId,  File? pickedFile)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ResumePickerState() when $default != null:
-return $default(_that.status,_that.uploadProgress,_that.pickedFile);case _:
+return $default(_that.status,_that.uploadProgress,_that.cvId,_that.pickedFile);case _:
   return orElse();
 
 }
@@ -182,10 +183,10 @@ return $default(_that.status,_that.uploadProgress,_that.pickedFile);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( FormStatus status,  int uploadProgress,  File? pickedFile)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( FormStatus status,  int uploadProgress,  String? cvId,  File? pickedFile)  $default,) {final _that = this;
 switch (_that) {
 case _ResumePickerState():
-return $default(_that.status,_that.uploadProgress,_that.pickedFile);case _:
+return $default(_that.status,_that.uploadProgress,_that.cvId,_that.pickedFile);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -202,10 +203,10 @@ return $default(_that.status,_that.uploadProgress,_that.pickedFile);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( FormStatus status,  int uploadProgress,  File? pickedFile)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( FormStatus status,  int uploadProgress,  String? cvId,  File? pickedFile)?  $default,) {final _that = this;
 switch (_that) {
 case _ResumePickerState() when $default != null:
-return $default(_that.status,_that.uploadProgress,_that.pickedFile);case _:
+return $default(_that.status,_that.uploadProgress,_that.cvId,_that.pickedFile);case _:
   return null;
 
 }
@@ -217,11 +218,12 @@ return $default(_that.status,_that.uploadProgress,_that.pickedFile);case _:
 
 
 class _ResumePickerState implements ResumePickerState {
-  const _ResumePickerState({this.status = const FormStatus.initial(), this.uploadProgress = 0, this.pickedFile});
+  const _ResumePickerState({this.status = const FormStatus.initial(), this.uploadProgress = 0, this.cvId, this.pickedFile});
   
 
 @override@JsonKey() final  FormStatus status;
 @override@JsonKey() final  int uploadProgress;
+@override final  String? cvId;
 @override final  File? pickedFile;
 
 /// Create a copy of ResumePickerState
@@ -234,16 +236,16 @@ _$ResumePickerStateCopyWith<_ResumePickerState> get copyWith => __$ResumePickerS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ResumePickerState&&(identical(other.status, status) || other.status == status)&&(identical(other.uploadProgress, uploadProgress) || other.uploadProgress == uploadProgress)&&(identical(other.pickedFile, pickedFile) || other.pickedFile == pickedFile));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ResumePickerState&&(identical(other.status, status) || other.status == status)&&(identical(other.uploadProgress, uploadProgress) || other.uploadProgress == uploadProgress)&&(identical(other.cvId, cvId) || other.cvId == cvId)&&(identical(other.pickedFile, pickedFile) || other.pickedFile == pickedFile));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,status,uploadProgress,pickedFile);
+int get hashCode => Object.hash(runtimeType,status,uploadProgress,cvId,pickedFile);
 
 @override
 String toString() {
-  return 'ResumePickerState(status: $status, uploadProgress: $uploadProgress, pickedFile: $pickedFile)';
+  return 'ResumePickerState(status: $status, uploadProgress: $uploadProgress, cvId: $cvId, pickedFile: $pickedFile)';
 }
 
 
@@ -254,7 +256,7 @@ abstract mixin class _$ResumePickerStateCopyWith<$Res> implements $ResumePickerS
   factory _$ResumePickerStateCopyWith(_ResumePickerState value, $Res Function(_ResumePickerState) _then) = __$ResumePickerStateCopyWithImpl;
 @override @useResult
 $Res call({
- FormStatus status, int uploadProgress, File? pickedFile
+ FormStatus status, int uploadProgress, String? cvId, File? pickedFile
 });
 
 
@@ -271,11 +273,12 @@ class __$ResumePickerStateCopyWithImpl<$Res>
 
 /// Create a copy of ResumePickerState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? uploadProgress = null,Object? pickedFile = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? uploadProgress = null,Object? cvId = freezed,Object? pickedFile = freezed,}) {
   return _then(_ResumePickerState(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as FormStatus,uploadProgress: null == uploadProgress ? _self.uploadProgress : uploadProgress // ignore: cast_nullable_to_non_nullable
-as int,pickedFile: freezed == pickedFile ? _self.pickedFile : pickedFile // ignore: cast_nullable_to_non_nullable
+as int,cvId: freezed == cvId ? _self.cvId : cvId // ignore: cast_nullable_to_non_nullable
+as String?,pickedFile: freezed == pickedFile ? _self.pickedFile : pickedFile // ignore: cast_nullable_to_non_nullable
 as File?,
   ));
 }

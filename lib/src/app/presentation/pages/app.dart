@@ -35,39 +35,38 @@ class App extends StatelessWidget {
           );
         },
         child: MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            routerConfig: _appRouter.config(),
-            localizationsDelegates: <LocalizationsDelegate>[
-              //AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-              textTheme: GoogleFonts.poppinsTextTheme(),
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-            ),
-            builder: (BuildContext context, Widget? child) {
-              //  ErrorWidget.builder = (FlutterErrorDetails details) => AppErrorWidget(details: details);
-              return child!;
-            }),
+          debugShowCheckedModeBanner: false,
+          routerConfig: _appRouter.config(),
+          localizationsDelegates: <LocalizationsDelegate>[
+            //AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            textTheme: GoogleFonts.poppinsTextTheme(),
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          builder: (BuildContext context, Widget? child) {
+            //  ErrorWidget.builder = (FlutterErrorDetails details) => AppErrorWidget(details: details);
+            return child!;
+          },
+        ),
       ),
     );
   }
-
-  /// Routes page based on the provided [route]
-  void _routePage({required PageRouteInfo route}) {
-    _appRouter.push(route);
-  }
 }
-
-
 
 class CVAnalysisScreen extends StatefulWidget {
   final String fileName;
+  final String cvId;
 
-  const CVAnalysisScreen({super.key, required this.fileName});
+  const CVAnalysisScreen({
+    super.key,
+    required this.fileName,
+    required this.cvId,
+  });
 
   @override
   _CVAnalysisScreenState createState() => _CVAnalysisScreenState();
@@ -112,7 +111,7 @@ class _CVAnalysisScreenState extends State<CVAnalysisScreen>
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              CVSummaryPage(),
+              CVSummaryPage(cvID: widget.cvId),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(opacity: animation, child: child);
           },
@@ -170,9 +169,7 @@ class _CVAnalysisScreenState extends State<CVAnalysisScreen>
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.3),
-                    ),
+                    border: Border.all(color: Colors.white.withOpacity(0.3)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

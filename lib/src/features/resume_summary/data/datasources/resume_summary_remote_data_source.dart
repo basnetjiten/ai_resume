@@ -33,7 +33,7 @@ class ResumeSummaryRemoteDataSourceImpl extends BaseRemoteSource
   @override
   Future<ResumeSummaryDto> getResumeSummary(String id) async {
     return networkRequest<ResumeSummaryDto>(
-      request: (dio) => dio.get('resume-summary', queryParameters: {"id": "FUELED-777"}),
+      request: (dio) => dio.get('resume-summary', queryParameters: {"id": id}),
       onResponse: (data) => ResumeSummaryDto.fromJson(data),
     );
   }

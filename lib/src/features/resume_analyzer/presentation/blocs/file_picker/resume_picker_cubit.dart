@@ -45,7 +45,7 @@ class ResumePickerCubit extends BaseBloc<void, ResumePickerState> {
           emit(state.copyWith(uploadProgress: progress));
         },
       ),
-      onSuccess: (status) => state.copyWith(status: FormStatus.success()),
+      onSuccess: (String cvId) => state.copyWith(status: FormStatus.success(),cvId:cvId),
       onFailure: (error) =>
           state.copyWith(status: FormStatus.error(error: error)),
     );

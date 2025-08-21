@@ -104,6 +104,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>
                     CVAnalysisScreen(
+                      cvId: state.cvId!,
                       fileName: state.pickedFile!.path.split('/').last,
                     ),
                 transitionsBuilder:
@@ -174,9 +175,9 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
               ),
               Column(
                 children: [
-                  SizedBox(height: 150),
+                  SizedBox(height: 100),
                   SizedBox(
-                    height: 100,
+                    height: 50,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,

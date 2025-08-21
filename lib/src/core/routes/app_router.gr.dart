@@ -16,6 +16,7 @@ import 'package:ai_resume/src/features/resume_library/presentation/pages/cv_list
 import 'package:ai_resume/src/features/resume_summary/presentation/pages/cv_summary_page.dart'
     as _i2;
 import 'package:auto_route/auto_route.dart' as _i4;
+import 'package:flutter/material.dart' as _i5;
 
 /// generated route for
 /// [_i1.CVListingPage]
@@ -35,18 +36,49 @@ class CVListingRoute extends _i4.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.CVSummaryPage]
-class CVSummaryRoute extends _i4.PageRouteInfo<void> {
-  const CVSummaryRoute({List<_i4.PageRouteInfo>? children})
-    : super(CVSummaryRoute.name, initialChildren: children);
+class CVSummaryRoute extends _i4.PageRouteInfo<CVSummaryRouteArgs> {
+  CVSummaryRoute({
+    _i5.Key? key,
+    required String cvID,
+    List<_i4.PageRouteInfo>? children,
+  }) : super(
+         CVSummaryRoute.name,
+         args: CVSummaryRouteArgs(key: key, cvID: cvID),
+         initialChildren: children,
+       );
 
   static const String name = 'CVSummaryRoute';
 
   static _i4.PageInfo page = _i4.PageInfo(
     name,
     builder: (data) {
-      return const _i2.CVSummaryPage();
+      final args = data.argsAs<CVSummaryRouteArgs>();
+      return _i2.CVSummaryPage(key: args.key, cvID: args.cvID);
     },
   );
+}
+
+class CVSummaryRouteArgs {
+  const CVSummaryRouteArgs({this.key, required this.cvID});
+
+  final _i5.Key? key;
+
+  final String cvID;
+
+  @override
+  String toString() {
+    return 'CVSummaryRouteArgs{key: $key, cvID: $cvID}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! CVSummaryRouteArgs) return false;
+    return key == other.key && cvID == other.cvID;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ cvID.hashCode;
 }
 
 /// generated route for

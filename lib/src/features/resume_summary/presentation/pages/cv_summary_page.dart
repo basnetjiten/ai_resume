@@ -12,12 +12,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 @RoutePage()
 class CVSummaryPage extends StatelessWidget {
-  const CVSummaryPage({super.key});
+  const CVSummaryPage({super.key,required this.cvID});
+
+  final String cvID;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<ResumeSummaryCubit>()..fetchResumeSummaryDetail(),
+      create: (_) => getIt<ResumeSummaryCubit>()..fetchResumeSummaryDetail(id: cvID),
       child: const _CVSummaryPageContent(),
     );
   }
@@ -116,41 +118,36 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
         .read<ResumeSummaryCubit>()
         .prepareAnalyzedSummaries(resumeSummaryData);
 
-    return RefreshIndicator(
-      onRefresh: () async {
-        context.read<ResumeSummaryCubit>().fetchResumeSummaryDetail();
-      },
-      child: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: cvSummaries.length + 1,
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return ProfileHeaderWidget(data: resumeSummaryData);
-          }
-          final cvIndex = index - 1;
-          return AnimatedBuilder(
-            animation: _staggerController,
-            builder: (context, child) {
-              final animationValue = Interval(
-                (index * 0.2).clamp(0.0, 1.0),
-                ((index * 0.2) + 0.4).clamp(0.0, 1.0),
-                curve: Curves.easeOutBack,
-              ).transform(_staggerController.value);
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: cvSummaries.length + 1,
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return ProfileHeaderWidget(data: resumeSummaryData);
+        }
+        final cvIndex = index - 1;
+        return AnimatedBuilder(
+          animation: _staggerController,
+          builder: (context, child) {
+            final animationValue = Interval(
+              (index * 0.2).clamp(0.0, 1.0),
+              ((index * 0.2) + 0.4).clamp(0.0, 1.0),
+              curve: Curves.easeOutBack,
+            ).transform(_staggerController.value);
 
-              return Transform.translate(
-                offset: Offset(0, 50 * (1 - animationValue)),
-                child: Opacity(
-                  opacity: animationValue.clamp(0.0, 1.0),
-                  child: SummaryCardWidget(
-                    resumeResultDto: cvSummaries[cvIndex],
-                    index: cvIndex,
-                  ),
+            return Transform.translate(
+              offset: Offset(0, 50 * (1 - animationValue)),
+              child: Opacity(
+                opacity: animationValue.clamp(0.0, 1.0),
+                child: SummaryCardWidget(
+                  resumeResultDto: cvSummaries[cvIndex],
+                  index: cvIndex,
                 ),
-              );
-            },
-          );
-        },
-      ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
