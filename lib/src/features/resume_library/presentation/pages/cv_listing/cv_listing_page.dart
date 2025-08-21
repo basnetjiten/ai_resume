@@ -167,7 +167,7 @@ class _CVListingPageState extends State<CVListingPage>
         _buildStatsHeader(),
         Expanded(child: _buildCVList()),
         if (totalPages > 1) _buildPagination(),
-        const SizedBox(height: 16),
+        const SizedBox(height: 50),
       ],
     );
   }

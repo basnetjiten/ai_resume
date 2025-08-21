@@ -55,7 +55,7 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'CV Summary',
+          'Resume Summary',
           style: GoogleFonts.poppins(
             fontWeight: FontWeight.w600,
             color: Colors.white,
@@ -88,7 +88,12 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
               submitting: () => _buildLoading(),
               success: (data) {
                 if (state.resumeSummaryData?.candidateName != null) {
-                  return _buildContent(state.resumeSummaryData!);
+                  return Column(
+                    children: [
+                      Expanded(child: _buildContent(state.resumeSummaryData!)),
+                      const SizedBox(height: 50),
+                    ],
+                  );
                 }
                 return _buildEmptyState();
               },
@@ -137,7 +142,9 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
                 child: Opacity(
                   opacity: animationValue.clamp(0.0, 1.0),
                   child: SummaryCardWidget(
-                      resumeResultDto: cvSummaries[cvIndex], index: cvIndex),
+                    resumeResultDto: cvSummaries[cvIndex],
+                    index: cvIndex,
+                  ),
                 ),
               );
             },
@@ -157,10 +164,7 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent>
 
   Widget _buildEmptyState() {
     return const Center(
-      child: Text(
-        'No data available',
-        style: TextStyle(color: Colors.white),
-      ),
+      child: Text('No data available', style: TextStyle(color: Colors.white)),
     );
   }
 }

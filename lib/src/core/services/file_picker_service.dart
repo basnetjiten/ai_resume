@@ -17,14 +17,14 @@ class FilePickerService {
     if (result != null) {
       pickedFiles = File(result.paths.first!);
 
-      if (isSize1MB(pickedFiles.lengthSync())) {
+      if (isSize2MB(pickedFiles.lengthSync())) {
         return (pickedFiles, null);
       }
 
-      return (pickedFiles, "localization.imageSizeError");
+      return (pickedFiles, "Please pick image less than 2 MB");
     }
-    return (pickedFiles, "localization.filePickError");
+    return (pickedFiles, "No file picked");
   }
 
-  static bool isSize1MB(int sizeInBytes) => sizeInBytes <= 1 * 1024 * 1024;
+  static bool isSize2MB(int sizeInBytes) => sizeInBytes <= 2 * 1024 * 1024;
 }

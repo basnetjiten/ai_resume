@@ -6,6 +6,7 @@ import 'package:ai_resume/src/core/di/injector.dart';
 import 'package:ai_resume/src/features/resume_analyzer/presentation/blocs/file_picker/resume_picker_cubit.dart';
 import 'package:ai_resume/src/features/resume_analyzer/presentation/blocs/file_picker/resume_picker_state.dart';
 import 'package:ai_resume/src/features/resume_library/presentation/pages/cv_listing/cv_listing_page.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +24,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
     with TickerProviderStateMixin {
   File? selectedFile;
   bool isUploading = false;
-  double uploadProgress = 0.0;
+
   late AnimationController _cardAnimationController;
   late AnimationController _particleAnimationController;
   late Animation<double> _cardScaleAnimation;
@@ -68,38 +69,6 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
 
   Future<void> _pickFile() async {
     _resumePickerCubit.selectedPdfFile();
-    // _startUpload();
-  }
-
-  void _startUpload() async {
-    setState(() {
-      isUploading = true;
-      uploadProgress = 0.0;
-    });
-
-    // Simulate upload progress
-    Timer.periodic(Duration(milliseconds: 100), (timer) {
-      setState(() {
-        uploadProgress += 0.02;
-      });
-
-      if (uploadProgress >= 1.0) {
-        timer.cancel();
-        _navigateToAnalysis();
-      }
-    });
-  }
-
-  void _navigateToAnalysis() {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            CVAnalysisScreen(fileName: selectedFile!.path.split('/').last),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return FadeTransition(opacity: animation, child: child);
-        },
-      ),
-    );
   }
 
   void _navigateToListings() {
@@ -194,7 +163,6 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
           ),
           child: Stack(
             children: [
-              // Animated particles background
               AnimatedBuilder(
                 animation: _particleAnimation,
                 builder: (context, child) {
@@ -204,19 +172,55 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
                   );
                 },
               ),
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.all(24.0),
-                  child: AnimatedBuilder(
-                    animation: _cardScaleAnimation,
-                    builder: (context, child) {
-                      return Transform.scale(
-                        scale: _cardScaleAnimation.value,
-                        child: _buildUploadCard(),
-                      );
-                    },
+              Column(
+                children: [
+                  SizedBox(height: 150),
+                  SizedBox(
+                    height: 100,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        DefaultTextStyle(
+                          style: const TextStyle(
+                            fontSize: 21.0,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'Horizon',
+                          ),
+                          child: AnimatedTextKit(
+                            pause: Duration(milliseconds: 100),
+                            repeatForever: true,
+                            animatedTexts: [
+                              RotateAnimatedText('HIGHLIGHT YOUR STRENGTHS'),
+                              RotateAnimatedText('IDENTIFY GAPS'),
+                              RotateAnimatedText('JUSTIFY EXPERIENCES'),
+                              RotateAnimatedText('SHOWCASE SKILLS'),
+                              RotateAnimatedText('CRAFT A CAREER STORY'),
+                            ],
+                            onTap: () {},
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+
+                  SizedBox(height: 50),
+                  Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(24.0),
+                      child: AnimatedBuilder(
+                        animation: _cardScaleAnimation,
+                        builder: (context, child) {
+                          return Transform.scale(
+                            scale: _cardScaleAnimation.value,
+                            child: _buildUploadCard(),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -370,14 +374,14 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
   }
 
   Widget _buildProgressIndicator() {
-    return Column(
-      children: [
-        BlocSelector<ResumePickerCubit, ResumePickerState, int>(
-          bloc: _resumePickerCubit,
-          selector: (state) => state.uploadProgress,
-          builder: (_, progress) {
-            uploadProgress = progress / 100;
-            return GestureDetector(
+    return BlocSelector<ResumePickerCubit, ResumePickerState, int>(
+      bloc: _resumePickerCubit,
+      selector: (state) => state.uploadProgress,
+      builder: (_, progress) {
+        double uploadProgress = progress / 100;
+        return Column(
+          children: [
+            GestureDetector(
               onTap: () {
                 if (uploadProgress < 1.0) {
                   _resumePickerCubit.resetFile();
@@ -388,18 +392,19 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
                 backgroundColor: Colors.white.withOpacity(0.3),
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               ),
-            );
-          },
-        ),
-        SizedBox(height: 16),
-        Text(
-          '${(uploadProgress * 100).toInt()}%',
-          style: GoogleFonts.poppins(
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
+            ),
+
+            SizedBox(height: 16),
+            Text(
+              '${(uploadProgress * 100).toInt()}%',
+              style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

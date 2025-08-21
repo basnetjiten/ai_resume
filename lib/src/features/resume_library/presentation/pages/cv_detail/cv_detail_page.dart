@@ -26,13 +26,10 @@ class _CVDetailPageState extends State<CVDetailPage>
       duration: const Duration(milliseconds: 600),
       vsync: this,
     );
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0.0, 1.0),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _slideController,
-      curve: Curves.easeOutCubic,
-    ));
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0.0, 1.0), end: Offset.zero).animate(
+          CurvedAnimation(parent: _slideController, curve: Curves.easeOutCubic),
+        );
     _slideController.forward();
   }
 
@@ -44,16 +41,13 @@ class _CVDetailPageState extends State<CVDetailPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: _buildBody(),
-    );
+    return Scaffold(appBar: _buildAppBar(), body: _buildBody());
   }
 
   AppBar _buildAppBar() {
     return AppBar(
       title: Text(
-        'CV Details',
+        'Resume Details',
         style: GoogleFonts.poppins(
           fontWeight: FontWeight.w600,
           color: Colors.white,
@@ -100,6 +94,7 @@ class _CVDetailPageState extends State<CVDetailPage>
               _buildSkillsSection(),
               const SizedBox(height: 20),
               _buildUploadInfoSection(),
+              const SizedBox(height: 50),
             ],
           ),
         ),
@@ -146,24 +141,27 @@ class _CVDetailPageState extends State<CVDetailPage>
             spacing: 10,
             runSpacing: 10,
             children: widget.cvData.skills
-                .map((skill) => Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(16),
-                        border:
-                            Border.all(color: Colors.white.withOpacity(0.3)),
+                .map(
+                  (skill) => Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: Colors.white.withOpacity(0.3)),
+                    ),
+                    child: Text(
+                      skill,
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
                       ),
-                      child: Text(
-                        skill,
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ))
+                    ),
+                  ),
+                )
                 .toList(),
           ),
         ],
