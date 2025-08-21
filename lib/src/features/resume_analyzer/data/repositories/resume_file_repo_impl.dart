@@ -7,6 +7,7 @@ import 'package:dio_filex_uploader/filex_utilities/filex_utils.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:dio_filex_uploader/diox_file_uploader.dart';
+import 'package:uuid/uuid.dart';
 
 @Singleton(as: ResumeFileRepository)
 class ResumeFileRepoImpl extends BaseRepository
@@ -17,8 +18,8 @@ class ResumeFileRepoImpl extends BaseRepository
 
   @override
   EitherFileOrError<File> pickPdfFile() async {
-    final (pickedFile, errorMessage) =
-        await _filePickerService.pickFileFromPhone();
+    final (pickedFile, errorMessage) = await _filePickerService
+        .pickFileFromPhone();
 
     if (pickedFile != null) {
       return right(File(pickedFile.path));
@@ -27,18 +28,23 @@ class ResumeFileRepoImpl extends BaseRepository
   }
 
   @override
-  EitherResponse<bool> uploadFile({required File pickedFile,
-    required void Function(int sentBytes, int totalBytes) downloadProgress})  async {
+  EitherResponse<bool> uploadFile({
+    required File pickedFile,
+    required void Function(int sentBytes, int totalBytes) downloadProgress,
+  }) async {
     final filePath = pickedFile.path;
+
+    final cvId = Uuid().v1();
     return processApiCall(
-        call: DioFileXUploader.uploadMultiPartFileFromURL(
-          signedUrl: "https://journey-ai-webservice.onrender.com/api/v1/resume/upload",
-          filePath: filePath,
-          metaData: {"userId": "FUELED-777"},
-          errorMessage: 'FILE UPLOAD FAILED',
-          onProgress: downloadProgress,
-        ),
-        onSuccess: (status) => status,
+      call: DioFileXUploader.uploadMultiPartFileFromURL(
+        signedUrl:
+            "https://journey-ai-webservice.onrender.com/api/v1/resume/upload",
+        filePath: filePath,
+        metaData: {"userId": cvId},
+        errorMessage: 'FILE UPLOAD FAILED',
+        onProgress: downloadProgress,
+      ),
+      onSuccess: (status) => status,
     );
   }
 }
