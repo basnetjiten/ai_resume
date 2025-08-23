@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 abstract class ResumeSummaryRemoteDataSource {
   Future<List<ResumeSummaryDataDto>> getResumeSummaries();
 
-  Future<ResumeSummaryDto> getResumeSummary(String id);
+  Future<ResumeSummaryDto> getResumeSummary(String fileName);
 }
 
 @Singleton(as: ResumeSummaryRemoteDataSource)
@@ -31,9 +31,9 @@ class ResumeSummaryRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   @override
-  Future<ResumeSummaryDto> getResumeSummary(String id) async {
+  Future<ResumeSummaryDto> getResumeSummary(String fileName) async {
     return networkRequest<ResumeSummaryDto>(
-      request: (dio) => dio.get('resume-summary', queryParameters: {"id": id}),
+      request: (dio) => dio.get('resume-summary', queryParameters: {"originalName": fileName}),
       onResponse: (data) => ResumeSummaryDto.fromJson(data),
     );
   }

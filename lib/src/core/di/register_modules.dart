@@ -23,7 +23,7 @@ abstract class RegisterModules {
               "Accept": "application/json'",
               "Content-Type": "application/json",
             },
-            baseUrl: "https://journey-ai-webservice.onrender.com/api/v1/",
+            baseUrl: "http://localhost:3000/api/v1/",
             receiveTimeout: const Duration(seconds: 120),
             connectTimeout: const Duration(seconds: 120),
             responseType: ResponseType.json,

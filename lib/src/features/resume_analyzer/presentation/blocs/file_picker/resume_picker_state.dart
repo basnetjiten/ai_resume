@@ -11,7 +11,7 @@ abstract class ResumePickerState with _$ResumePickerState {
   const factory ResumePickerState({
     @Default(FormStatus.initial()) FormStatus status,
     @Default(0) int uploadProgress,
-    String? cvId,
+    String? fileName,
     File? pickedFile,
   }) = _ResumePickerState;
 }

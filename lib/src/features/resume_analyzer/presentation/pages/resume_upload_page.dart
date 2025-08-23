@@ -104,8 +104,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>
                     CVAnalysisScreen(
-                      cvId: state.cvId!,
-                      fileName: state.pickedFile!.path.split('/').last,
+                      fileName: state.fileName!
                     ),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {

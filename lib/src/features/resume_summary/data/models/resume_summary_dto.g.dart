@@ -22,14 +22,13 @@ _ResumeSummaryDataDto _$ResumeSummaryDataDtoFromJson(
   Map<String, dynamic> json,
 ) => _ResumeSummaryDataDto(
   id: json['_id'] as String,
-  cvId: json['cvId'] as String,
   candidateName: json['candidateName'] as String,
   role: json['role'] as String,
-  experience: json['experience'] as String?,
+  experience: json['experience'] as String? ?? '-',
   seniority: json['seniority'] as String,
   skills: (json['skills'] as List<dynamic>).map((e) => e as String).toList(),
   summary: json['summary'] as String,
-  uploadedDate: json['uploadedDate'] as String,
+  uploadedDate: json['uploadedDate'] as String?,
   analysis: AnalysisDto.fromJson(json['analysis'] as Map<String, dynamic>),
 );
 
@@ -37,7 +36,6 @@ Map<String, dynamic> _$ResumeSummaryDataDtoToJson(
   _ResumeSummaryDataDto instance,
 ) => <String, dynamic>{
   '_id': instance.id,
-  'cvId': instance.cvId,
   'candidateName': instance.candidateName,
   'role': instance.role,
   'experience': instance.experience,

@@ -299,7 +299,7 @@ $ResumeSummaryDataDtoCopyWith<$Res> get data {
 /// @nodoc
 mixin _$ResumeSummaryDataDto {
 
-@JsonKey(name: '_id') String get id; String get cvId; String get candidateName; String get role; String? get experience; String get seniority; List<String> get skills; String get summary; String get uploadedDate; AnalysisDto get analysis;
+@JsonKey(name: '_id') String get id; String get candidateName; String get role; String? get experience; String get seniority; List<String> get skills; String get summary; String? get uploadedDate; AnalysisDto get analysis;
 /// Create a copy of ResumeSummaryDataDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -312,16 +312,16 @@ $ResumeSummaryDataDtoCopyWith<ResumeSummaryDataDto> get copyWith => _$ResumeSumm
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ResumeSummaryDataDto&&(identical(other.id, id) || other.id == id)&&(identical(other.cvId, cvId) || other.cvId == cvId)&&(identical(other.candidateName, candidateName) || other.candidateName == candidateName)&&(identical(other.role, role) || other.role == role)&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.seniority, seniority) || other.seniority == seniority)&&const DeepCollectionEquality().equals(other.skills, skills)&&(identical(other.summary, summary) || other.summary == summary)&&(identical(other.uploadedDate, uploadedDate) || other.uploadedDate == uploadedDate)&&(identical(other.analysis, analysis) || other.analysis == analysis));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ResumeSummaryDataDto&&(identical(other.id, id) || other.id == id)&&(identical(other.candidateName, candidateName) || other.candidateName == candidateName)&&(identical(other.role, role) || other.role == role)&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.seniority, seniority) || other.seniority == seniority)&&const DeepCollectionEquality().equals(other.skills, skills)&&(identical(other.summary, summary) || other.summary == summary)&&(identical(other.uploadedDate, uploadedDate) || other.uploadedDate == uploadedDate)&&(identical(other.analysis, analysis) || other.analysis == analysis));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,cvId,candidateName,role,experience,seniority,const DeepCollectionEquality().hash(skills),summary,uploadedDate,analysis);
+int get hashCode => Object.hash(runtimeType,id,candidateName,role,experience,seniority,const DeepCollectionEquality().hash(skills),summary,uploadedDate,analysis);
 
 @override
 String toString() {
-  return 'ResumeSummaryDataDto(id: $id, cvId: $cvId, candidateName: $candidateName, role: $role, experience: $experience, seniority: $seniority, skills: $skills, summary: $summary, uploadedDate: $uploadedDate, analysis: $analysis)';
+  return 'ResumeSummaryDataDto(id: $id, candidateName: $candidateName, role: $role, experience: $experience, seniority: $seniority, skills: $skills, summary: $summary, uploadedDate: $uploadedDate, analysis: $analysis)';
 }
 
 
@@ -332,7 +332,7 @@ abstract mixin class $ResumeSummaryDataDtoCopyWith<$Res>  {
   factory $ResumeSummaryDataDtoCopyWith(ResumeSummaryDataDto value, $Res Function(ResumeSummaryDataDto) _then) = _$ResumeSummaryDataDtoCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: '_id') String id, String cvId, String candidateName, String role, String? experience, String seniority, List<String> skills, String summary, String uploadedDate, AnalysisDto analysis
+@JsonKey(name: '_id') String id, String candidateName, String role, String? experience, String seniority, List<String> skills, String summary, String? uploadedDate, AnalysisDto analysis
 });
 
 
@@ -349,18 +349,17 @@ class _$ResumeSummaryDataDtoCopyWithImpl<$Res>
 
 /// Create a copy of ResumeSummaryDataDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? cvId = null,Object? candidateName = null,Object? role = null,Object? experience = freezed,Object? seniority = null,Object? skills = null,Object? summary = null,Object? uploadedDate = null,Object? analysis = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? candidateName = null,Object? role = null,Object? experience = freezed,Object? seniority = null,Object? skills = null,Object? summary = null,Object? uploadedDate = freezed,Object? analysis = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,cvId: null == cvId ? _self.cvId : cvId // ignore: cast_nullable_to_non_nullable
 as String,candidateName: null == candidateName ? _self.candidateName : candidateName // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
 as String,experience: freezed == experience ? _self.experience : experience // ignore: cast_nullable_to_non_nullable
 as String?,seniority: null == seniority ? _self.seniority : seniority // ignore: cast_nullable_to_non_nullable
 as String,skills: null == skills ? _self.skills : skills // ignore: cast_nullable_to_non_nullable
 as List<String>,summary: null == summary ? _self.summary : summary // ignore: cast_nullable_to_non_nullable
-as String,uploadedDate: null == uploadedDate ? _self.uploadedDate : uploadedDate // ignore: cast_nullable_to_non_nullable
-as String,analysis: null == analysis ? _self.analysis : analysis // ignore: cast_nullable_to_non_nullable
+as String,uploadedDate: freezed == uploadedDate ? _self.uploadedDate : uploadedDate // ignore: cast_nullable_to_non_nullable
+as String?,analysis: null == analysis ? _self.analysis : analysis // ignore: cast_nullable_to_non_nullable
 as AnalysisDto,
   ));
 }
@@ -455,10 +454,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: '_id')  String id,  String cvId,  String candidateName,  String role,  String? experience,  String seniority,  List<String> skills,  String summary,  String uploadedDate,  AnalysisDto analysis)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: '_id')  String id,  String candidateName,  String role,  String? experience,  String seniority,  List<String> skills,  String summary,  String? uploadedDate,  AnalysisDto analysis)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ResumeSummaryDataDto() when $default != null:
-return $default(_that.id,_that.cvId,_that.candidateName,_that.role,_that.experience,_that.seniority,_that.skills,_that.summary,_that.uploadedDate,_that.analysis);case _:
+return $default(_that.id,_that.candidateName,_that.role,_that.experience,_that.seniority,_that.skills,_that.summary,_that.uploadedDate,_that.analysis);case _:
   return orElse();
 
 }
@@ -476,10 +475,10 @@ return $default(_that.id,_that.cvId,_that.candidateName,_that.role,_that.experie
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: '_id')  String id,  String cvId,  String candidateName,  String role,  String? experience,  String seniority,  List<String> skills,  String summary,  String uploadedDate,  AnalysisDto analysis)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: '_id')  String id,  String candidateName,  String role,  String? experience,  String seniority,  List<String> skills,  String summary,  String? uploadedDate,  AnalysisDto analysis)  $default,) {final _that = this;
 switch (_that) {
 case _ResumeSummaryDataDto():
-return $default(_that.id,_that.cvId,_that.candidateName,_that.role,_that.experience,_that.seniority,_that.skills,_that.summary,_that.uploadedDate,_that.analysis);case _:
+return $default(_that.id,_that.candidateName,_that.role,_that.experience,_that.seniority,_that.skills,_that.summary,_that.uploadedDate,_that.analysis);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -496,10 +495,10 @@ return $default(_that.id,_that.cvId,_that.candidateName,_that.role,_that.experie
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: '_id')  String id,  String cvId,  String candidateName,  String role,  String? experience,  String seniority,  List<String> skills,  String summary,  String uploadedDate,  AnalysisDto analysis)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: '_id')  String id,  String candidateName,  String role,  String? experience,  String seniority,  List<String> skills,  String summary,  String? uploadedDate,  AnalysisDto analysis)?  $default,) {final _that = this;
 switch (_that) {
 case _ResumeSummaryDataDto() when $default != null:
-return $default(_that.id,_that.cvId,_that.candidateName,_that.role,_that.experience,_that.seniority,_that.skills,_that.summary,_that.uploadedDate,_that.analysis);case _:
+return $default(_that.id,_that.candidateName,_that.role,_that.experience,_that.seniority,_that.skills,_that.summary,_that.uploadedDate,_that.analysis);case _:
   return null;
 
 }
@@ -511,14 +510,13 @@ return $default(_that.id,_that.cvId,_that.candidateName,_that.role,_that.experie
 
 @JsonSerializable(explicitToJson: true)
 class _ResumeSummaryDataDto implements ResumeSummaryDataDto {
-  const _ResumeSummaryDataDto({@JsonKey(name: '_id') required this.id, required this.cvId, required this.candidateName, required this.role, this.experience, required this.seniority, required final  List<String> skills, required this.summary, required this.uploadedDate, required this.analysis}): _skills = skills;
+  const _ResumeSummaryDataDto({@JsonKey(name: '_id') required this.id, required this.candidateName, required this.role, this.experience = '-', required this.seniority, required final  List<String> skills, required this.summary, this.uploadedDate, required this.analysis}): _skills = skills;
   factory _ResumeSummaryDataDto.fromJson(Map<String, dynamic> json) => _$ResumeSummaryDataDtoFromJson(json);
 
 @override@JsonKey(name: '_id') final  String id;
-@override final  String cvId;
 @override final  String candidateName;
 @override final  String role;
-@override final  String? experience;
+@override@JsonKey() final  String? experience;
 @override final  String seniority;
  final  List<String> _skills;
 @override List<String> get skills {
@@ -528,7 +526,7 @@ class _ResumeSummaryDataDto implements ResumeSummaryDataDto {
 }
 
 @override final  String summary;
-@override final  String uploadedDate;
+@override final  String? uploadedDate;
 @override final  AnalysisDto analysis;
 
 /// Create a copy of ResumeSummaryDataDto
@@ -544,16 +542,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ResumeSummaryDataDto&&(identical(other.id, id) || other.id == id)&&(identical(other.cvId, cvId) || other.cvId == cvId)&&(identical(other.candidateName, candidateName) || other.candidateName == candidateName)&&(identical(other.role, role) || other.role == role)&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.seniority, seniority) || other.seniority == seniority)&&const DeepCollectionEquality().equals(other._skills, _skills)&&(identical(other.summary, summary) || other.summary == summary)&&(identical(other.uploadedDate, uploadedDate) || other.uploadedDate == uploadedDate)&&(identical(other.analysis, analysis) || other.analysis == analysis));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ResumeSummaryDataDto&&(identical(other.id, id) || other.id == id)&&(identical(other.candidateName, candidateName) || other.candidateName == candidateName)&&(identical(other.role, role) || other.role == role)&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.seniority, seniority) || other.seniority == seniority)&&const DeepCollectionEquality().equals(other._skills, _skills)&&(identical(other.summary, summary) || other.summary == summary)&&(identical(other.uploadedDate, uploadedDate) || other.uploadedDate == uploadedDate)&&(identical(other.analysis, analysis) || other.analysis == analysis));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,cvId,candidateName,role,experience,seniority,const DeepCollectionEquality().hash(_skills),summary,uploadedDate,analysis);
+int get hashCode => Object.hash(runtimeType,id,candidateName,role,experience,seniority,const DeepCollectionEquality().hash(_skills),summary,uploadedDate,analysis);
 
 @override
 String toString() {
-  return 'ResumeSummaryDataDto(id: $id, cvId: $cvId, candidateName: $candidateName, role: $role, experience: $experience, seniority: $seniority, skills: $skills, summary: $summary, uploadedDate: $uploadedDate, analysis: $analysis)';
+  return 'ResumeSummaryDataDto(id: $id, candidateName: $candidateName, role: $role, experience: $experience, seniority: $seniority, skills: $skills, summary: $summary, uploadedDate: $uploadedDate, analysis: $analysis)';
 }
 
 
@@ -564,7 +562,7 @@ abstract mixin class _$ResumeSummaryDataDtoCopyWith<$Res> implements $ResumeSumm
   factory _$ResumeSummaryDataDtoCopyWith(_ResumeSummaryDataDto value, $Res Function(_ResumeSummaryDataDto) _then) = __$ResumeSummaryDataDtoCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: '_id') String id, String cvId, String candidateName, String role, String? experience, String seniority, List<String> skills, String summary, String uploadedDate, AnalysisDto analysis
+@JsonKey(name: '_id') String id, String candidateName, String role, String? experience, String seniority, List<String> skills, String summary, String? uploadedDate, AnalysisDto analysis
 });
 
 
@@ -581,18 +579,17 @@ class __$ResumeSummaryDataDtoCopyWithImpl<$Res>
 
 /// Create a copy of ResumeSummaryDataDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? cvId = null,Object? candidateName = null,Object? role = null,Object? experience = freezed,Object? seniority = null,Object? skills = null,Object? summary = null,Object? uploadedDate = null,Object? analysis = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? candidateName = null,Object? role = null,Object? experience = freezed,Object? seniority = null,Object? skills = null,Object? summary = null,Object? uploadedDate = freezed,Object? analysis = null,}) {
   return _then(_ResumeSummaryDataDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,cvId: null == cvId ? _self.cvId : cvId // ignore: cast_nullable_to_non_nullable
 as String,candidateName: null == candidateName ? _self.candidateName : candidateName // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
 as String,experience: freezed == experience ? _self.experience : experience // ignore: cast_nullable_to_non_nullable
 as String?,seniority: null == seniority ? _self.seniority : seniority // ignore: cast_nullable_to_non_nullable
 as String,skills: null == skills ? _self._skills : skills // ignore: cast_nullable_to_non_nullable
 as List<String>,summary: null == summary ? _self.summary : summary // ignore: cast_nullable_to_non_nullable
-as String,uploadedDate: null == uploadedDate ? _self.uploadedDate : uploadedDate // ignore: cast_nullable_to_non_nullable
-as String,analysis: null == analysis ? _self.analysis : analysis // ignore: cast_nullable_to_non_nullable
+as String,uploadedDate: freezed == uploadedDate ? _self.uploadedDate : uploadedDate // ignore: cast_nullable_to_non_nullable
+as String?,analysis: null == analysis ? _self.analysis : analysis // ignore: cast_nullable_to_non_nullable
 as AnalysisDto,
   ));
 }

@@ -19,9 +19,9 @@ class ResumeSummaryRepositoryImpl extends BaseRepository
     : super();
 
   @override
-  EitherResponse<ResumeSummaryDto> getResumeSummary(String id) {
+  EitherResponse<ResumeSummaryDto> getResumeSummary(String fileName) {
     return processApiCall(
-      call: _remoteDataSource.getResumeSummary(id),
+      call: _remoteDataSource.getResumeSummary(fileName),
       onSuccess: (resumeSummary) => resumeSummary,
     );
   }

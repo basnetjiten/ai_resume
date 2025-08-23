@@ -49,7 +49,7 @@ class ProfileHeaderWidget extends StatelessWidget {
           SizedBox(height: 6),
           // Experience
           Text(
-            "${data.experience} Years of Experience",
+            "${data.experience} of Experience",
             style: GoogleFonts.poppins(
               fontSize: 15,
               fontWeight: FontWeight.w400,

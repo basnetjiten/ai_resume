@@ -358,7 +358,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "90cb75eb78be888d798f5d7c5d4ec79c86f83e29"
+      resolved-ref: fd91799ce879ce33735468f6154fc9b0b5cfde2d
       url: "https://github.com/basnetjiten/dio-filex-uploader"
     source: git
     version: "0.1.4"

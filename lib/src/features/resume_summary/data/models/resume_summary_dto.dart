@@ -21,14 +21,14 @@ abstract class ResumeSummaryDataDto with _$ResumeSummaryDataDto {
   @JsonSerializable(explicitToJson: true)
   const factory ResumeSummaryDataDto({
     @JsonKey(name: '_id') required String id,
-    required String cvId,
+
     required String candidateName,
     required String role,
-    String? experience,
+    @Default('-')String? experience,
     required String seniority,
     required List<String> skills,
     required String summary,
-    required String uploadedDate,
+    String? uploadedDate,
     required AnalysisDto analysis,
   }) = _ResumeSummaryDataDto;
 

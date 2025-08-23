@@ -293,7 +293,7 @@ class _CVListingPageState extends State<CVListingPage>
             experience: cv.seniority,
             summary: cv.summary,
             skills: cv.skills,
-            uploadDate: cv.uploadedDate,
+            uploadDate: cv.uploadedDate??'NA',
           ),
         ),
       ),

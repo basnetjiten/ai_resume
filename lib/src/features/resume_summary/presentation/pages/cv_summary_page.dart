@@ -12,14 +12,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 @RoutePage()
 class CVSummaryPage extends StatelessWidget {
-  const CVSummaryPage({super.key,required this.cvID});
+  const CVSummaryPage({super.key,required this.fileName});
 
-  final String cvID;
+  final String fileName;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<ResumeSummaryCubit>()..fetchResumeSummaryDetail(id: cvID),
+      create: (_) => getIt<ResumeSummaryCubit>()..fetchResumeSummaryDetail(fileName: fileName),
       child: const _CVSummaryPageContent(),
     );
   }

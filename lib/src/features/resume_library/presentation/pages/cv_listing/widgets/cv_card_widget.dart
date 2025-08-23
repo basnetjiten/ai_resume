@@ -186,7 +186,7 @@ class CVCardWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Uploaded: ${_formatDate(cv.uploadedDate)}',
+          'Uploaded: ${_formatDate(cv.uploadedDate?? DateTime.now().toString())}',
           style: GoogleFonts.poppins(
             fontSize: 12,
             color: Colors.white.withOpacity(0.7),

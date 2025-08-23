@@ -60,13 +60,8 @@ class App extends StatelessWidget {
 
 class CVAnalysisScreen extends StatefulWidget {
   final String fileName;
-  final String cvId;
 
-  const CVAnalysisScreen({
-    super.key,
-    required this.fileName,
-    required this.cvId,
-  });
+  const CVAnalysisScreen({super.key, required this.fileName});
 
   @override
   _CVAnalysisScreenState createState() => _CVAnalysisScreenState();
@@ -111,7 +106,7 @@ class _CVAnalysisScreenState extends State<CVAnalysisScreen>
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              CVSummaryPage(cvID: widget.cvId),
+              CVSummaryPage(fileName: widget.fileName),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(opacity: animation, child: child);
           },

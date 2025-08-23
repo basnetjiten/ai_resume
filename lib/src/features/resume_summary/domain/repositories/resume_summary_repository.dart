@@ -7,5 +7,5 @@ abstract class ResumeSummaryRepository {
   EitherResponse<List<ResumeSummaryDataDto>> getResumeSummaries();
 
   /// Fetches a single resume summary by its ID
-  EitherResponse<ResumeSummaryDto> getResumeSummary(String id);
+  EitherResponse<ResumeSummaryDto> getResumeSummary(String fileName);
 }

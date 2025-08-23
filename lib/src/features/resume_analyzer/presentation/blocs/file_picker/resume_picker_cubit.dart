@@ -24,6 +24,7 @@ class ResumePickerCubit extends BaseBloc<void, ResumePickerState> {
           state.copyWith(
             status: const FormStatus.submitting(),
             pickedFile: pdfFile,
+            fileName: pdfFile.path.split('/').last,
           ),
         );
         _uploadFile(pickedFile: pdfFile);
@@ -45,7 +46,7 @@ class ResumePickerCubit extends BaseBloc<void, ResumePickerState> {
           emit(state.copyWith(uploadProgress: progress));
         },
       ),
-      onSuccess: (String cvId) => state.copyWith(status: FormStatus.success(),cvId:cvId),
+      onSuccess: (String fileName) => state.copyWith(status: FormStatus.success(),fileName:fileName),
       onFailure: (error) =>
           state.copyWith(status: FormStatus.error(error: error)),
     );
@@ -54,6 +55,7 @@ class ResumePickerCubit extends BaseBloc<void, ResumePickerState> {
   void resetFile() {
     emit(
       state.copyWith(
+        fileName: null,
         pickedFile: null,
         uploadProgress: 0,
         status: FormStatus.initial(),

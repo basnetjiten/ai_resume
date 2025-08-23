@@ -39,11 +39,11 @@ class CVListingRoute extends _i4.PageRouteInfo<void> {
 class CVSummaryRoute extends _i4.PageRouteInfo<CVSummaryRouteArgs> {
   CVSummaryRoute({
     _i5.Key? key,
-    required String cvID,
+    required String fileName,
     List<_i4.PageRouteInfo>? children,
   }) : super(
          CVSummaryRoute.name,
-         args: CVSummaryRouteArgs(key: key, cvID: cvID),
+         args: CVSummaryRouteArgs(key: key, fileName: fileName),
          initialChildren: children,
        );
 
@@ -53,32 +53,32 @@ class CVSummaryRoute extends _i4.PageRouteInfo<CVSummaryRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<CVSummaryRouteArgs>();
-      return _i2.CVSummaryPage(key: args.key, cvID: args.cvID);
+      return _i2.CVSummaryPage(key: args.key, fileName: args.fileName);
     },
   );
 }
 
 class CVSummaryRouteArgs {
-  const CVSummaryRouteArgs({this.key, required this.cvID});
+  const CVSummaryRouteArgs({this.key, required this.fileName});
 
   final _i5.Key? key;
 
-  final String cvID;
+  final String fileName;
 
   @override
   String toString() {
-    return 'CVSummaryRouteArgs{key: $key, cvID: $cvID}';
+    return 'CVSummaryRouteArgs{key: $key, fileName: $fileName}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! CVSummaryRouteArgs) return false;
-    return key == other.key && cvID == other.cvID;
+    return key == other.key && fileName == other.fileName;
   }
 
   @override
-  int get hashCode => key.hashCode ^ cvID.hashCode;
+  int get hashCode => key.hashCode ^ fileName.hashCode;
 }
 
 /// generated route for

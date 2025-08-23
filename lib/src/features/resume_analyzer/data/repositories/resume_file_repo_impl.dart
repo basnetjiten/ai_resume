@@ -3,11 +3,9 @@ import 'package:ai_resume/src/core/base/base_repository.dart';
 import 'package:ai_resume/src/core/services/file_picker_service.dart';
 import 'package:ai_resume/src/core/typedefs/typedefs.dart';
 import 'package:ai_resume/src/features/resume_analyzer/domain/repositories/resume_file_repo.dart';
-import 'package:dio_filex_uploader/filex_utilities/filex_utils.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:dio_filex_uploader/diox_file_uploader.dart';
-import 'package:uuid/uuid.dart';
 
 @Singleton(as: ResumeFileRepository)
 class ResumeFileRepoImpl extends BaseRepository
@@ -33,18 +31,19 @@ class ResumeFileRepoImpl extends BaseRepository
     required void Function(int sentBytes, int totalBytes) downloadProgress,
   }) async {
     final filePath = pickedFile.path;
+    final fileName = pickedFile.path.split('/').last;
 
-    final cvId = Uuid().v1();
+
     return processApiCall(
       call: DioFileXUploader.uploadMultiPartFileFromURL(
         signedUrl:
-            "https://journey-ai-webservice.onrender.com/api/v1/resume/upload",
+            "http://localhost:3000/api/v1/resume/upload",
         filePath: filePath,
-        metaData: {"userId": cvId},
+        metaData: {"originalName": fileName},
         errorMessage: 'FILE UPLOAD FAILED',
         onProgress: downloadProgress,
       ),
-      onSuccess: (status) => cvId,
+      onSuccess: (status) => fileName,
     );
   }
 }
