@@ -23,7 +23,7 @@ class AppCubit extends Cubit<AppState> {
   /// Checks the current authentication status and updates the state accordingly
   Future<void> checkAuthStatus() async {
     try {
-      // TODO: Jiten: Implement actual auth check
+      // TODO: Jiten: Implement actual authorization later
       emit(const AppState.authenticated());
     } catch (e) {
       emit(const AppState.unAuthenticated());

@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'dart:math' as math;
 import 'package:ai_resume/src/app/presentation/blocs/app_cubit/app_cubit.dart';
 import 'package:ai_resume/src/app/presentation/pages/global_bloc_provider.dart';
 import 'package:ai_resume/src/core/di/injector.dart';
 import 'package:ai_resume/src/core/routes/app_router.dart';
 import 'package:ai_resume/src/features/resume_summary/presentation/pages/cv_summary_page.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -38,7 +36,6 @@ class App extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           routerConfig: _appRouter.config(),
           localizationsDelegates: <LocalizationsDelegate>[
-            //AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
@@ -102,17 +99,15 @@ class _CVAnalysisScreenState extends State<CVAnalysisScreen>
   }
 
   void _navigateToSummary() {
-    Future.delayed(Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacement(
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              CVSummaryPage(fileName: widget.fileName),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
-          },
-        ),
-      );
-    });
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            CVSummaryPage(fileName: widget.fileName),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+      ),
+    );
   }
 
   @override

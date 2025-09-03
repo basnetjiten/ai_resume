@@ -37,7 +37,7 @@ class ResumeFileRepoImpl extends BaseRepository
     return processApiCall(
       call: DioFileXUploader.uploadMultiPartFileFromURL(
         signedUrl:
-            "http://localhost:3000/api/v1/resume/upload",
+            "https://journey-ai-webservice.onrender.com/api/v1/resume/upload",
         filePath: filePath,
         metaData: {"originalName": fileName},
         errorMessage: 'FILE UPLOAD FAILED',

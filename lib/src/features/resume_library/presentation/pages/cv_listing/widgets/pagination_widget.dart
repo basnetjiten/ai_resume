@@ -22,8 +22,9 @@ class PaginationWidget extends StatelessWidget {
       children: [
         _buildPaginationButton(
           icon: Icons.chevron_left,
-          onPressed:
-              currentPage > 0 ? () => onPageChanged(currentPage - 1) : null,
+          onPressed: currentPage > 0
+              ? () => onPageChanged(currentPage - 1)
+              : null,
           isActive: currentPage > 0,
           context: context,
         ),
@@ -48,11 +49,12 @@ class PaginationWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildPaginationButton(
-      {required IconData icon,
-      required VoidCallback? onPressed,
-      required bool isActive,
-      required BuildContext context}) {
+  Widget _buildPaginationButton({
+    required IconData icon,
+    required VoidCallback? onPressed,
+    required bool isActive,
+    required BuildContext context,
+  }) {
     return Container(
       width: 40,
       height: 40,
