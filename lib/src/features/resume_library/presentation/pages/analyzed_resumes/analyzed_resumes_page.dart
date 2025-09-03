@@ -1,28 +1,28 @@
 import 'dart:math' as math;
-
 import 'package:ai_resume/src/core/di/injector.dart';
+import 'package:ai_resume/src/features/resume_library/domain/models/resume_summary_data.dart';
+import 'package:ai_resume/src/features/resume_library/presentation/pages/analyzed_resumes/widgets/resume_list_widget.dart';
+import 'package:ai_resume/src/features/resume_library/presentation/pages/cv_detail/resume_detail_page.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../../resume_summary/data/models/resume_summary_dto.dart';
-import '../../../domain/models/cv_summary_data.dart';
-import '../../blocs/resume_library_cubit.dart';
-import '../../blocs/resume_library_state.dart';
-import '../cv_detail/cv_detail_page.dart';
 import 'widgets/stat_card_widget.dart';
 import 'widgets/cv_card_widget.dart';
 import 'widgets/pagination_widget.dart';
+import '../../../../resume_summary/data/models/resume_summary_dto.dart';
+import '../../blocs/resume_library_cubit.dart';
+import '../../blocs/resume_library_state.dart';
 
 @RoutePage()
-class CVListingPage extends StatefulWidget {
-  const CVListingPage({super.key});
+class AnalyzedResumesPage extends StatefulWidget {
+  const AnalyzedResumesPage({super.key});
 
   @override
-  State<CVListingPage> createState() => _CVListingPageState();
+  State<AnalyzedResumesPage> createState() => _AnalyzedResumesPageState();
 }
 
-class _CVListingPageState extends State<CVListingPage>
+class _AnalyzedResumesPageState extends State<AnalyzedResumesPage>
     with TickerProviderStateMixin {
   late AnimationController _fadeController;
   int currentPage = 0;
@@ -165,7 +165,12 @@ class _CVListingPageState extends State<CVListingPage>
     return Column(
       children: [
         _buildStatsHeader(),
-        Expanded(child: _buildCVList()),
+        Expanded(
+          child: ResumeListWidget(
+            animationController: _fadeController,
+            currentPageCVs: currentPageCVs,
+          ),
+        ),
         if (totalPages > 1) _buildPagination(),
         const SizedBox(height: 50),
       ],
@@ -209,66 +214,6 @@ class _CVListingPageState extends State<CVListingPage>
     );
   }
 
-  Widget _buildCVList() {
-    if (currentPageCVs.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.folder_open, size: 64, color: Colors.grey[400]),
-            const SizedBox(height: 16),
-            Text(
-              'No resumes found',
-              style: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
-            ),
-          ],
-        ),
-      );
-    }
-
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: AnimatedBuilder(
-        animation: _fadeController,
-        builder: (context, child) {
-          return FadeTransition(
-            opacity: _fadeController,
-            child: ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              itemCount: currentPageCVs.length,
-              itemBuilder: (context, index) {
-                return TweenAnimationBuilder<double>(
-                  duration: Duration(milliseconds: 600 + (index * 100)),
-                  tween: Tween(begin: 0.0, end: 1.0),
-                  builder: (context, value, child) {
-                    final cv = currentPageCVs[index];
-                    return Transform.translate(
-                      offset: Offset(0, 30 * (1 - value)),
-                      child: Opacity(
-                        opacity: value.clamp(0.0, 1.0),
-                        child: CVCardWidget(
-                          cv: cv,
-                          onTap: () => _viewCVDetails(cv),
-                          index: index,
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          );
-        },
-      ),
-    );
-  }
-
   Widget _buildPagination() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -279,23 +224,6 @@ class _CVListingPageState extends State<CVListingPage>
         currentPage: currentPage,
         totalPages: totalPages,
         onPageChanged: _goToPage,
-      ),
-    );
-  }
-
-  void _viewCVDetails(ResumeSummaryDataDto cv) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => CVDetailPage(
-          cvData: CVSummaryData(
-            name: cv.candidateName,
-            position: cv.role,
-            experience: cv.seniority,
-            summary: cv.summary,
-            skills: cv.skills,
-            uploadDate: cv.uploadedDate ?? 'NA',
-          ),
-        ),
       ),
     );
   }

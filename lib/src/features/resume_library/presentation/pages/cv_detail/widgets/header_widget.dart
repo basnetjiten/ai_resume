@@ -1,11 +1,11 @@
+import 'package:ai_resume/src/features/resume_library/domain/models/resume_summary_data.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../../domain/models/cv_summary_data.dart';
 
 class HeaderWidget extends StatelessWidget {
-  final CVSummaryData cvData;
+  final ResumeSummaryData resumeSummaryData;
 
-  const HeaderWidget({super.key, required this.cvData});
+  const HeaderWidget({super.key, required this.resumeSummaryData});
 
   Color _getExperienceColor(String experience) {
     switch (experience) {
@@ -43,7 +43,7 @@ class HeaderWidget extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            cvData.name,
+            resumeSummaryData.name,
             style: GoogleFonts.poppins(
               fontSize: 24,
               fontWeight: FontWeight.w700,
@@ -52,7 +52,7 @@ class HeaderWidget extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           Text(
-            cvData.position,
+            resumeSummaryData.position,
             style: GoogleFonts.poppins(
               fontSize: 16,
               color: Colors.white.withOpacity(0.8),
@@ -63,11 +63,11 @@ class HeaderWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: _getExperienceColor(cvData.experience),
+              color: _getExperienceColor(resumeSummaryData.experience),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
-              '${cvData.experience} Level',
+              '${resumeSummaryData.experience} Level',
               style: GoogleFonts.poppins(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,

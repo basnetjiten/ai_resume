@@ -1,13 +1,11 @@
 import 'dart:io';
-import 'dart:async';
 import 'dart:math' as math;
 import 'package:ai_resume/src/app/presentation/pages/app.dart';
 import 'package:ai_resume/src/core/di/injector.dart';
 import 'package:ai_resume/src/features/resume_analyzer/presentation/blocs/file_picker/resume_picker_cubit.dart';
 import 'package:ai_resume/src/features/resume_analyzer/presentation/blocs/file_picker/resume_picker_state.dart';
-import 'package:ai_resume/src/features/resume_analyzer/presentation/widgets/upload_card_widget.dart';
-import 'package:ai_resume/src/features/resume_analyzer/presentation/widgets/upload_progress_widget.dart';
-import 'package:ai_resume/src/features/resume_library/presentation/pages/cv_listing/cv_listing_page.dart';
+import 'package:ai_resume/src/features/resume_analyzer/presentation/widgets/upload_file_widget.dart';
+import 'package:ai_resume/src/features/resume_library/presentation/pages/analyzed_resumes/analyzed_resumes_page.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -69,15 +67,12 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
     super.dispose();
   }
 
-  Future<void> _pickFile() async {
-    _resumePickerCubit.selectedPdfFile();
-  }
 
   void _navigateToListings() {
     Navigator.of(context).push(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            CVListingPage(),
+            AnalyzedResumesPage(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(
             position: Tween<Offset>(begin: Offset(1.0, 0.0), end: Offset.zero)
@@ -89,10 +84,6 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
         },
       ),
     );
-  }
-
-  void _removeFile() {
-    context.read<ResumePickerCubit>().resetFile();
   }
 
   @override
@@ -223,7 +214,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
                               builder: (context, child) {
                                 return Transform.scale(
                                   scale: _cardScaleAnimation.value,
-                                  child: UploadCardWidget(),
+                                  child: UploadFileWidget(),
                                 );
                               },
                             ),

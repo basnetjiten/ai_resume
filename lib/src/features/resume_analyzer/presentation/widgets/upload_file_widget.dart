@@ -7,8 +7,8 @@ import 'package:ai_resume/src/features/resume_analyzer/presentation/widgets/uplo
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UploadCardWidget extends StatelessWidget {
-  const UploadCardWidget({super.key});
+class UploadFileWidget extends StatelessWidget {
+  const UploadFileWidget({super.key});
 
   Future<void> _pickFile(BuildContext context) async {
     context.read<ResumePickerCubit>().selectedPdfFile();

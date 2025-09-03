@@ -1,4 +1,4 @@
-class CVSummaryData {
+class ResumeSummaryData {
   final String name;
   final String position;
   final String experience;
@@ -6,7 +6,7 @@ class CVSummaryData {
   final List<String> skills;
   final String uploadDate;
 
-  CVSummaryData({
+  ResumeSummaryData({
     required this.name,
     required this.position,
     required this.experience,

@@ -11,7 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:ai_resume/src/features/resume_analyzer/presentation/pages/resume_upload_page.dart'
     as _i3;
-import 'package:ai_resume/src/features/resume_library/presentation/pages/cv_listing/cv_listing_page.dart'
+import 'package:ai_resume/src/features/resume_library/presentation/pages/analyzed_resumes/analyzed_resumes_page.dart'
     as _i1;
 import 'package:ai_resume/src/features/resume_summary/presentation/pages/cv_summary_page.dart'
     as _i2;
@@ -19,17 +19,17 @@ import 'package:auto_route/auto_route.dart' as _i4;
 import 'package:flutter/material.dart' as _i5;
 
 /// generated route for
-/// [_i1.CVListingPage]
-class CVListingRoute extends _i4.PageRouteInfo<void> {
-  const CVListingRoute({List<_i4.PageRouteInfo>? children})
-    : super(CVListingRoute.name, initialChildren: children);
+/// [_i1.AnalyzedResumesPage]
+class AnalyzedResumesRoute extends _i4.PageRouteInfo<void> {
+  const AnalyzedResumesRoute({List<_i4.PageRouteInfo>? children})
+    : super(AnalyzedResumesRoute.name, initialChildren: children);
 
-  static const String name = 'CVListingRoute';
+  static const String name = 'AnalyzedResumesRoute';
 
   static _i4.PageInfo page = _i4.PageInfo(
     name,
     builder: (data) {
-      return const _i1.CVListingPage();
+      return const _i1.AnalyzedResumesPage();
     },
   );
 }
