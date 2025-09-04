@@ -1,3 +1,4 @@
+import 'package:ai_resume/localization/arb/l10n.dart';
 import 'package:ai_resume/src/features/resume_library/domain/models/resume_summary_data.dart';
 import 'package:ai_resume/src/features/resume_library/presentation/pages/analyzed_resumes/widgets/cv_card_widget.dart';
 import 'package:ai_resume/src/features/resume_library/presentation/pages/cv_detail/resume_detail_page.dart';
@@ -20,7 +21,7 @@ class ResumeListWidget extends StatelessWidget {
           children: <Widget>[
             Icon(Icons.folder_open, size: 64, color: Colors.grey[400]),
             const SizedBox(height: 16),
-            Text('No resumes found', style: GoogleFonts.poppins(fontSize: 16, color: Colors.white)),
+            Text(localization.noResume, style: GoogleFonts.poppins(fontSize: 16, color: Colors.white)),
           ],
         ),
       );
@@ -78,7 +79,7 @@ class ResumeListWidget extends StatelessWidget {
       experience: cv.seniority,
       summary: cv.summary,
       skills: cv.skills,
-      uploadDate: cv.uploadedDate ?? 'NA',
+      uploadDate: cv.uploadedDate ?? localization.notAvailable,
     );
     Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => ResumeDetailPage(resumeSummaryData: resumeData)));
   }

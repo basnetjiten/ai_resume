@@ -14,9 +14,9 @@ class DetailSectionWidget extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.12),
+        color: Colors.white.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.3)),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +32,7 @@ class DetailSectionWidget extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          Text(content, style: GoogleFonts.poppins(fontSize: 15, color: Colors.white.withOpacity(0.9), height: 1.6)),
+          Text(content, style: GoogleFonts.poppins(fontSize: 15, color: Colors.white.withValues(alpha: 0.9), height: 1.6)),
         ],
       ),
     );

@@ -20,6 +20,68 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(error) => "An error occurred: ${error}";
+
+  static String m1(date) => "Uploaded on ${date}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{};
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "analyzingCv": MessageLookupByLibrary.simpleMessage("Analyzing CV..."),
+    "analyzingCvText": MessageLookupByLibrary.simpleMessage(
+      "Analyzing your CV and extracting key information. Our AI is processing your experience, skills, and qualifications to create a comprehensive summary...",
+    ),
+    "cacheError": MessageLookupByLibrary.simpleMessage(
+      "Failed to cache resume data",
+    ),
+    "cachingResumes": MessageLookupByLibrary.simpleMessage(
+      "Caching resume data...",
+    ),
+    "craftCareerStory": MessageLookupByLibrary.simpleMessage(
+      "CRAFT A CAREER STORY",
+    ),
+    "creatingSummary": MessageLookupByLibrary.simpleMessage(
+      "Creating comprehensive summary...",
+    ),
+    "errorOccurred": m0,
+    "extractingKeyInformation": MessageLookupByLibrary.simpleMessage(
+      "Extracting key information...",
+    ),
+    "highlightStrengths": MessageLookupByLibrary.simpleMessage(
+      "HIGHLIGHT YOUR STRENGTHS",
+    ),
+    "identifyGaps": MessageLookupByLibrary.simpleMessage("IDENTIFY GAPS"),
+    "justifyExperiences": MessageLookupByLibrary.simpleMessage(
+      "JUSTIFY EXPERIENCES",
+    ),
+    "metadata": MessageLookupByLibrary.simpleMessage("Metadata:"),
+    "noDataAvailable": MessageLookupByLibrary.simpleMessage(
+      "No data available",
+    ),
+    "noResume": MessageLookupByLibrary.simpleMessage("No resumes found"),
+    "notAvailable": MessageLookupByLibrary.simpleMessage("N/A"),
+    "processingExperience": MessageLookupByLibrary.simpleMessage(
+      "Processing experience...",
+    ),
+    "processingQualifications": MessageLookupByLibrary.simpleMessage(
+      "Processing qualifications...",
+    ),
+    "processingSkills": MessageLookupByLibrary.simpleMessage(
+      "Processing skills...",
+    ),
+    "professionalSummary": MessageLookupByLibrary.simpleMessage(
+      "Professional Summary",
+    ),
+    "remove": MessageLookupByLibrary.simpleMessage("Remove"),
+    "retry": MessageLookupByLibrary.simpleMessage("Retry"),
+    "selectFile": MessageLookupByLibrary.simpleMessage("Select File"),
+    "showcaseSkills": MessageLookupByLibrary.simpleMessage("SHOWCASE SKILLS"),
+    "totalResumes": MessageLookupByLibrary.simpleMessage("Total Resumes"),
+    "uploadInformation": MessageLookupByLibrary.simpleMessage(
+      "Upload Information",
+    ),
+    "uploadedOn": m1,
+    "yearsOfExperience": MessageLookupByLibrary.simpleMessage(
+      "Years of Experience",
+    ),
+  };
 }

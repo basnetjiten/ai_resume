@@ -28,10 +28,9 @@ class AppLocalizations {
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<AppLocalizations> load(Locale locale) {
-    final name =
-        (locale.countryCode?.isEmpty ?? false)
-            ? locale.languageCode
-            : locale.toString();
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
     final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
@@ -53,6 +52,251 @@ class AppLocalizations {
 
   static AppLocalizations? maybeOf(BuildContext context) {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
+  }
+
+  /// `No resumes found`
+  String get noResume {
+    return Intl.message(
+      'No resumes found',
+      name: 'noResume',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred: {error}`
+  String errorOccurred(Object error) {
+    return Intl.message(
+      'An error occurred: $error',
+      name: 'errorOccurred',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `No data available`
+  String get noDataAvailable {
+    return Intl.message(
+      'No data available',
+      name: 'noDataAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Metadata:`
+  String get metadata {
+    return Intl.message('Metadata:', name: 'metadata', desc: '', args: []);
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message('Retry', name: 'retry', desc: '', args: []);
+  }
+
+  /// `Select File`
+  String get selectFile {
+    return Intl.message('Select File', name: 'selectFile', desc: '', args: []);
+  }
+
+  /// `Remove`
+  String get remove {
+    return Intl.message('Remove', name: 'remove', desc: '', args: []);
+  }
+
+  /// `HIGHLIGHT YOUR STRENGTHS`
+  String get highlightStrengths {
+    return Intl.message(
+      'HIGHLIGHT YOUR STRENGTHS',
+      name: 'highlightStrengths',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `IDENTIFY GAPS`
+  String get identifyGaps {
+    return Intl.message(
+      'IDENTIFY GAPS',
+      name: 'identifyGaps',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `JUSTIFY EXPERIENCES`
+  String get justifyExperiences {
+    return Intl.message(
+      'JUSTIFY EXPERIENCES',
+      name: 'justifyExperiences',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SHOWCASE SKILLS`
+  String get showcaseSkills {
+    return Intl.message(
+      'SHOWCASE SKILLS',
+      name: 'showcaseSkills',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CRAFT A CAREER STORY`
+  String get craftCareerStory {
+    return Intl.message(
+      'CRAFT A CAREER STORY',
+      name: 'craftCareerStory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Resumes`
+  String get totalResumes {
+    return Intl.message(
+      'Total Resumes',
+      name: 'totalResumes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Professional Summary`
+  String get professionalSummary {
+    return Intl.message(
+      'Professional Summary',
+      name: 'professionalSummary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload Information`
+  String get uploadInformation {
+    return Intl.message(
+      'Upload Information',
+      name: 'uploadInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Uploaded on {date}`
+  String uploadedOn(Object date) {
+    return Intl.message(
+      'Uploaded on $date',
+      name: 'uploadedOn',
+      desc: '',
+      args: [date],
+    );
+  }
+
+  /// `Years of Experience`
+  String get yearsOfExperience {
+    return Intl.message(
+      'Years of Experience',
+      name: 'yearsOfExperience',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Analyzing your CV and extracting key information. Our AI is processing your experience, skills, and qualifications to create a comprehensive summary...`
+  String get analyzingCvText {
+    return Intl.message(
+      'Analyzing your CV and extracting key information. Our AI is processing your experience, skills, and qualifications to create a comprehensive summary...',
+      name: 'analyzingCvText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `N/A`
+  String get notAvailable {
+    return Intl.message('N/A', name: 'notAvailable', desc: '', args: []);
+  }
+
+  /// `Analyzing CV...`
+  String get analyzingCv {
+    return Intl.message(
+      'Analyzing CV...',
+      name: 'analyzingCv',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extracting key information...`
+  String get extractingKeyInformation {
+    return Intl.message(
+      'Extracting key information...',
+      name: 'extractingKeyInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Processing experience...`
+  String get processingExperience {
+    return Intl.message(
+      'Processing experience...',
+      name: 'processingExperience',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Processing skills...`
+  String get processingSkills {
+    return Intl.message(
+      'Processing skills...',
+      name: 'processingSkills',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Processing qualifications...`
+  String get processingQualifications {
+    return Intl.message(
+      'Processing qualifications...',
+      name: 'processingQualifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Creating comprehensive summary...`
+  String get creatingSummary {
+    return Intl.message(
+      'Creating comprehensive summary...',
+      name: 'creatingSummary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Caching resume data...`
+  String get cachingResumes {
+    return Intl.message(
+      'Caching resume data...',
+      name: 'cachingResumes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to cache resume data`
+  String get cacheError {
+    return Intl.message(
+      'Failed to cache resume data',
+      name: 'cacheError',
+      desc: '',
+      args: [],
+    );
   }
 }
 

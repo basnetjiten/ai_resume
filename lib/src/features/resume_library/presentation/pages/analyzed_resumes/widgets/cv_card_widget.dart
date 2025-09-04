@@ -1,11 +1,9 @@
+import 'package:ai_resume/localization/arb/l10n.dart';
 import 'package:ai_resume/src/features/resume_summary/data/models/resume_summary_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CVCardWidget extends StatelessWidget {
-  final ResumeSummaryDataDto cv;
-  final VoidCallback onTap;
-  final int index;
 
   const CVCardWidget({
     super.key,
@@ -13,13 +11,16 @@ class CVCardWidget extends StatelessWidget {
     required this.onTap,
     required this.index,
   });
+  final ResumeSummaryDataDto cv;
+  final VoidCallback onTap;
+  final int index;
 
-  String _formatDate(String dateString) {
+  String _formatDate(String dateString, BuildContext context) {
     try {
-      final date = DateTime.parse(dateString);
+      final DateTime date = DateTime.parse(dateString);
       return '${date.day}/${date.month}/${date.year}';
     } catch (e) {
-      return dateString;
+      return localization.notAvailable;
     }
   }
 
@@ -41,7 +42,7 @@ class CVCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.12),
         borderRadius: BorderRadius.circular(20),
@@ -119,7 +120,7 @@ class CVCardWidget extends StatelessWidget {
           ),
         ),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
             color: _getExperienceColor(cv.seniority),
             borderRadius: BorderRadius.circular(20),
@@ -155,7 +156,9 @@ class CVCardWidget extends StatelessWidget {
   }
 
   Widget _buildSkills() {
-    if (cv.skills.isEmpty) return const SizedBox.shrink();
+    if (cv.skills.isEmpty) {
+      return const SizedBox.shrink();
+    }
 
     return Wrap(
       spacing: 8,
@@ -185,12 +188,16 @@ class CVCardWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          'Uploaded: ${_formatDate(cv.uploadedDate?? DateTime.now().toString())}',
-          style: GoogleFonts.poppins(
-            fontSize: 12,
-            color: Colors.white.withOpacity(0.7),
-          ),
+        Builder(
+          builder: (BuildContext context) {
+            return Text(
+              _formatDate(cv.uploadedDate ?? DateTime.now().toString(), context),
+              style: GoogleFonts.poppins(
+                fontSize: 12,
+                color: Colors.white.withValues(alpha: 0.7),
+              ),
+            );
+          },
         ),
         Icon(
           Icons.arrow_forward_ios,

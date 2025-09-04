@@ -21,7 +21,7 @@ class ResumeSummaryRemoteDataSourceImpl extends BaseRemoteSource implements Resu
       request: (Dio dio) => dio.get('resume-summaries'),
       onResponse: (responseData) {
         AppLogger.logInfo(info: "NEW DAA ${jsonEncode(responseData['data'])}");
-        return (responseData['data'] as List).map((json) => ResumeSummaryDataDto.fromJson(json)).toList();
+        return (responseData['data'] as List<dynamic>).map<ResumeSummaryDataDto>((dynamic json) => ResumeSummaryDataDto.fromJson(json as Map<String, dynamic>)).toList();
       },
     );
   }
@@ -29,7 +29,7 @@ class ResumeSummaryRemoteDataSourceImpl extends BaseRemoteSource implements Resu
   @override
   Future<ResumeSummaryDto> getResumeSummary(String fileName) async {
     return networkRequest<ResumeSummaryDto>(
-      request: (Dio dio) => dio.get<Response<Map<String,dynamic>>>('resume-summary', queryParameters: <String, dynamic>{"originalName": fileName}),
+      request: (Dio dio) => dio.get<Map<String, dynamic>>('resume-summary', queryParameters: <String, dynamic>{"originalName": fileName}),
       onResponse: (data) => ResumeSummaryDto.fromJson(data),
     );
   }

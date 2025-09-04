@@ -8,7 +8,7 @@ part 'production_env.g.dart';
 class ProductionEnv extends EnvVars {
 
   @override
-  @EnviedField(varName: EnvKeys.baseUrlKey, obfuscate: true)
+  @EnviedField(varName: EnvKeys.baseUrlKey, obfuscate: false, interpolate: false)
   String baseUrl = _ProductionEnv.baseUrl;
 
 }

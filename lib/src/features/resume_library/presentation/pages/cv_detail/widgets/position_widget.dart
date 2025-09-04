@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 class PositionWidget extends StatelessWidget {
 
   const PositionWidget({required this.resumeSummaryData, super.key});
+  
   final ResumeSummaryData resumeSummaryData;
 
   Color _getExperienceColor(String experience) {
@@ -26,9 +27,9 @@ class PositionWidget extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.15),
+        color: Colors.white.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.white.withOpacity(0.3)),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
@@ -36,7 +37,7 @@ class PositionWidget extends StatelessWidget {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(20),
             ),
             child: const Icon(Icons.person, color: Colors.white, size: 40),
@@ -55,7 +56,7 @@ class PositionWidget extends StatelessWidget {
             resumeSummaryData.position,
             style: GoogleFonts.poppins(
               fontSize: 16,
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.8),
             ),
             textAlign: TextAlign.center,
           ),

@@ -16,7 +16,7 @@ class ProfileHeaderWidget extends StatelessWidget {
         color: Colors.white.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(24),
         border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
-        boxShadow: <BoxShadow>[BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 20, offset: const Offset(0, 8))],
+        boxShadow: <BoxShadow>[BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 20, offset: const Offset(0, 8))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

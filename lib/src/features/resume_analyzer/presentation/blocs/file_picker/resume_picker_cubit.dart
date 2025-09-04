@@ -1,19 +1,20 @@
 import 'dart:io';
 import 'package:ai_resume/src/features/resume_analyzer/domain/repositories/resume_file_repo.dart';
 import 'package:ai_resume/src/features/resume_analyzer/presentation/blocs/file_picker/resume_picker_state.dart';
+import 'package:fpdart/src/either.dart';
 import 'package:injectable/injectable.dart';
 import 'package:simple_form_field/base_bloc.dart';
 import 'package:simple_form_field/form/form_status.dart';
 
 @injectable
 class ResumePickerCubit extends BaseBloc<void, ResumePickerState> {
-  ResumePickerCubit(this._resumeFileRepository) : super(ResumePickerState());
+  ResumePickerCubit(this._resumeFileRepository) : super(const ResumePickerState());
   final ResumeFileRepository _resumeFileRepository;
 
   void selectedPdfFile() async {
     emit(state.copyWith(status: const FormStatus.submitting()));
 
-    final pickStatus = await _resumeFileRepository.pickPdfFile();
+    final Either<String, File> pickStatus = await _resumeFileRepository.pickPdfFile();
 
     pickStatus.fold(
       (String errorMessage) {
@@ -34,7 +35,7 @@ class ResumePickerCubit extends BaseBloc<void, ResumePickerState> {
 
   void _uploadFile({required File? pickedFile}) {
     if (pickedFile == null) {
-      emit(state.copyWith(status: FormStatus.error(error: 'No file selected')));
+      emit(state.copyWith(status: const FormStatus.error(error: 'No file selected')));
       return;
     }
 
@@ -46,20 +47,12 @@ class ResumePickerCubit extends BaseBloc<void, ResumePickerState> {
           emit(state.copyWith(uploadProgress: progress));
         },
       ),
-      onSuccess: (String fileName) => state.copyWith(status: FormStatus.success(),fileName:fileName),
-      onFailure: (error) =>
-          state.copyWith(status: FormStatus.error(error: error)),
+      onSuccess: (String fileName) => state.copyWith(status: const FormStatus.success(), fileName: fileName),
+      onFailure: (String error) => state.copyWith(status: FormStatus.error(error: error)),
     );
   }
 
   void resetFile() {
-    emit(
-      state.copyWith(
-        fileName: null,
-        pickedFile: null,
-        uploadProgress: 0,
-        status: FormStatus.initial(),
-      ),
-    );
+    emit(state.copyWith(fileName: null, pickedFile: null, uploadProgress: 0, status: FormStatus.initial()));
   }
 }

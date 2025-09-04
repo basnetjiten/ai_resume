@@ -1,3 +1,4 @@
+import 'package:ai_resume/localization/arb/l10n.dart';
 import 'package:ai_resume/src/features/resume_summary/data/models/resume_result_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,6 +9,19 @@ class SummaryCardWidget extends StatelessWidget {
   final ResumeResultDto resumeResultDto;
   final int index;
 
+  String _getLocalizedTitle(String title) {
+    switch (title.toLowerCase()) {
+      case 'professional summary':
+        return localization.professionalSummary;
+      case 'upload information':
+        return localization.uploadInformation;
+      case 'years of experience':
+        return localization.yearsOfExperience;
+      default:
+        return title;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,8 +29,8 @@ class SummaryCardWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.3)),
-        boxShadow: <BoxShadow>[BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 15, offset: const Offset(0, 5))],
+        border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+        boxShadow: <BoxShadow>[BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 15, offset: const Offset(0, 5))],
       ),
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -24,11 +38,11 @@ class SummaryCardWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              resumeResultDto.title,
+              _getLocalizedTitle(resumeResultDto.title),
               style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white),
             ),
             const SizedBox(height: 16),
-            ...resumeResultDto.items.asMap().entries.map((MapEntry<int, String> entry) {
+            ...resumeResultDto.items.asMap().entries.map<Widget>((MapEntry<int, String> entry) {
               return TweenAnimationBuilder<double>(
                 duration: Duration(milliseconds: 800 + (entry.key * 100)),
                 tween: Tween(begin: 0.0, end: 1.0),
@@ -46,15 +60,18 @@ class SummaryCardWidget extends StatelessWidget {
                               margin: const EdgeInsets.only(top: 6, right: 12),
                               width: 6,
                               height: 6,
-                              decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
                             ),
                             Expanded(
                               child: Text(
                                 entry.value,
                                 style: GoogleFonts.poppins(
-                                  fontSize: 15,
-                                  color: Colors.white.withOpacity(0.9),
-                                  height: 1.5,
+                                  fontSize: 14,
+                                  color: Colors.white.withValues(alpha: 0.8),
+                                  height: 1.6,
                                 ),
                               ),
                             ),

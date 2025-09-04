@@ -216,7 +216,7 @@ return $default(_that.summaries,_that.status);case _:
 
 
 class _ResumeLibraryState implements ResumeLibraryState {
-  const _ResumeLibraryState({final  List<ResumeSummaryDataDto> summaries = const <dynamic>[], this.status = const FormStatus.initial()}): _summaries = summaries;
+  const _ResumeLibraryState({final  List<ResumeSummaryDataDto> summaries = const <ResumeSummaryDataDto>[], this.status = const FormStatus.initial()}): _summaries = summaries;
   
 
  final  List<ResumeSummaryDataDto> _summaries;

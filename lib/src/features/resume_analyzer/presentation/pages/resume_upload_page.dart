@@ -191,7 +191,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage> with TickerProvider
                             child: AnimatedBuilder(
                               animation: _cardScaleAnimation,
                               builder: (BuildContext context, Widget? child) {
-                                return Transform.scale(scale: _cardScaleAnimation.value, child: const UploadFileWidget());
+                                return Transform.scale(scale: _cardScaleAnimation.value, child: UploadFileWidget());
                               },
                             ),
                           ),

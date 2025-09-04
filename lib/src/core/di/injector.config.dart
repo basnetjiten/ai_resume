@@ -15,6 +15,8 @@ import 'package:ai_resume/src/core/di/register_modules.dart' as _i506;
 import 'package:ai_resume/src/core/network/auth_interceptor.dart' as _i444;
 import 'package:ai_resume/src/core/routes/app_router.dart' as _i614;
 import 'package:ai_resume/src/core/services/file_picker_service.dart' as _i403;
+import 'package:ai_resume/src/features/resume_analyzer/data/repositories/resume_file_repo_impl.dart'
+    as _i618;
 import 'package:ai_resume/src/features/resume_analyzer/domain/repositories/resume_file_repo.dart'
     as _i918;
 import 'package:ai_resume/src/features/resume_analyzer/presentation/blocs/file_picker/resume_picker_cubit.dart'
@@ -32,7 +34,6 @@ import 'package:ai_resume/src/features/resume_summary/domain/repositories/resume
 import 'package:ai_resume/src/features/resume_summary/presentation/blocs/resume_summary_cubit/resume_summary_cubit.dart'
     as _i580;
 import 'package:dio/dio.dart' as _i361;
-import 'package:dio/src/dio.dart' as _i1068;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:hive_local_storage/hive_local_storage.dart' as _i920;
 import 'package:injectable/injectable.dart' as _i526;
@@ -57,7 +58,10 @@ Future<_i174.GetIt> $initGetIt(
     () => registerModules.dio(gh<_i444.AuthInterceptor>()),
   );
   gh.singleton<_i879.ResumeSummaryRemoteDataSource>(
-    () => _i879.ResumeSummaryRemoteDataSourceImpl(gh<_i1068.Dio>()),
+    () => _i879.ResumeSummaryRemoteDataSourceImpl(gh<_i361.Dio>()),
+  );
+  gh.singleton<_i918.ResumeFileRepository>(
+    () => _i618.ResumeFileRepoImpl(gh<_i403.FilePickerService>()),
   );
   gh.singleton<_i1047.ResumeLibraryLocalDataSource>(
     () => _i1047.ResumeLibraryLocalDataSourceImpl(gh<_i920.LocalStorage>()),

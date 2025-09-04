@@ -1,14 +1,16 @@
 import 'dart:async';
+import 'package:ai_resume/localization/generated/l10n.dart';
 import 'package:ai_resume/src/app/presentation/blocs/app_cubit/app_cubit.dart';
 import 'package:ai_resume/src/app/presentation/pages/global_bloc_provider.dart';
 import 'package:ai_resume/src/core/di/injector.dart';
 import 'package:ai_resume/src/core/routes/app_router.dart';
 import 'package:ai_resume/src/features/resume_summary/presentation/pages/cv_summary_page.dart';
+import 'package:ai_resume/localization/arb/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 class App extends StatelessWidget {
   App({super.key});
@@ -35,11 +37,14 @@ class App extends StatelessWidget {
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
           routerConfig: _appRouter.config(),
-          localizationsDelegates: <LocalizationsDelegate>[
+          localizationsDelegates: const <LocalizationsDelegate>[
+            AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
+          supportedLocales: const <Locale>[Locale('en')],
+          locale: const Locale('en'),
           theme: ThemeData(
             primarySwatch: Colors.blue,
             textTheme: GoogleFonts.poppinsTextTheme(),
@@ -67,8 +72,18 @@ class CVAnalysisScreen extends StatefulWidget {
 class _CVAnalysisScreenState extends State<CVAnalysisScreen> with TickerProviderStateMixin {
   late AnimationController _dotsController;
   String displayedText = '';
-  String fullText =
-      'Analyzing your CV and extracting key information. Our AI is processing your experience, skills, and qualifications to create a comprehensive summary...';
+
+  String get fullText {
+    return '''
+${localization.analyzingCv}
+${localization.extractingKeyInformation}
+${localization.processingExperience}
+${localization.processingSkills}
+${localization.processingQualifications}
+${localization.creatingSummary}
+''';
+  }
+
   Timer? _typingTimer;
   int _currentIndex = 0;
 
@@ -81,7 +96,7 @@ class _CVAnalysisScreenState extends State<CVAnalysisScreen> with TickerProvider
   }
 
   void _startTypingAnimation() {
-    _typingTimer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
+    _typingTimer = Timer.periodic(const Duration(milliseconds: 50), (Timer timer) {
       if (_currentIndex < fullText.length) {
         setState(() {
           displayedText = fullText.substring(0, _currentIndex + 1);
@@ -97,8 +112,8 @@ class _CVAnalysisScreenState extends State<CVAnalysisScreen> with TickerProvider
   void _navigateToSummary() {
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => CVSummaryPage(fileName: widget.fileName),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        pageBuilder: (BuildContext context, _, __) => CVSummaryPage(fileName: widget.fileName),
+        transitionsBuilder: (BuildContext context, Animation<double> animation, _, Widget child) {
           return FadeTransition(opacity: animation, child: child);
         },
       ),
@@ -118,7 +133,7 @@ class _CVAnalysisScreenState extends State<CVAnalysisScreen> with TickerProvider
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
+            colors: <Color>[Color(0xFF6A11CB), Color(0xFF2575FC)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

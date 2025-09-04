@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:ai_resume/localization/arb/l10n.dart';
 import 'package:ai_resume/src/core/services/logging/app_logger.dart';
 import 'package:ai_resume/src/features/resume_summary/data/models/resume_summary_dto.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive_local_storage/hive_local_storage.dart';
 import 'package:injectable/injectable.dart';
 
@@ -22,15 +24,15 @@ class ResumeLibraryLocalDataSourceImpl implements ResumeLibraryLocalDataSource {
   @override
   Future<List<ResumeSummaryDataDto>> getCachedResumes() async {
     try {
-      final cached = await _hiveLocalStorage.get(key: _cacheKey);
+      final dynamic cached = await _hiveLocalStorage.get(key: _cacheKey);
       if (cached == null || cached is! List) {
         return <ResumeSummaryDataDto>[];
       }
 
       final String storedData = jsonEncode(cached);
-      final List<dynamic> jsonList = jsonDecode(storedData);
+      final List<Map<String,dynamic>> jsonList = jsonDecode(storedData);
 
-      return jsonList.map((e) => ResumeSummaryDataDto.fromJson(e)).toList();
+      return jsonList.map<ResumeSummaryDataDto>((Map<String, dynamic> e) => ResumeSummaryDataDto.fromJson(e as Map<String, dynamic>)).toList();
     } catch (_) {
       return <ResumeSummaryDataDto>[];
     }
@@ -38,8 +40,18 @@ class ResumeLibraryLocalDataSourceImpl implements ResumeLibraryLocalDataSource {
 
   @override
   Future<void> cacheResumes(List<ResumeSummaryDataDto> resumes) async {
-    AppLogger.logInfo(info: 'TO STORE DATA ${resumes.map((ResumeSummaryDataDto e) => e.toJson()).toList()}');
-    await _hiveLocalStorage.put(key: _cacheKey, value: resumes.map((ResumeSummaryDataDto e) => e.toJson()).toList());
+    try {
+      if (kDebugMode) {
+        AppLogger.logInfo(info: localization.cachingResumes);
+      }
+      await _hiveLocalStorage.put(
+        key: _cacheKey, 
+        value: resumes.map((ResumeSummaryDataDto e) => e.toJson()).toList()
+      );
+    } catch (e) {
+      AppLogger.logError(error: '${localization.cacheError}: $e');
+      rethrow;
+    }
   }
 
   @override

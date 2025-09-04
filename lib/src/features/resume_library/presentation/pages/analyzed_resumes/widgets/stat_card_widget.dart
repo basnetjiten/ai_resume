@@ -16,9 +16,9 @@ class StatCardWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: textColor.withOpacity(0.1),
+        color: textColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: textColor.withOpacity(0.3), width: 1),
+        border: Border.all(color: textColor.withValues(alpha: 0.3), width: 1),
       ),
       child: Column(
         children: <Widget>[
@@ -28,7 +28,7 @@ class StatCardWidget extends StatelessWidget {
             value,
             style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w700, color: textColor),
           ),
-          Text(title, style: GoogleFonts.poppins(fontSize: 12, color: textColor.withOpacity(0.8))),
+          Text(title, style: GoogleFonts.poppins(fontSize: 12, color: textColor.withValues(alpha: 0.8))),
         ],
       ),
     );

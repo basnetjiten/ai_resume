@@ -5,16 +5,17 @@ import 'package:google_fonts/google_fonts.dart';
 
 class SkillsSectionWidget extends StatelessWidget {
   const SkillsSectionWidget({required this.resumeSummaryData, super.key});
-final ResumeSummaryData resumeSummaryData;
+  
+  final ResumeSummaryData resumeSummaryData;
   @override
   Widget build(BuildContext context) {
     return  Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.12),
+        color: Colors.white.withValues(alpha:  0.12),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.3)),
+        border: Border.all(color: Colors.white.withValues(alpha:  0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,9 +46,9 @@ final ResumeSummaryData resumeSummaryData;
                   vertical: 10,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.white.withOpacity(0.3)),
+                  border: Border.all(color: Colors.white.withValues(alpha:  0.3)),
                 ),
                 child: Text(
                   skill,

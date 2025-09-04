@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ai_resume/localization/arb/l10n.dart';
 
 class ErrorView extends StatelessWidget {
-  final String message;
-  final VoidCallback? onRetry;
-  final IconData? icon;
-  final double iconSize;
-  final double spacing;
 
   const ErrorView({
     Key? key,
@@ -15,6 +11,11 @@ class ErrorView extends StatelessWidget {
     this.iconSize = 48,
     this.spacing = 16.0,
   }) : super(key: key);
+  final String message;
+  final VoidCallback? onRetry;
+  final IconData? icon;
+  final double iconSize;
+  final double spacing;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class ErrorView extends StatelessWidget {
               SizedBox(height: spacing),
               ElevatedButton.icon(
                 icon: const Icon(Icons.refresh, size: 20),
-                label: const Text('Retry'),
+                label: Text(localization.retry),
                 onPressed: onRetry,
               ),
             ],
