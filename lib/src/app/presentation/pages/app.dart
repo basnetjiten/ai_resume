@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:ai_resume/localization/generated/l10n.dart';
 import 'package:ai_resume/src/app/presentation/blocs/app_cubit/app_cubit.dart';
 import 'package:ai_resume/src/app/presentation/pages/global_bloc_provider.dart';
 import 'package:ai_resume/src/core/di/injector.dart';
@@ -110,14 +109,16 @@ ${localization.creatingSummary}
   }
 
   void _navigateToSummary() {
-    Navigator.of(context).pushReplacement(
-      PageRouteBuilder(
-        pageBuilder: (BuildContext context, _, __) => CVSummaryPage(fileName: widget.fileName),
-        transitionsBuilder: (BuildContext context, Animation<double> animation, _, Widget child) {
-          return FadeTransition(opacity: animation, child: child);
-        },
-      ),
-    );
+    Future.delayed(Duration(seconds: 2), () {
+      Navigator.of(context).pushReplacement(
+        PageRouteBuilder(
+          pageBuilder: (BuildContext context, _, __) => CVSummaryPage(fileName: widget.fileName),
+          transitionsBuilder: (BuildContext context, Animation<double> animation, _, Widget child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+        ),
+      );
+    });
   }
 
   @override

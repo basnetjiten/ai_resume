@@ -35,8 +35,8 @@ class _ResumeUploadPageState extends State<ResumeUploadPage> with TickerProvider
   void initState() {
     super.initState();
     _resumePickerCubit = getIt<ResumePickerCubit>();
-    _cardAnimationController = AnimationController(duration: Duration(milliseconds: 800), vsync: this);
-    _particleAnimationController = AnimationController(duration: Duration(seconds: 10), vsync: this)..repeat();
+    _cardAnimationController = AnimationController(duration: const Duration(milliseconds: 800), vsync: this);
+    _particleAnimationController = AnimationController(duration: const Duration(seconds: 10), vsync: this)..repeat();
 
     _cardScaleAnimation = Tween<double>(
       begin: 0.0,
@@ -76,135 +76,125 @@ class _ResumeUploadPageState extends State<ResumeUploadPage> with TickerProvider
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (BuildContext context) {
-        return BlocProvider<ResumePickerCubit>(
-          create: (BuildContext context) => _resumePickerCubit,
-          child: BlocListener<ResumePickerCubit, ResumePickerState>(
-            bloc: _resumePickerCubit,
-            listener: (_, ResumePickerState state) {
-              state.status.maybeWhen(
-                success: (String? data) {
-                  Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder:
-                          (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) =>
-                              CVAnalysisScreen(fileName: state.fileName!),
-                      transitionsBuilder:
-                          (
-                            BuildContext context,
-                            Animation<double> animation,
-                            Animation<double> secondaryAnimation,
-                            child,
-                          ) {
-                            return FadeTransition(opacity: animation, child: child);
-                          },
-                    ),
-                  );
-                  _resumePickerCubit.resetFile();
-                },
-                error: (String? error) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('$error', style: GoogleFonts.poppins()),
-                      backgroundColor: Colors.redAccent,
-                    ),
-                  );
-                },
-                orElse: () {},
-              );
-            },
-            child: Scaffold(
-              appBar: AppBar(
-                title: Text(
-                  'Upload Your Resume',
-                  style: GoogleFonts.poppins(fontWeight: FontWeight.w600, color: Colors.white),
-                ),
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                flexibleSpace: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: <Color>[Color(0xFF6A11CB), Color(0xFF2575FC)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
-                ),
-                actions: [
-                  IconButton(
-                    icon: const Icon(Icons.list, color: Colors.white),
-                    onPressed: _navigateToListings,
-                    tooltip: 'View All CVs',
-                  ),
-                ],
+    return BlocListener<ResumePickerCubit, ResumePickerState>(
+      bloc: _resumePickerCubit,
+      listener: (_, ResumePickerState state) {
+        state.status.maybeWhen(
+          success: (String? data) {
+            Navigator.of(context).push(
+              PageRouteBuilder(
+                pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) =>
+                    CVAnalysisScreen(fileName: state.fileName!),
+                transitionsBuilder:
+                    (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, child) {
+                      return FadeTransition(opacity: animation, child: child);
+                    },
               ),
-              body: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: <Color>[Color(0xFF6A11CB), Color(0xFF2575FC)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                ),
-                child: Stack(
-                  children: [
-                    AnimatedBuilder(
-                      animation: _particleAnimation,
-                      builder: (BuildContext context, Widget? child) {
-                        return CustomPaint(painter: ParticlePainter(_particleAnimation.value), size: Size.infinite);
-                      },
-                    ),
-                    Column(
+            );
+            //_resumePickerCubit.resetFile();
+          },
+          error: (String? error) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('$error', style: GoogleFonts.poppins()),
+                backgroundColor: Colors.redAccent,
+              ),
+            );
+          },
+          orElse: () {},
+        );
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Upload Your Resume',
+            style: GoogleFonts.poppins(fontWeight: FontWeight.w600, color: Colors.white),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: <Color>[Color(0xFF6A11CB), Color(0xFF2575FC)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.list, color: Colors.white),
+              onPressed: _navigateToListings,
+              tooltip: 'View All CVs',
+            ),
+          ],
+        ),
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: <Color>[Color(0xFF6A11CB), Color(0xFF2575FC)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: Stack(
+            children: <Widget>[
+              AnimatedBuilder(
+                animation: _particleAnimation,
+                builder: (BuildContext context, Widget? child) {
+                  return CustomPaint(painter: ParticlePainter(_particleAnimation.value), size: Size.infinite);
+                },
+              ),
+              Column(
+                children: <Widget>[
+                  const SizedBox(height: 100),
+                  SizedBox(
+                    height: 50,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        const SizedBox(height: 100),
-                        SizedBox(
-                          height: 50,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              DefaultTextStyle(
-                                style: const TextStyle(fontSize: 21.0, fontWeight: FontWeight.w700, fontFamily: 'Horizon'),
-                                child: AnimatedTextKit(
-                                  pause: const Duration(milliseconds: 100),
-                                  repeatForever: true,
-                                  animatedTexts: [
-                                    RotateAnimatedText('HIGHLIGHT YOUR STRENGTHS'),
-                                    RotateAnimatedText('IDENTIFY GAPS'),
-                                    RotateAnimatedText('JUSTIFY EXPERIENCES'),
-                                    RotateAnimatedText('SHOWCASE SKILLS'),
-                                    RotateAnimatedText('CRAFT A CAREER STORY'),
-                                  ],
-                                  onTap: () {},
-                                ),
-                              ),
+                        DefaultTextStyle(
+                          style: const TextStyle(fontSize: 21.0, fontWeight: FontWeight.w700, fontFamily: 'Horizon'),
+                          child: AnimatedTextKit(
+                            pause: const Duration(milliseconds: 100),
+                            repeatForever: true,
+                            animatedTexts: [
+                              RotateAnimatedText('HIGHLIGHT YOUR STRENGTHS'),
+                              RotateAnimatedText('IDENTIFY GAPS'),
+                              RotateAnimatedText('JUSTIFY EXPERIENCES'),
+                              RotateAnimatedText('SHOWCASE SKILLS'),
+                              RotateAnimatedText('CRAFT A CAREER STORY'),
                             ],
-                          ),
-                        ),
-
-                        const SizedBox(height: 50),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(24.0),
-                            child: AnimatedBuilder(
-                              animation: _cardScaleAnimation,
-                              builder: (BuildContext context, Widget? child) {
-                                return Transform.scale(scale: _cardScaleAnimation.value, child: UploadFileWidget());
-                              },
-                            ),
+                            onTap: () {},
                           ),
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+
+                  const SizedBox(height: 50),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: AnimatedBuilder(
+                        animation: _cardScaleAnimation,
+                        builder: (BuildContext context, Widget? child) {
+                          return Transform.scale(
+                            scale: _cardScaleAnimation.value,
+                            child: BlocProvider.value(value: _resumePickerCubit, child: const UploadFileWidget()),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

@@ -2,7 +2,6 @@
  * Copyright (c) 2025.
  * Author: Jiten Basnet
  */
-
 import 'package:ai_resume/src/core/base/env.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -25,5 +24,5 @@ abstract class RegisterModules {
       connectTimeout: const Duration(seconds: 120),
       responseType: ResponseType.json,
     ),
-  )..interceptors.addAll([authInterceptor, if (kDebugMode) LogInterceptor(requestBody: true)]);
+  )..interceptors.addAll(<Interceptor>[authInterceptor, if (kDebugMode) LogInterceptor(requestBody: true)]);
 }

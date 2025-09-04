@@ -53,6 +53,6 @@ class ResumePickerCubit extends BaseBloc<void, ResumePickerState> {
   }
 
   void resetFile() {
-    emit(state.copyWith(fileName: null, pickedFile: null, uploadProgress: 0, status: FormStatus.initial()));
+    emit(state.copyWith(fileName: null, pickedFile: null, uploadProgress: 0, status: const FormStatus.initial()));
   }
 }

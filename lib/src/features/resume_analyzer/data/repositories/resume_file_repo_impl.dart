@@ -34,7 +34,7 @@ class ResumeFileRepoImpl extends BaseRepository implements ResumeFileRepository 
 
     return processApiCall(
       call: DioFileXUploader.uploadMultiPartFileFromURL(
-        signedUrl: "${Env.instance.baseUrl}resume/upload",
+        signedUrl: "${Env.instance.baseUrl}v1/resume/upload",
         filePath: filePath,
         metaData: <String, dynamic>{"originalName": fileName},
         errorMessage: 'FILE UPLOAD FAILED',
