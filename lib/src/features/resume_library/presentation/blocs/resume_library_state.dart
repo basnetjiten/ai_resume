@@ -7,7 +7,7 @@ part 'resume_library_state.freezed.dart';
 @freezed
 abstract class ResumeLibraryState with _$ResumeLibraryState {
   const factory ResumeLibraryState({
-    @Default([]) List<ResumeSummaryDataDto> summaries,
+    @Default(<dynamic>[]) List<ResumeSummaryDataDto> summaries,
     @Default(FormStatus.initial()) FormStatus status,
   }) = _ResumeLibraryState;
 }

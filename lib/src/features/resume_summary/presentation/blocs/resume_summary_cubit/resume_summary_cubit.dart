@@ -8,60 +8,36 @@ import 'resume_summary_state.dart';
 
 @injectable
 class ResumeSummaryCubit extends BaseBloc<void, ResumeSummaryState> {
+  ResumeSummaryCubit(this._repository) : super(const ResumeSummaryState());
   final ResumeSummaryRepository _repository;
 
-  ResumeSummaryCubit(this._repository) : super(const ResumeSummaryState());
-
   Future<void> fetchResumeSummaries() async {
-    emit(state.copyWith(status: FormStatus.submitting()));
+    emit(state.copyWith(status: const FormStatus.submitting()));
 
     await handleAPICall(
       call: _repository.getResumeSummaries(),
-      onSuccess: (summaries) => state.copyWith(
-        status: FormStatus.success(),
-        summaries: summaries,
-      ),
-      onFailure: (error) => state.copyWith(
-        status: FormStatus.error(error: error.toString()),
-      ),
+      onSuccess: (List<ResumeSummaryDataDto> summaries) =>
+          state.copyWith(status: const FormStatus.success(), summaries: summaries),
+      onFailure: (String error) => state.copyWith(status: FormStatus.error(error: error.toString())),
     );
   }
 
   Future<void> fetchResumeSummaryDetail({required String fileName}) async {
     await handleAPICall(
       call: _repository.getResumeSummary(fileName),
-      onSuccess: (summary) => state.copyWith(
-          status: const FormStatus.success(), resumeSummaryData: summary.data),
-      onFailure: (error) => state.copyWith(
-        status: FormStatus.error(error: error.toString()),
-      ),
+      onSuccess: (ResumeSummaryDto summary) =>
+          state.copyWith(status: const FormStatus.success(), resumeSummaryData: summary.data),
+      onFailure: (String error) => state.copyWith(status: FormStatus.error(error: error.toString())),
     );
   }
 
-  List<ResumeResultDto> prepareAnalyzedSummaries(
-      ResumeSummaryDataDto analyzedData) {
-    final List<ResumeResultDto> summaries = [
-      ResumeResultDto(
-        title: 'Professional Summary',
-        items: [
-          analyzedData.summary,
-        ],
-      ),
-      ResumeResultDto(
-        title: 'Technical Skills',
-        items: analyzedData.skills.sublist(0, 5),
-      ),
-      ResumeResultDto(
-        title: 'Strengths',
-        items: analyzedData.analysis.candidateStrengths,
-      ),
-      ResumeResultDto(
-        title: 'Weaknesses',
-        items: analyzedData.analysis.candidateWeaknesses,
-      ),
-      ResumeResultDto(title: 'Justification', items: [
-        analyzedData.analysis.justification,
-      ]),
+  List<ResumeResultDto> prepareAnalyzedSummaries(ResumeSummaryDataDto analyzedData) {
+    final List<ResumeResultDto> summaries = <ResumeResultDto>[
+      ResumeResultDto(title: 'Professional Summary', items: <String>[analyzedData.summary]),
+      ResumeResultDto(title: 'Technical Skills', items: analyzedData.skills.sublist(0, 5)),
+      ResumeResultDto(title: 'Strengths', items: analyzedData.analysis.candidateStrengths),
+      ResumeResultDto(title: 'Weaknesses', items: analyzedData.analysis.candidateWeaknesses),
+      ResumeResultDto(title: 'Justification', items: <String>[analyzedData.analysis.justification]),
     ];
     return summaries;
   }

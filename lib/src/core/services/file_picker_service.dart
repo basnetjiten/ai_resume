@@ -21,9 +21,9 @@ class FilePickerService {
         return (pickedFiles, null);
       }
 
-      return (pickedFiles, "Please pick image less than 2 MB");
+      return (pickedFiles, 'Please pick image less than 2 MB');
     }
-    return (pickedFiles, "No file picked");
+    return (pickedFiles, 'No file picked');
   }
 
   static bool isSize2MB(int sizeInBytes) => sizeInBytes <= 2 * 1024 * 1024;

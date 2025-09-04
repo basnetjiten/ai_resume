@@ -10,11 +10,11 @@ class UploadProgressWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<ResumePickerCubit, ResumePickerState, int>(
-      selector: (state) => state.uploadProgress,
-      builder: (_, progress) {
+      selector: (ResumePickerState state) => state.uploadProgress,
+      builder: (_, int progress) {
         double uploadProgress = progress / 100;
         return Column(
-          children: [
+          children: <Widget>[
             GestureDetector(
               onTap: () {
                 if (uploadProgress < 1.0) {
@@ -24,17 +24,14 @@ class UploadProgressWidget extends StatelessWidget {
               child: LinearProgressIndicator(
                 value: uploadProgress,
                 backgroundColor: Colors.white.withOpacity(0.3),
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
               ),
             ),
 
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               '${(uploadProgress * 100).toInt()}%',
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-              ),
+              style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w500),
             ),
           ],
         );

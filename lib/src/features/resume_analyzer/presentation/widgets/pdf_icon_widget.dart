@@ -8,11 +8,8 @@ class PdfIconWidget extends StatelessWidget {
     return Container(
       width: 80,
       height: 80,
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Icon(Icons.picture_as_pdf, size: 40, color: Colors.white),
+      decoration: BoxDecoration(color: Colors.white.withOpacity(0.2), borderRadius: BorderRadius.circular(20)),
+      child: const Icon(Icons.picture_as_pdf, size: 40, color: Colors.white),
     );
   }
 }

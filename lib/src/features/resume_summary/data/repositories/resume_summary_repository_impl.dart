@@ -10,19 +10,16 @@ import 'package:ai_resume/src/core/base/base_repository.dart';
 import 'package:simple_form_field/errors/app_error.dart';
 
 @Singleton(as: ResumeSummaryRepository)
-class ResumeSummaryRepositoryImpl extends BaseRepository
-    implements ResumeSummaryRepository {
+class ResumeSummaryRepositoryImpl extends BaseRepository implements ResumeSummaryRepository {
+  ResumeSummaryRepositoryImpl(this._remoteDataSource, this._localDataSource) : super();
   final ResumeSummaryRemoteDataSource _remoteDataSource;
   final ResumeLibraryLocalDataSource _localDataSource;
-
-  ResumeSummaryRepositoryImpl(this._remoteDataSource, this._localDataSource)
-    : super();
 
   @override
   EitherResponse<ResumeSummaryDto> getResumeSummary(String fileName) {
     return processApiCall(
       call: _remoteDataSource.getResumeSummary(fileName),
-      onSuccess: (resumeSummary) => resumeSummary,
+      onSuccess: (ResumeSummaryDto resumeSummary) => resumeSummary,
     );
   }
 
@@ -33,17 +30,17 @@ class ResumeSummaryRepositoryImpl extends BaseRepository
     if (isConnected) {
       return processApiCall(
         call: _remoteDataSource.getResumeSummaries(),
-        onSuccess: (summaries) {
+        onSuccess: (List<ResumeSummaryDataDto> summaries) {
           _localDataSource.cacheResumes(summaries);
           return summaries;
         },
       );
     } else {
-      final cachedSummaries = await _localDataSource.getCachedResumes();
+      final List<ResumeSummaryDataDto> cachedSummaries = await _localDataSource.getCachedResumes();
       if (cachedSummaries.isNotEmpty) {
         return right(cachedSummaries);
       }
-      return left(AppError.noInternet());
+      return left(const AppError.noInternet());
     }
   }
 }

@@ -1,12 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class ResumeSummary extends Equatable {
-  final String id;
-  final String title;
-  final String summary;
-  final DateTime createdAt;
-  final Map<String, dynamic>? metadata;
-
   const ResumeSummary({
     required this.id,
     required this.title,
@@ -15,8 +9,14 @@ class ResumeSummary extends Equatable {
     this.metadata,
   });
 
+  final String id;
+  final String title;
+  final String summary;
+  final DateTime createdAt;
+  final Map<String, dynamic>? metadata;
+
   @override
-  List<Object?> get props => [id, title, summary, createdAt, metadata];
+  List<Object?> get props => <Object?>[id, title, summary, createdAt, metadata];
 
   ResumeSummary copyWith({
     String? id,

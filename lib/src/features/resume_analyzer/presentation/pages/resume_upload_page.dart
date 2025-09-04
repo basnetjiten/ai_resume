@@ -20,8 +20,7 @@ class ResumeUploadPage extends StatefulWidget {
   _ResumeUploadPageState createState() => _ResumeUploadPageState();
 }
 
-class _ResumeUploadPageState extends State<ResumeUploadPage>
-    with TickerProviderStateMixin {
+class _ResumeUploadPageState extends State<ResumeUploadPage> with TickerProviderStateMixin {
   File? selectedFile;
   bool isUploading = false;
 
@@ -36,26 +35,15 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
   void initState() {
     super.initState();
     _resumePickerCubit = getIt<ResumePickerCubit>();
-    _cardAnimationController = AnimationController(
-      duration: Duration(milliseconds: 800),
-      vsync: this,
-    );
-    _particleAnimationController = AnimationController(
-      duration: Duration(seconds: 10),
-      vsync: this,
-    )..repeat();
+    _cardAnimationController = AnimationController(duration: Duration(milliseconds: 800), vsync: this);
+    _particleAnimationController = AnimationController(duration: Duration(seconds: 10), vsync: this)..repeat();
 
-    _cardScaleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _cardAnimationController,
-        curve: Curves.elasticOut,
-      ),
-    );
-
-    _particleAnimation = Tween<double>(
+    _cardScaleAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
-    ).animate(_particleAnimationController);
+    ).animate(CurvedAnimation(parent: _cardAnimationController, curve: Curves.elasticOut));
+
+    _particleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_particleAnimationController);
 
     _cardAnimationController.forward();
   }
@@ -67,21 +55,21 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
     super.dispose();
   }
 
-
   void _navigateToListings() {
     Navigator.of(context).push(
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            AnalyzedResumesPage(),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return SlideTransition(
-            position: Tween<Offset>(begin: Offset(1.0, 0.0), end: Offset.zero)
-                .animate(
-                  CurvedAnimation(parent: animation, curve: Curves.easeInOut),
-                ),
-            child: child,
-          );
-        },
+        pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) =>
+            const AnalyzedResumesPage(),
+        transitionsBuilder:
+            (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+              return SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(1.0, 0.0),
+                  end: Offset.zero,
+                ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
+                child: child,
+              );
+            },
       ),
     );
   }
@@ -89,9 +77,9 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
   @override
   Widget build(BuildContext context) {
     return Builder(
-      builder: (context) {
-        return BlocProvider(
-          create: (context) => _resumePickerCubit,
+      builder: (BuildContext context) {
+        return BlocProvider<ResumePickerCubit>(
+          create: (BuildContext context) => _resumePickerCubit,
           child: BlocListener<ResumePickerCubit, ResumePickerState>(
             bloc: _resumePickerCubit,
             listener: (_, ResumePickerState state) {
@@ -99,14 +87,17 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
                 success: (String? data) {
                   Navigator.of(context).push(
                     PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) =>
-                          CVAnalysisScreen(fileName: state.fileName!),
+                      pageBuilder:
+                          (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) =>
+                              CVAnalysisScreen(fileName: state.fileName!),
                       transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                            return FadeTransition(
-                              opacity: animation,
-                              child: child,
-                            );
+                          (
+                            BuildContext context,
+                            Animation<double> animation,
+                            Animation<double> secondaryAnimation,
+                            child,
+                          ) {
+                            return FadeTransition(opacity: animation, child: child);
                           },
                     ),
                   );
@@ -127,17 +118,14 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
               appBar: AppBar(
                 title: Text(
                   'Upload Your Resume',
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
+                  style: GoogleFonts.poppins(fontWeight: FontWeight.w600, color: Colors.white),
                 ),
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 flexibleSpace: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
+                      colors: <Color>[Color(0xFF6A11CB), Color(0xFF2575FC)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -145,16 +133,16 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
                 ),
                 actions: [
                   IconButton(
-                    icon: Icon(Icons.list, color: Colors.white),
+                    icon: const Icon(Icons.list, color: Colors.white),
                     onPressed: _navigateToListings,
                     tooltip: 'View All CVs',
                   ),
                 ],
               ),
               body: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
+                    colors: <Color>[Color(0xFF6A11CB), Color(0xFF2575FC)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -163,16 +151,13 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
                   children: [
                     AnimatedBuilder(
                       animation: _particleAnimation,
-                      builder: (context, child) {
-                        return CustomPaint(
-                          painter: ParticlePainter(_particleAnimation.value),
-                          size: Size.infinite,
-                        );
+                      builder: (BuildContext context, Widget? child) {
+                        return CustomPaint(painter: ParticlePainter(_particleAnimation.value), size: Size.infinite);
                       },
                     ),
                     Column(
-                      children: [
-                        SizedBox(height: 100),
+                      children: <Widget>[
+                        const SizedBox(height: 100),
                         SizedBox(
                           height: 50,
                           child: Row(
@@ -181,18 +166,12 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               DefaultTextStyle(
-                                style: const TextStyle(
-                                  fontSize: 21.0,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Horizon',
-                                ),
+                                style: const TextStyle(fontSize: 21.0, fontWeight: FontWeight.w700, fontFamily: 'Horizon'),
                                 child: AnimatedTextKit(
-                                  pause: Duration(milliseconds: 100),
+                                  pause: const Duration(milliseconds: 100),
                                   repeatForever: true,
                                   animatedTexts: [
-                                    RotateAnimatedText(
-                                      'HIGHLIGHT YOUR STRENGTHS',
-                                    ),
+                                    RotateAnimatedText('HIGHLIGHT YOUR STRENGTHS'),
                                     RotateAnimatedText('IDENTIFY GAPS'),
                                     RotateAnimatedText('JUSTIFY EXPERIENCES'),
                                     RotateAnimatedText('SHOWCASE SKILLS'),
@@ -205,17 +184,14 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
                           ),
                         ),
 
-                        SizedBox(height: 50),
+                        const SizedBox(height: 50),
                         Center(
                           child: Padding(
-                            padding: EdgeInsets.all(24.0),
+                            padding: const EdgeInsets.all(24.0),
                             child: AnimatedBuilder(
                               animation: _cardScaleAnimation,
-                              builder: (context, child) {
-                                return Transform.scale(
-                                  scale: _cardScaleAnimation.value,
-                                  child: UploadFileWidget(),
-                                );
+                              builder: (BuildContext context, Widget? child) {
+                                return Transform.scale(scale: _cardScaleAnimation.value, child: UploadFileWidget());
                               },
                             ),
                           ),
@@ -234,14 +210,13 @@ class _ResumeUploadPageState extends State<ResumeUploadPage>
 }
 
 class ParticlePainter extends CustomPainter {
+  ParticlePainter(this.animationValue) : particles = _generateParticles();
   final double animationValue;
   final List<Particle> particles;
 
-  ParticlePainter(this.animationValue) : particles = _generateParticles();
-
   static List<Particle> _generateParticles() {
-    final random = math.Random();
-    return List.generate(50, (index) {
+    final math.Random random = math.Random();
+    return List<Particle>.generate(50, (int index) {
       return Particle(
         x: random.nextDouble(),
         y: random.nextDouble(),
@@ -253,14 +228,13 @@ class ParticlePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
+    final Paint paint = Paint()
       ..color = Colors.white.withOpacity(0.1)
       ..style = PaintingStyle.fill;
 
-    for (final particle in particles) {
-      final x =
-          (particle.x + animationValue * particle.speed) % 1.0 * size.width;
-      final y = particle.y * size.height;
+    for (final Particle particle in particles) {
+      final double x = (particle.x + animationValue * particle.speed) % 1.0 * size.width;
+      final double y = particle.y * size.height;
       canvas.drawCircle(Offset(x, y), particle.size, paint);
     }
   }
@@ -272,15 +246,10 @@ class ParticlePainter extends CustomPainter {
 }
 
 class Particle {
+  Particle({required this.x, required this.y, required this.size, required this.speed});
+
   final double x;
   final double y;
   final double size;
   final double speed;
-
-  Particle({
-    required this.x,
-    required this.y,
-    required this.size,
-    required this.speed,
-  });
 }

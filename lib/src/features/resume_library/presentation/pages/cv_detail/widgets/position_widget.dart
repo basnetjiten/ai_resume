@@ -2,10 +2,10 @@ import 'package:ai_resume/src/features/resume_library/domain/models/resume_summa
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HeaderWidget extends StatelessWidget {
-  final ResumeSummaryData resumeSummaryData;
+class PositionWidget extends StatelessWidget {
 
-  const HeaderWidget({super.key, required this.resumeSummaryData});
+  const PositionWidget({required this.resumeSummaryData, super.key});
+  final ResumeSummaryData resumeSummaryData;
 
   Color _getExperienceColor(String experience) {
     switch (experience) {

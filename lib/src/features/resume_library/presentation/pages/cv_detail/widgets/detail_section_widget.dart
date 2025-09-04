@@ -2,16 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DetailSectionWidget extends StatelessWidget {
+  const DetailSectionWidget({super.key, required this.title, required this.content, required this.icon});
+
   final String title;
   final String content;
   final IconData icon;
-
-  const DetailSectionWidget({
-    super.key,
-    required this.title,
-    required this.content,
-    required this.icon,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,30 +20,19 @@ class DetailSectionWidget extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Row(
-            children: [
+            children: <Widget>[
               Icon(icon, color: Colors.white, size: 20),
               const SizedBox(width: 12),
               Text(
                 title,
-                style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                ),
+                style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w700, color: Colors.white),
               ),
             ],
           ),
           const SizedBox(height: 12),
-          Text(
-            content,
-            style: GoogleFonts.poppins(
-              fontSize: 15,
-              color: Colors.white.withOpacity(0.9),
-              height: 1.6,
-            ),
-          ),
+          Text(content, style: GoogleFonts.poppins(fontSize: 15, color: Colors.white.withOpacity(0.9), height: 1.6)),
         ],
       ),
     );

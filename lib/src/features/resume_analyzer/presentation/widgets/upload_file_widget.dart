@@ -22,54 +22,41 @@ class UploadFileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.maxFinite,
-      constraints: BoxConstraints(maxWidth: 400),
+      constraints: const BoxConstraints(maxWidth: 400),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
         gradient: LinearGradient(
-          colors: [
-            Colors.white.withOpacity(0.2),
-            Colors.white.withOpacity(0.1),
-          ],
+          colors: <Color>[Colors.white.withOpacity(0.2), Colors.white.withOpacity(0.1)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         border: Border.all(color: Colors.white.withOpacity(0.3), width: 1.5),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 20,
-            offset: Offset(0, 10),
-          ),
+        boxShadow: <BoxShadow>[
+          BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 20, offset: const Offset(0, 10)),
         ],
       ),
       child: Padding(
-        padding: EdgeInsets.all(32.0),
+        padding: const EdgeInsets.all(32.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             BlocBuilder<ResumePickerCubit, ResumePickerState>(
-              buildWhen: (prev, curr) =>
-                  prev.uploadProgress != curr.uploadProgress,
-              builder: (context, state) {
+              buildWhen: (ResumePickerState prev, ResumePickerState curr) => prev.uploadProgress != curr.uploadProgress,
+              builder: (BuildContext context, ResumePickerState state) {
                 if (state.pickedFile == null) {
                   return Column(
-                    children: [
-                      PdfIconWidget(),
-                      SizedBox(height: 24),
-                      UploadFileButtonWidget(
-                        onFilePick: () => _pickFile(context),
-                      ),
+                    children: <Widget>[
+                      const PdfIconWidget(),
+                      const SizedBox(height: 24),
+                      UploadFileButtonWidget(onFilePick: () => _pickFile(context)),
                     ],
                   );
                 } else {
                   return Column(
                     children: [
-                      ShowPickedFileWidget(
-                        pickedFile: state.pickedFile,
-                        removeFile: () => _removeFile(context),
-                      ),
-                      SizedBox(height: 24),
-                      if (state.uploadProgress > 0) UploadProgressWidget(),
+                      ShowPickedFileWidget(pickedFile: state.pickedFile, removeFile: () => _removeFile(context)),
+                      const SizedBox(height: 24),
+                      if (state.uploadProgress > 0) const UploadProgressWidget(),
                     ],
                   );
                 }

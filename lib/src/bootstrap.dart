@@ -19,8 +19,7 @@ Future<void> bootstrap({required Function() initEnv}) async {
 
   FlutterNativeSplash.preserve(widgetsBinding: binding);
 
-  await SystemChrome.setPreferredOrientations(
-      <DeviceOrientation>[DeviceOrientation.portraitUp]);
+  await SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp]);
 
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
