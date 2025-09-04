@@ -38,8 +38,8 @@ class ResumeLibraryLocalDataSourceImpl implements ResumeLibraryLocalDataSource {
 
   @override
   Future<void> cacheResumes(List<ResumeSummaryDataDto> resumes) async {
-    AppLogger.logInfo(info: 'TO STORE DATA ${resumes.map((e) => e.toJson()).toList()}');
-    await _hiveLocalStorage.put(key: _cacheKey, value: resumes.map((e) => e.toJson()).toList());
+    AppLogger.logInfo(info: 'TO STORE DATA ${resumes.map((ResumeSummaryDataDto e) => e.toJson()).toList()}');
+    await _hiveLocalStorage.put(key: _cacheKey, value: resumes.map((ResumeSummaryDataDto e) => e.toJson()).toList());
   }
 
   @override

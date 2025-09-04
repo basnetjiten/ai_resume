@@ -14,15 +14,15 @@ extension ApiExceptionDioX on DioException {
       case DioExceptionType.sendTimeout:
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.receiveTimeout:
-        return ApiException.timeOut(message: 'Connection Error');
+        return const ApiException.timeOut(message: 'Connection Error');
 
       case DioExceptionType.badResponse:
-        _statusCode = response?.statusCode!;
+        _statusCode = response?.statusCode;
         _apiData = response?.data;
 
         return ApiException.serverException(message: 'Server Error ${response?.data}');
       default:
-        return ApiException.serverException(message: 'Server Error');
+        return const ApiException.serverException(message: 'Server Error');
     }
   }
 }

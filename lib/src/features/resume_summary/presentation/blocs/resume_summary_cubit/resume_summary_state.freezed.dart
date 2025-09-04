@@ -229,7 +229,7 @@ return $default(_that.summaries,_that.resumeSummaryData,_that.status);case _:
 
 
 class _ResumeSummaryState implements ResumeSummaryState {
-  const _ResumeSummaryState({final  List<ResumeSummaryDataDto> summaries = const [], this.resumeSummaryData = null, this.status = const FormStatus.initial()}): _summaries = summaries;
+  const _ResumeSummaryState({final  List<ResumeSummaryDataDto> summaries = const <ResumeSummaryDataDto>[], this.resumeSummaryData = null, this.status = const FormStatus.initial()}): _summaries = summaries;
   
 
  final  List<ResumeSummaryDataDto> _summaries;

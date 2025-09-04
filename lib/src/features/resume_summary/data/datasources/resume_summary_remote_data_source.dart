@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:ai_resume/src/core/base/base_remote_source.dart';
 import 'package:ai_resume/src/core/services/logging/app_logger.dart';
 import 'package:ai_resume/src/features/resume_summary/data/models/resume_summary_dto.dart';
-import 'package:dio/src/dio.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class ResumeSummaryRemoteDataSource {
@@ -29,7 +29,7 @@ class ResumeSummaryRemoteDataSourceImpl extends BaseRemoteSource implements Resu
   @override
   Future<ResumeSummaryDto> getResumeSummary(String fileName) async {
     return networkRequest<ResumeSummaryDto>(
-      request: (Dio dio) => dio.get('resume-summary', queryParameters: {"originalName": fileName}),
+      request: (Dio dio) => dio.get<Response<Map<String,dynamic>>>('resume-summary', queryParameters: <String, dynamic>{"originalName": fileName}),
       onResponse: (data) => ResumeSummaryDto.fromJson(data),
     );
   }

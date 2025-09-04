@@ -27,9 +27,9 @@ abstract class BaseRemoteSource {
     required T Function(dynamic data) onResponse,
   }) async {
     try {
-      final response = await request(_dio);
+      final Response<dynamic> response = await request(_dio);
       if (response.statusCode! == 200) {
-        return onResponse(response.data ?? {});
+        return onResponse(response.data ?? <String, dynamic>{});
       } else {
         throw ApiException.serverException(
           message: response.data['message'] ?? 'UnExpected Error Occurred!',

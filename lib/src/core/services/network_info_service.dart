@@ -11,8 +11,8 @@ class InternetConnectionHelper {
 
   static Future<bool> checkConnection() async {
     final String baseURL = 'https://journey-ai-webservice.onrender.com';
-    return await InternetConnection.createInstance(
-      customCheckOptions: [InternetCheckOption(uri: Uri.parse(baseURL))],
+    return InternetConnection.createInstance(
+      customCheckOptions: <InternetCheckOption>[InternetCheckOption(uri: Uri.parse(baseURL))],
     ).hasInternetAccess;
   }
 }

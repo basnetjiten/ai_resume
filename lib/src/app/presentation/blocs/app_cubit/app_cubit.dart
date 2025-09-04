@@ -17,7 +17,7 @@ class AppCubit extends Cubit<AppState> {
   AppCubit() : super(const AppState.initial()) {
     // Initialize with a small delay to ensure proper widget tree initialization
     //Later this will be a proper session check (e.g., checking token validity)
-    Future.delayed(const Duration(milliseconds: 50), checkAuthStatus);
+    Future<void>.delayed(const Duration(milliseconds: 50), checkAuthStatus);
   }
 
   /// Checks the current authentication status and updates the state accordingly

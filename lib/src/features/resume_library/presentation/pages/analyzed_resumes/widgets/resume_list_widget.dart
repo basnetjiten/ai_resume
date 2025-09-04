@@ -6,11 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ResumeListWidget extends StatelessWidget {
-  const ResumeListWidget({
-    super.key,
-    required this.animationController,
-    required this.currentPageCVs,
-  });
+  const ResumeListWidget({required this.animationController, required this.currentPageCVs, super.key});
 
   final List<ResumeSummaryDataDto> currentPageCVs;
   final AnimationController animationController;
@@ -21,40 +17,37 @@ class ResumeListWidget extends StatelessWidget {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Icon(Icons.folder_open, size: 64, color: Colors.grey[400]),
             const SizedBox(height: 16),
-            Text(
-              'No resumes found',
-              style: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
-            ),
+            Text('No resumes found', style: GoogleFonts.poppins(fontSize: 16, color: Colors.white)),
           ],
         ),
       );
     }
 
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
+          colors: <Color>[Color(0xFF6A11CB), Color(0xFF2575FC)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
       ),
       child: AnimatedBuilder(
         animation: animationController,
-        builder: (context, child) {
+        builder: (BuildContext context, Widget? child) {
           return FadeTransition(
             opacity: animationController,
             child: ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               itemCount: currentPageCVs.length,
-              itemBuilder: (context, index) {
+              itemBuilder: (BuildContext context, int index) {
                 return TweenAnimationBuilder<double>(
                   duration: Duration(milliseconds: 600 + (index * 100)),
                   tween: Tween(begin: 0.0, end: 1.0),
-                  builder: (context, value, child) {
-                    final resume = currentPageCVs[index];
+                  builder: (BuildContext context, double value, _) {
+                    final ResumeSummaryDataDto resume = currentPageCVs[index];
                     return Transform.translate(
                       offset: Offset(0, 30 * (1 - value)),
                       child: Opacity(
@@ -87,10 +80,6 @@ class ResumeListWidget extends StatelessWidget {
       skills: cv.skills,
       uploadDate: cv.uploadedDate ?? 'NA',
     );
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => ResumeDetailPage(resumeSummaryData: resumeData),
-      ),
-    );
+    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => ResumeDetailPage(resumeSummaryData: resumeData)));
   }
 }

@@ -8,6 +8,6 @@ part 'development_env.g.dart';
 class DevelopmentEnv extends EnvVars {
 
   @override
-  @EnviedField(varName: EnvKeys.baseUrlKey, obfuscate: false)
+  @EnviedField(varName: EnvKeys.baseUrlKey, obfuscate: true)
   String baseUrl = _DevelopmentEnv.baseUrl;
 }

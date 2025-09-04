@@ -56,16 +56,15 @@ class App extends StatelessWidget {
 }
 
 class CVAnalysisScreen extends StatefulWidget {
-  final String fileName;
+  const CVAnalysisScreen({required this.fileName, super.key});
 
-  const CVAnalysisScreen({super.key, required this.fileName});
+  final String fileName;
 
   @override
   _CVAnalysisScreenState createState() => _CVAnalysisScreenState();
 }
 
-class _CVAnalysisScreenState extends State<CVAnalysisScreen>
-    with TickerProviderStateMixin {
+class _CVAnalysisScreenState extends State<CVAnalysisScreen> with TickerProviderStateMixin {
   late AnimationController _dotsController;
   String displayedText = '';
   String fullText =
@@ -76,16 +75,13 @@ class _CVAnalysisScreenState extends State<CVAnalysisScreen>
   @override
   void initState() {
     super.initState();
-    _dotsController = AnimationController(
-      duration: Duration(seconds: 2),
-      vsync: this,
-    )..repeat();
+    _dotsController = AnimationController(duration: const Duration(seconds: 2), vsync: this)..repeat();
 
     _startTypingAnimation();
   }
 
   void _startTypingAnimation() {
-    _typingTimer = Timer.periodic(Duration(milliseconds: 50), (timer) {
+    _typingTimer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
       if (_currentIndex < fullText.length) {
         setState(() {
           displayedText = fullText.substring(0, _currentIndex + 1);
@@ -101,8 +97,7 @@ class _CVAnalysisScreenState extends State<CVAnalysisScreen>
   void _navigateToSummary() {
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            CVSummaryPage(fileName: widget.fileName),
+        pageBuilder: (context, animation, secondaryAnimation) => CVSummaryPage(fileName: widget.fileName),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(opacity: animation, child: child);
         },
@@ -121,7 +116,7 @@ class _CVAnalysisScreenState extends State<CVAnalysisScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
             begin: Alignment.topLeft,
@@ -130,32 +125,25 @@ class _CVAnalysisScreenState extends State<CVAnalysisScreen>
         ),
         child: Center(
           child: Padding(
-            padding: EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(24.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 Text(
                   'Summarizing your CV...',
-                  style: GoogleFonts.poppins(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
+                  style: GoogleFonts.poppins(fontSize: 28, fontWeight: FontWeight.w700, color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 AnimatedBuilder(
                   animation: _dotsController,
-                  builder: (context, child) {
-                    return LoadingAnimationWidget.waveDots(
-                      color: Colors.white,
-                      size: 50,
-                    );
+                  builder: (BuildContext context, _) {
+                    return LoadingAnimationWidget.waveDots(color: Colors.white, size: 50);
                   },
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Container(
-                  padding: EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(16),
@@ -163,29 +151,19 @@ class _CVAnalysisScreenState extends State<CVAnalysisScreen>
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Row(
-                        children: [
+                        children: <Widget>[
                           Expanded(
                             child: Text(
                               displayedText,
-                              style: GoogleFonts.poppins(
-                                fontSize: 16,
-                                color: Colors.white.withOpacity(0.9),
-                                height: 1.6,
-                              ),
+                              style: GoogleFonts.poppins(fontSize: 16, color: Colors.white.withOpacity(0.9), height: 1.6),
                             ),
                           ),
                           AnimatedOpacity(
-                            opacity:
-                                (_currentIndex < fullText.length ? 1.0 : 0.0)
-                                    .clamp(0.0, 1.0),
-                            duration: Duration(milliseconds: 500),
-                            child: Container(
-                              width: 2,
-                              height: 20,
-                              color: Colors.white,
-                            ),
+                            opacity: (_currentIndex < fullText.length ? 1.0 : 0.0).clamp(0.0, 1.0),
+                            duration: const Duration(milliseconds: 500),
+                            child: Container(width: 2, height: 20, color: Colors.white),
                           ),
                         ],
                       ),

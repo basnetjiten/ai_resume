@@ -39,7 +39,7 @@ class BaseRepository {
       );
       return left(appError);
     } catch(_) {
-      return left(AppError.serverError(message: 'Server Error'));
+      return left(const AppError.serverError(message: 'Server Error'));
     }
   }
 }

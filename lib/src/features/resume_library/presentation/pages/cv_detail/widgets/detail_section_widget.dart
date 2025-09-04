@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DetailSectionWidget extends StatelessWidget {
-  const DetailSectionWidget({super.key, required this.title, required this.content, required this.icon});
+  const DetailSectionWidget({required this.title, required this.content, required this.icon, super.key});
 
   final String title;
   final String content;

@@ -15,11 +15,13 @@ class PaginationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (totalPages <= 1) return const SizedBox.shrink();
+    if (totalPages <= 1) {
+      return const SizedBox.shrink();
+    }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
+      children: <Widget>[
         _buildPaginationButton(
           icon: Icons.chevron_left,
           onPressed: currentPage > 0
@@ -29,9 +31,9 @@ class PaginationWidget extends StatelessWidget {
           context: context,
         ),
         const SizedBox(width: 8),
-        ...List.generate(
+        ...List<Widget>.generate(
           totalPages,
-          (index) => Padding(
+          (int index) => Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: _buildPageNumber(index, context),
           ),
@@ -83,10 +85,10 @@ class PaginationWidget extends StatelessWidget {
   }
 
   Widget _buildPageNumber(int index, BuildContext context) {
-    final isCurrentPage = index == currentPage;
+    final bool isCurrentPage = index == currentPage;
 
     return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       width: 40,
       height: 40,
       decoration: BoxDecoration(

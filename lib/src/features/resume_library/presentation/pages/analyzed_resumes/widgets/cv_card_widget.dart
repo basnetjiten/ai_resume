@@ -46,11 +46,11 @@ class CVCardWidget extends StatelessWidget {
         color: Colors.white.withOpacity(0.12),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.white.withOpacity(0.3)),
-        boxShadow: [
+        boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
             blurRadius: 15,
-            offset: Offset(0, 5),
+            offset: const Offset(0, 5),
           ),
         ],
       ),
@@ -89,7 +89,7 @@ class CVCardWidget extends StatelessWidget {
             color: Colors.white.withOpacity(0.2),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Icon(
+          child: const Icon(
             Icons.person,
             color: Colors.white,
             size: 28,
@@ -162,8 +162,8 @@ class CVCardWidget extends StatelessWidget {
       runSpacing: 8,
       children: (cv.skills.take(3).toList()..sort())
           .map(
-            (skill) => Container(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            (String skill) => Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(12),

@@ -24,12 +24,12 @@ _ResumeSummaryDataDto _$ResumeSummaryDataDtoFromJson(
   id: json['_id'] as String,
   candidateName: json['candidateName'] as String,
   role: json['role'] as String,
-  experience: json['experience'] as String? ?? '-',
   seniority: json['seniority'] as String,
   skills: (json['skills'] as List<dynamic>).map((e) => e as String).toList(),
   summary: json['summary'] as String,
-  uploadedDate: json['uploadedDate'] as String?,
   analysis: AnalysisDto.fromJson(json['analysis'] as Map<String, dynamic>),
+  experience: json['experience'] as String? ?? '-',
+  uploadedDate: json['uploadedDate'] as String?,
 );
 
 Map<String, dynamic> _$ResumeSummaryDataDtoToJson(
@@ -38,12 +38,12 @@ Map<String, dynamic> _$ResumeSummaryDataDtoToJson(
   '_id': instance.id,
   'candidateName': instance.candidateName,
   'role': instance.role,
-  'experience': instance.experience,
   'seniority': instance.seniority,
   'skills': instance.skills,
   'summary': instance.summary,
-  'uploadedDate': instance.uploadedDate,
   'analysis': instance.analysis.toJson(),
+  'experience': instance.experience,
+  'uploadedDate': instance.uploadedDate,
 };
 
 _AnalysisDto _$AnalysisDtoFromJson(Map<String, dynamic> json) => _AnalysisDto(

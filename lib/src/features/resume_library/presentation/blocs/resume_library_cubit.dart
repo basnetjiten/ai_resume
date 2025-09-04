@@ -7,7 +7,7 @@ import 'package:simple_form_field/form/form_status.dart';
 
 @injectable
 class ResumeLibraryCubit extends BaseBloc<void, ResumeLibraryState> {
-  ResumeLibraryCubit(this._repository) : super(const ResumeLibraryState());
+  ResumeLibraryCubit(this._repository) : super(ResumeLibraryState());
   final ResumeSummaryRepository _repository;
 
   Future<void> fetchResumeSummaries() async {

@@ -61,7 +61,7 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent> with Ticke
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
+              colors: <Color>[Color(0xFF6A11CB), Color(0xFF2575FC)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),

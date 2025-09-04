@@ -8,6 +8,6 @@ part 'stage_env.g.dart';
 class StageEnv extends EnvVars {
 
   @override
-  @EnviedField(varName: EnvKeys.baseUrlKey, obfuscate: false)
+  @EnviedField(varName: EnvKeys.baseUrlKey, obfuscate: true)
   String baseUrl = _StageEnv.baseUrl;
 }

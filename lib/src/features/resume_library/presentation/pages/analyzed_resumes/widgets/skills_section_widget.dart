@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SkillsSectionWidget extends StatelessWidget {
-  const SkillsSectionWidget({super.key,required this.resumeSummaryData});
+  const SkillsSectionWidget({required this.resumeSummaryData, super.key});
 final ResumeSummaryData resumeSummaryData;
   @override
   Widget build(BuildContext context) {
@@ -18,9 +18,9 @@ final ResumeSummaryData resumeSummaryData;
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Row(
-            children: [
+            children: <Widget>[
               const Icon(Icons.star, color: Colors.white, size: 20),
               const SizedBox(width: 12),
               Text(
@@ -39,7 +39,7 @@ final ResumeSummaryData resumeSummaryData;
             runSpacing: 10,
             children: resumeSummaryData.skills
                 .map(
-                  (skill) => Container(
+                  (String skill) => Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 10,
