@@ -27,5 +27,6 @@
   "creatingSummary": "Creating comprehensive summary...",
   "cachingResumes": "Caching resume data...",
   "cacheError": "Failed to cache resume data",
-  "resumeSummary":"Resume Summary"
+  "resumeSummary":"Resume Summary",
+  "uploadYourResume":"Upload Your Resume"
 }

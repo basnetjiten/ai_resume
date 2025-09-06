@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:ai_resume/localization/arb/l10n.dart';
 
 class ErrorView extends StatelessWidget {
-
   const ErrorView({
-    Key? key,
     required this.message,
+    Key? key,
     this.onRetry,
     this.icon = Icons.error_outline,
     this.iconSize = 48,
@@ -34,9 +33,9 @@ class ErrorView extends StatelessWidget {
             Text(
               message,
               textAlign: TextAlign.center,
-             // style: Theme.of(context).textTheme.subtitle1,
+              // style: Theme.of(context).textTheme.subtitle1,
             ),
-            if (onRetry != null) ...[
+            if (onRetry != null) ...<Widget>[
               SizedBox(height: spacing),
               ElevatedButton.icon(
                 icon: const Icon(Icons.refresh, size: 20),

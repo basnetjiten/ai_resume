@@ -25,7 +25,7 @@ class ResumeLibraryLocalDataSourceImpl implements ResumeLibraryLocalDataSource {
     try {
       final cached = await _hiveLocalStorage.get(key: EnvKeys.cacheKey);
       if (cached is! List) {
-        return [];
+        return <ResumeSummaryDataDto>[];
       }
 
       return cached.whereType<Map<String, dynamic>>().map(ResumeSummaryDataDto.fromJson).toList();

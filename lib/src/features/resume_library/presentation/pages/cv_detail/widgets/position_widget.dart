@@ -32,7 +32,7 @@ class PositionWidget extends StatelessWidget {
         border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
       ),
       child: Column(
-        children: [
+        children: <Widget>[
           Container(
             width: 80,
             height: 80,

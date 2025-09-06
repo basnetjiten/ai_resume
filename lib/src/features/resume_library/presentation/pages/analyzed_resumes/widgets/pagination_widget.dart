@@ -2,16 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PaginationWidget extends StatelessWidget {
+
+  const PaginationWidget({
+    required this.currentPage, required this.totalPages, required this.onPageChanged, super.key,
+  });
   final int currentPage;
   final int totalPages;
   final Function(int) onPageChanged;
-
-  const PaginationWidget({
-    super.key,
-    required this.currentPage,
-    required this.totalPages,
-    required this.onPageChanged,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +59,11 @@ class PaginationWidget extends StatelessWidget {
       height: 40,
       decoration: BoxDecoration(
         color: onPressed != null
-            ? Colors.white.withOpacity(0.2)
-            : Colors.white.withOpacity(0.1),
+            ? Colors.white.withValues(alpha:0.2)
+            : Colors.white.withValues(alpha:0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: Colors.white.withOpacity(onPressed != null ? 0.3 : 0.1),
+          color: Colors.white.withValues(alpha:(onPressed != null ? 0.3 : 0.1)),
         ),
       ),
       child: Material(
@@ -77,7 +74,7 @@ class PaginationWidget extends StatelessWidget {
           child: Icon(
             icon,
             size: 20,
-            color: Colors.white.withOpacity(onPressed != null ? 1.0 : 0.5),
+            color: Colors.white.withValues(alpha:onPressed != null ? 1.0 : 0.5),
           ),
         ),
       ),
@@ -93,13 +90,13 @@ class PaginationWidget extends StatelessWidget {
       height: 40,
       decoration: BoxDecoration(
         color: isCurrentPage
-            ? Colors.white.withOpacity(0.3)
-            : Colors.white.withOpacity(0.1),
+            ? Colors.white.withValues(alpha:0.3)
+            : Colors.white.withValues(alpha:0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isCurrentPage
-              ? Colors.white.withOpacity(0.5)
-              : Colors.white.withOpacity(0.2),
+              ? Colors.white.withValues(alpha:0.5)
+              : Colors.white.withValues(alpha:0.2),
           width: isCurrentPage ? 2 : 1,
         ),
       ),
@@ -114,7 +111,7 @@ class PaginationWidget extends StatelessWidget {
               style: GoogleFonts.poppins(
                 fontSize: 14,
                 fontWeight: isCurrentPage ? FontWeight.w700 : FontWeight.w500,
-                color: Colors.white.withOpacity(isCurrentPage ? 1.0 : 0.8),
+                color: Colors.white.withValues(alpha:isCurrentPage ? 1.0 : 0.8),
               ),
             ),
           ),

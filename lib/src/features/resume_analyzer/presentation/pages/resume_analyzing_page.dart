@@ -34,7 +34,7 @@ class _ResumeAnalyzingPageState extends State<ResumeAnalyzingPage> with TickerPr
   }
 
   void _startTypingAnimation() {
-    _typingTimer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
+    _typingTimer = Timer.periodic(const Duration(milliseconds: 50), (Timer timer) {
       if (_currentIndex < fullText.length) {
         setState(() {
           displayedText = fullText.substring(0, _currentIndex + 1);
@@ -94,9 +94,9 @@ class _ResumeAnalyzingPageState extends State<ResumeAnalyzingPage> with TickerPr
                 Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
+                    color: Colors.white.withValues(alpha:0.1),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Colors.white.withOpacity(0.3)),
+                    border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +106,7 @@ class _ResumeAnalyzingPageState extends State<ResumeAnalyzingPage> with TickerPr
                           Expanded(
                             child: Text(
                               displayedText,
-                              style: GoogleFonts.poppins(fontSize: 16, color: Colors.white.withOpacity(0.9), height: 1.6),
+                              style: GoogleFonts.poppins(fontSize: 16, color: Colors.white.withValues(alpha:0.9), height: 1.6),
                             ),
                           ),
                           AnimatedOpacity(

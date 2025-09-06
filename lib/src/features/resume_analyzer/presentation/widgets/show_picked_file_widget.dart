@@ -20,7 +20,7 @@ class ShowPickedFileWidget extends StatelessWidget {
           Container(
             width: 60,
             height: 60,
-            decoration: BoxDecoration(color: Colors.white.withOpacity(0.2), borderRadius: BorderRadius.circular(16)),
+            decoration: BoxDecoration(color: Colors.white.withValues(alpha:0.2), borderRadius: BorderRadius.circular(16)),
             child: const Icon(Icons.picture_as_pdf, size: 30, color: Colors.white),
           ),
           const SizedBox(height: 16),

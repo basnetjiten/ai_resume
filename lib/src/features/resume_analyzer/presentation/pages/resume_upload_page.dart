@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:ai_resume/localization/arb/l10n.dart';
 import 'package:ai_resume/src/core/di/injector.dart';
 import 'package:ai_resume/src/core/routes/app_router.dart';
 import 'package:ai_resume/src/features/resume_analyzer/presentation/blocs/file_picker/resume_picker_cubit.dart';
@@ -82,7 +83,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage> with TickerProvider
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Upload Your Resume',
+            localization.uploadYourResume,
             style: GoogleFonts.poppins(fontWeight: FontWeight.w600, color: Colors.white),
           ),
           backgroundColor: Colors.transparent,
@@ -127,7 +128,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage> with TickerProvider
                       child: AnimatedTextKit(
                         pause: const Duration(milliseconds: 100),
                         repeatForever: true,
-                        animatedTexts: [
+                        animatedTexts: <AnimatedText>[
                           RotateAnimatedText('HIGHLIGHT YOUR STRENGTHS'),
                           RotateAnimatedText('IDENTIFY GAPS'),
                           RotateAnimatedText('JUSTIFY EXPERIENCES'),

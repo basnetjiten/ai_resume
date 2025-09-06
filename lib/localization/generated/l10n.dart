@@ -308,6 +308,16 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `Upload Your Resume`
+  String get uploadYourResume {
+    return Intl.message(
+      'Upload Your Resume',
+      name: 'uploadYourResume',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

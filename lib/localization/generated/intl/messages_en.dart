@@ -82,6 +82,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "uploadInformation": MessageLookupByLibrary.simpleMessage(
       "Upload Information",
     ),
+    "uploadYourResume": MessageLookupByLibrary.simpleMessage(
+      "Upload Your Resume",
+    ),
     "uploadedOn": m1,
     "yearsOfExperience": MessageLookupByLibrary.simpleMessage(
       "Years of Experience",

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
 class LoadingView extends StatelessWidget {
-  final String? message;
-  final double progress;
-  final bool showProgress;
-  final EdgeInsets padding;
-  final double spacing;
 
   const LoadingView({
     Key? key,
@@ -15,6 +10,11 @@ class LoadingView extends StatelessWidget {
     this.padding = const EdgeInsets.all(24.0),
     this.spacing = 16.0,
   }) : super(key: key);
+  final String? message;
+  final double progress;
+  final bool showProgress;
+  final EdgeInsets padding;
+  final double spacing;
 
   @override
   Widget build(BuildContext context) {

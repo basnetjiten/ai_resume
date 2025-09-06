@@ -27,7 +27,7 @@ class UploadFileWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
         gradient: LinearGradient(
-          colors: <Color>[AppColors.iconPrimary, Colors.white.withOpacity(0.1)],
+          colors: <Color>[AppColors.iconPrimary, Colors.white.withValues(alpha:0.1)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
