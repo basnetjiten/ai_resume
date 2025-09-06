@@ -88,7 +88,7 @@ class _ResumeUploadPageState extends State<ResumeUploadPage> with TickerProvider
           backgroundColor: Colors.transparent,
           elevation: 0,
           flexibleSpace: Container(
-            decoration:  const BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: <Color>[AppColors.primary, AppColors.secondary],
                 begin: Alignment.topLeft,
@@ -163,4 +163,3 @@ class _ResumeUploadPageState extends State<ResumeUploadPage> with TickerProvider
     );
   }
 }
-
