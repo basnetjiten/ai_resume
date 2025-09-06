@@ -1,3 +1,5 @@
+import 'package:ai_resume/localization/arb/l10n.dart';
+import 'package:ai_resume/src/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -14,18 +16,18 @@ class UploadFileButtonWidget extends StatelessWidget {
         onPressed: onFilePick,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
-          foregroundColor: const Color(0xFF6A11CB),
+          foregroundColor: AppColors.primary,
           elevation: 8,
-          shadowColor: Colors.black.withOpacity(0.3),
+          shadowColor: Colors.black.withValues(alpha: 0.3),
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
             const Icon(Icons.upload_file),
             const SizedBox(width: 8),
-            Text('Select File', style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 16)),
+            Text(localization.selectFile, style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 16)),
           ],
         ),
       ),

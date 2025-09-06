@@ -4,6 +4,7 @@ import 'package:ai_resume/src/features/resume_analyzer/presentation/widgets/pdf_
 import 'package:ai_resume/src/features/resume_analyzer/presentation/widgets/show_picked_file_widget.dart';
 import 'package:ai_resume/src/features/resume_analyzer/presentation/widgets/upload_file_button_widget.dart';
 import 'package:ai_resume/src/features/resume_analyzer/presentation/widgets/upload_progress_widget.dart';
+import 'package:ai_resume/src/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,13 +27,13 @@ class UploadFileWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
         gradient: LinearGradient(
-          colors: <Color>[Colors.white.withOpacity(0.2), Colors.white.withOpacity(0.1)],
+          colors: <Color>[AppColors.iconPrimary, Colors.white.withOpacity(0.1)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        border: Border.all(color: Colors.white.withOpacity(0.3), width: 1.5),
+        border: Border.all(color: AppColors.border, width: 1.5),
         boxShadow: <BoxShadow>[
-          BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 20, offset: const Offset(0, 10)),
+          const BoxShadow(color: AppColors.shadow, blurRadius: 20, offset: Offset(0, 10)),
         ],
       ),
       child: Padding(
@@ -53,7 +54,7 @@ class UploadFileWidget extends StatelessWidget {
                   );
                 } else {
                   return Column(
-                    children: [
+                    children: <Widget>[
                       ShowPickedFileWidget(pickedFile: state.pickedFile, removeFile: () => _removeFile(context)),
                       const SizedBox(height: 24),
                       if (state.uploadProgress > 0) const UploadProgressWidget(),

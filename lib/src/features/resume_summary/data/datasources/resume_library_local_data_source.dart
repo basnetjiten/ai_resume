@@ -1,5 +1,5 @@
-import 'dart:convert';
 import 'package:ai_resume/localization/arb/l10n.dart';
+import 'package:ai_resume/src/core/constants/env_keys.dart';
 import 'package:ai_resume/src/core/services/logging/app_logger.dart';
 import 'package:ai_resume/src/features/resume_summary/data/models/resume_summary_dto.dart';
 import 'package:flutter/foundation.dart';
@@ -18,22 +18,19 @@ abstract class ResumeLibraryLocalDataSource {
 class ResumeLibraryLocalDataSourceImpl implements ResumeLibraryLocalDataSource {
   ResumeLibraryLocalDataSourceImpl(this._hiveLocalStorage);
 
-  static const String _cacheKey = 'cached_resumes';
   final LocalStorage _hiveLocalStorage;
 
   @override
   Future<List<ResumeSummaryDataDto>> getCachedResumes() async {
     try {
-      final dynamic cached = await _hiveLocalStorage.get(key: _cacheKey);
-      if (cached == null || cached is! List) {
-        return <ResumeSummaryDataDto>[];
+      final cached = await _hiveLocalStorage.get(key: EnvKeys.cacheKey);
+      if (cached is! List) {
+        return [];
       }
 
-      final String storedData = jsonEncode(cached);
-      final List<Map<String,dynamic>> jsonList = jsonDecode(storedData);
-
-      return jsonList.map<ResumeSummaryDataDto>((Map<String, dynamic> e) => ResumeSummaryDataDto.fromJson(e as Map<String, dynamic>)).toList();
-    } catch (_) {
+      return cached.whereType<Map<String, dynamic>>().map(ResumeSummaryDataDto.fromJson).toList();
+    } catch (e) {
+      AppLogger.logError(error: 'Failed to get cached resumes: $e');
       return <ResumeSummaryDataDto>[];
     }
   }
@@ -43,11 +40,11 @@ class ResumeLibraryLocalDataSourceImpl implements ResumeLibraryLocalDataSource {
     try {
       if (kDebugMode) {
         AppLogger.logInfo(info: localization.cachingResumes);
+        AppLogger.logInfo(info: 'TO STORE DATA: ${resumes.map((e) => e.toJson())}');
       }
-      await _hiveLocalStorage.put(
-        key: _cacheKey, 
-        value: resumes.map((ResumeSummaryDataDto e) => e.toJson()).toList()
-      );
+
+      final List<Map<String, dynamic>> jsonList = resumes.map((ResumeSummaryDataDto e) => e.toJson()).toList();
+      await _hiveLocalStorage.put(key: EnvKeys.cacheKey, value: jsonList);
     } catch (e) {
       AppLogger.logError(error: '${localization.cacheError}: $e');
       rethrow;

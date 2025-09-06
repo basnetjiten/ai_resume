@@ -1,19 +1,23 @@
 import 'dart:async';
-import 'package:ai_resume/src/features/resume_summary/presentation/pages/cv_summary_page.dart';
+import 'package:ai_resume/localization/arb/l10n.dart';
+import 'package:ai_resume/src/core/routes/app_router.dart';
+import 'package:ai_resume/src/theme/app_colors.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-class ResumeScreeningPage extends StatefulWidget {
-  const ResumeScreeningPage({super.key, required this.fileName});
+@RoutePage()
+class ResumeAnalyzingPage extends StatefulWidget {
+  const ResumeAnalyzingPage({required this.fileName, super.key});
 
   final String fileName;
 
   @override
-  _ResumeScreeningPageState createState() => _ResumeScreeningPageState();
+  _ResumeAnalyzingPageState createState() => _ResumeAnalyzingPageState();
 }
 
-class _ResumeScreeningPageState extends State<ResumeScreeningPage> with TickerProviderStateMixin {
+class _ResumeAnalyzingPageState extends State<ResumeAnalyzingPage> with TickerProviderStateMixin {
   late AnimationController _dotsController;
   String displayedText = '';
   String fullText =
@@ -44,18 +48,10 @@ class _ResumeScreeningPageState extends State<ResumeScreeningPage> with TickerPr
   }
 
   void _navigateToSummary() {
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacement(
-        PageRouteBuilder(
-          pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) =>
-              CVSummaryPage(fileName: widget.fileName),
-          transitionsBuilder:
-              (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
-                return FadeTransition(opacity: animation, child: child);
-              },
-        ),
-      );
-    });
+    Future<void>.delayed(
+      const Duration(seconds: 2),
+      () {},
+    ).then((_) => context.router.replace(CVSummaryRoute(fileName: widget.fileName)));
   }
 
   @override
@@ -69,9 +65,9 @@ class _ResumeScreeningPageState extends State<ResumeScreeningPage> with TickerPr
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration:  const BoxDecoration(
           gradient: LinearGradient(
-            colors: <Color>[Color(0xFF6A11CB), Color(0xFF2575FC)],
+            colors: <Color>[AppColors.primary, AppColors.secondary],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -83,7 +79,7 @@ class _ResumeScreeningPageState extends State<ResumeScreeningPage> with TickerPr
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Summarizing your CV...',
+                  localization.summarizingCV,
                   style: GoogleFonts.poppins(fontSize: 28, fontWeight: FontWeight.w700, color: Colors.white),
                   textAlign: TextAlign.center,
                 ),

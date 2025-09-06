@@ -1,6 +1,7 @@
 import 'package:ai_resume/src/features/resume_summary/data/models/resume_summary_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ai_resume/src/theme/app_colors.dart';
 
 class ProfileHeaderWidget extends StatelessWidget {
   const ProfileHeaderWidget({required this.data, super.key});
@@ -43,7 +44,7 @@ class ProfileHeaderWidget extends StatelessWidget {
             style: GoogleFonts.poppins(
               fontSize: 15,
               fontWeight: FontWeight.w400,
-              color: Colors.white.withValues(alpha: 0.8),
+              color: AppColors.textPrimary,
             ),
           ),
         ],

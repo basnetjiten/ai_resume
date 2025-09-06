@@ -18,8 +18,8 @@ dependencies:
     sdk: flutter
 
   # State management
-  bloc: 9.0.0
-  flutter_bloc: 9.1.1
+  bloc: 8.1.4
+  flutter_bloc: ^8.1.6
 
   # Functional programming
   fpdart: 1.1.1
@@ -29,7 +29,7 @@ dependencies:
   injectable: ^2.5.1
 
   # Data models
-  freezed_annotation: ^3.1.0
+  freezed_annotation: 2.4.4
   json_annotation: ^4.9.0
   equatable: 2.0.7
   google_fonts: ^6.3.1
@@ -54,7 +54,7 @@ dependencies:
 
 
   # Routing
-  auto_route: ^10.1.1
+  auto_route: ^9.2.2
 
   # Network
   dio: ^5.9.0
@@ -80,18 +80,20 @@ dependencies:
 
 
   flutter_launcher_icons: ^0.14.4
-  envied: ^1.2.0
+  envied: ^1.0.1
 
 dev_dependencies:
   flutter_lints: 6.0.0
-  build_runner: ^2.7.0
-  freezed: 3.2.0
-  json_serializable: 6.10.0
-  injectable_generator: 2.8.1
-  auto_route_generator: 10.2.4
-  flutter_gen_runner: 5.11.0
-  envied_generator: ^1.2.0
+  build_runner: ^2.4.12
+  freezed: 2.5.2
+  json_serializable: 6.8.0
+  injectable_generator: 2.6.2
+  auto_route_generator: 9.0.0
+  flutter_gen_runner: 5.4.0
+  envied_generator: ^1.0.1
 
+dependency_overrides:
+  freezed_annotation: 2.4.4
 
 flutter_intl:
   enabled: true

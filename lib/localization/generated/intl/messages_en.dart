@@ -26,7 +26,6 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-    "analyzingCv": MessageLookupByLibrary.simpleMessage("Analyzing CV..."),
     "analyzingCvText": MessageLookupByLibrary.simpleMessage(
       "Analyzing your CV and extracting key information. Our AI is processing your experience, skills, and qualifications to create a comprehensive summary...",
     ),
@@ -72,9 +71,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "Professional Summary",
     ),
     "remove": MessageLookupByLibrary.simpleMessage("Remove"),
+    "resumeSummary": MessageLookupByLibrary.simpleMessage("Resume Summary"),
     "retry": MessageLookupByLibrary.simpleMessage("Retry"),
     "selectFile": MessageLookupByLibrary.simpleMessage("Select File"),
     "showcaseSkills": MessageLookupByLibrary.simpleMessage("SHOWCASE SKILLS"),
+    "summarizingCV": MessageLookupByLibrary.simpleMessage(
+      "Summarizing your CV...",
+    ),
     "totalResumes": MessageLookupByLibrary.simpleMessage("Total Resumes"),
     "uploadInformation": MessageLookupByLibrary.simpleMessage(
       "Upload Information",

@@ -2,6 +2,7 @@ import 'package:ai_resume/localization/arb/l10n.dart';
 import 'package:ai_resume/src/features/resume_summary/data/models/resume_result_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ai_resume/src/theme/app_colors.dart';
 
 class SummaryCardWidget extends StatelessWidget {
   const SummaryCardWidget({required this.resumeResultDto, required this.index, super.key});
@@ -70,7 +71,7 @@ class SummaryCardWidget extends StatelessWidget {
                                 entry.value,
                                 style: GoogleFonts.poppins(
                                   fontSize: 14,
-                                  color: Colors.white.withValues(alpha: 0.8),
+                                  color: AppColors.textPrimary,
                                   height: 1.6,
                                 ),
                               ),

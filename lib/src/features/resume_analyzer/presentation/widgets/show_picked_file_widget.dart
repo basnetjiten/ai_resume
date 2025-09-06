@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:ai_resume/localization/arb/l10n.dart';
+import 'package:ai_resume/src/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -14,7 +16,7 @@ class ShowPickedFileWidget extends StatelessWidget {
       opacity: (pickedFile != null ? 1.0 : 0.0).clamp(0.0, 1.0),
       duration: const Duration(milliseconds: 300),
       child: Column(
-        children: [
+        children: <Widget>[
           Container(
             width: 60,
             height: 60,
@@ -30,7 +32,7 @@ class ShowPickedFileWidget extends StatelessWidget {
           const SizedBox(height: 16),
           TextButton(
             onPressed: removeFile,
-            child: Text('Remove', style: GoogleFonts.poppins(color: Colors.white.withOpacity(0.8), fontSize: 12)),
+            child: Text(localization.remove, style: GoogleFonts.poppins(color: AppColors.textPrimary, fontSize: 12)),
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ai_resume/src/theme/app_colors.dart';
 
 class PdfIconWidget extends StatelessWidget {
   const PdfIconWidget({super.key});
@@ -8,8 +9,8 @@ class PdfIconWidget extends StatelessWidget {
     return Container(
       width: 80,
       height: 80,
-      decoration: BoxDecoration(color: Colors.white.withOpacity(0.2), borderRadius: BorderRadius.circular(20)),
-      child: const Icon(Icons.picture_as_pdf, size: 40, color: Colors.white),
+      decoration: BoxDecoration(color: AppColors.cardBackground, borderRadius: BorderRadius.circular(20)),
+      child: const Icon(Icons.picture_as_pdf, size: 40, color: AppColors.iconPrimary),
     );
   }
 }

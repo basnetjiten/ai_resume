@@ -219,11 +219,11 @@ class AppLocalizations {
     return Intl.message('N/A', name: 'notAvailable', desc: '', args: []);
   }
 
-  /// `Analyzing CV...`
-  String get analyzingCv {
+  /// `Summarizing your CV...`
+  String get summarizingCV {
     return Intl.message(
-      'Analyzing CV...',
-      name: 'analyzingCv',
+      'Summarizing your CV...',
+      name: 'summarizingCV',
       desc: '',
       args: [],
     );
@@ -294,6 +294,16 @@ class AppLocalizations {
     return Intl.message(
       'Failed to cache resume data',
       name: 'cacheError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resume Summary`
+  String get resumeSummary {
+    return Intl.message(
+      'Resume Summary',
+      name: 'resumeSummary',
       desc: '',
       args: [],
     );

@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:ai_resume/src/core/base/base_remote_source.dart';
-import 'package:ai_resume/src/core/services/logging/app_logger.dart';
 import 'package:ai_resume/src/features/resume_summary/data/models/resume_summary_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
@@ -19,9 +17,8 @@ class ResumeSummaryRemoteDataSourceImpl extends BaseRemoteSource implements Resu
   Future<List<ResumeSummaryDataDto>> getResumeSummaries() async {
     return networkRequest<List<ResumeSummaryDataDto>>(
       request: (Dio dio) => dio.get('resume-summaries'),
-      onResponse: (responseData) {
-        AppLogger.logInfo(info: "NEW DAA ${jsonEncode(responseData['data'])}");
-        return (responseData['data'] as List<dynamic>).map<ResumeSummaryDataDto>((dynamic json) => ResumeSummaryDataDto.fromJson(json as Map<String, dynamic>)).toList();
+      onResponse: (summaries) {
+        return (summaries['data'] as List).map((json) => ResumeSummaryDataDto.fromJson(json)).toList();
       },
     );
   }
@@ -29,7 +26,8 @@ class ResumeSummaryRemoteDataSourceImpl extends BaseRemoteSource implements Resu
   @override
   Future<ResumeSummaryDto> getResumeSummary(String fileName) async {
     return networkRequest<ResumeSummaryDto>(
-      request: (Dio dio) => dio.get<Map<String, dynamic>>('resume-summary', queryParameters: <String, dynamic>{"originalName": fileName}),
+      request: (Dio dio) =>
+          dio.get<Map<String, dynamic>>('resume-summary', queryParameters: <String, dynamic>{"originalName": fileName}),
       onResponse: (data) => ResumeSummaryDto.fromJson(data),
     );
   }

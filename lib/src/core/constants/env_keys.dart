@@ -12,4 +12,5 @@ class EnvKeys {
   static const String stageEnvPath = '.env_stg';
   static const String prodEnvPath = '.env_prod';
   static const String baseUrlKey = 'BASE_URL';
+  static const String cacheKey = 'cached_resumes';
 }

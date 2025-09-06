@@ -1,3 +1,4 @@
+import 'package:ai_resume/localization/arb/l10n.dart';
 import 'package:ai_resume/src/core/di/injector.dart';
 import 'package:ai_resume/src/features/resume_summary/data/models/resume_result_dto.dart';
 import 'package:ai_resume/src/features/resume_summary/data/models/resume_summary_dto.dart';
@@ -5,6 +6,7 @@ import 'package:ai_resume/src/features/resume_summary/presentation/blocs/resume_
 import 'package:ai_resume/src/features/resume_summary/presentation/blocs/resume_summary_cubit/resume_summary_state.dart';
 import 'package:ai_resume/src/features/resume_summary/presentation/pages/widgets/profile_header_widget.dart';
 import 'package:ai_resume/src/features/resume_summary/presentation/pages/widgets/summary_card_widget.dart';
+import 'package:ai_resume/src/theme/app_colors.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,7 +55,7 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent> with Ticke
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Resume Summary',
+          localization.resumeSummary,
           style: GoogleFonts.poppins(fontWeight: FontWeight.w600, color: Colors.white),
         ),
         backgroundColor: Colors.transparent,
@@ -61,7 +63,7 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent> with Ticke
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: <Color>[Color(0xFF6A11CB), Color(0xFF2575FC)],
+              colors: <Color>[AppColors.primary, AppColors.secondary],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -71,7 +73,7 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent> with Ticke
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: <Color>[Color(0xFF6A11CB), Color(0xFF2575FC)],
+            colors: <Color>[AppColors.primary, AppColors.secondary],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -139,12 +141,12 @@ class _CVSummaryPageContentState extends State<_CVSummaryPageContent> with Ticke
   }
 
   Widget _buildLoading() {
-    return const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white)));
+    return  const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white)));
   }
 
   Widget _buildEmptyState() {
     return const Center(
-      child: Text('No data available', style: TextStyle(color: Colors.white)),
+      child: Text('No data available', style: TextStyle(color: AppColors.textPrimary)),
     );
   }
 }

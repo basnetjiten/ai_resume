@@ -19,12 +19,13 @@
   "yearsOfExperience": "Years of Experience",
   "analyzingCvText": "Analyzing your CV and extracting key information. Our AI is processing your experience, skills, and qualifications to create a comprehensive summary...",
   "notAvailable": "N/A",
-  "analyzingCv": "Analyzing CV...",
+  "summarizingCV": "Summarizing your CV...",
   "extractingKeyInformation": "Extracting key information...",
   "processingExperience": "Processing experience...",
   "processingSkills": "Processing skills...",
   "processingQualifications": "Processing qualifications...",
   "creatingSummary": "Creating comprehensive summary...",
   "cachingResumes": "Caching resume data...",
-  "cacheError": "Failed to cache resume data"
+  "cacheError": "Failed to cache resume data",
+  "resumeSummary":"Resume Summary"
 }

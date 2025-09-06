@@ -10,6 +10,5 @@ part of 'development_env.dart';
 // ignore_for_file: type=lint
 // generated_from: .env_dev
 final class _DevelopmentEnv {
-  static const String baseUrl =
-      'https://journey-ai-webservice.onrender.com/api/v1/';
+  static const String baseUrl = 'http://localhost:3000/api/v1/';
 }
